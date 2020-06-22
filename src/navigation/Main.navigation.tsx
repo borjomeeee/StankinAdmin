@@ -11,23 +11,19 @@ const MainNavigation = () => {
   return (
     <Router>
       <div className="content">
-        <div className="main">
-          <div className="screen">
-            <CommonHeaderComponent />
-            <Switch>
-              <Route path="/group/:id" exact>
-                <GroupScreen />
-              </Route>
-              <Route path="/" exact>
-                <MainScreen />
-              </Route>
-            </Switch>
-          </div>
+        <div className="screen">
+          <CommonHeaderComponent />
+          <Switch>
+            <Route path="/group/:id" exact>
+              <GroupScreen />
+            </Route>
+            <Route path="/" exact>
+              <MainScreen />
+            </Route>
+          </Switch>
         </div>
 
-        <div className="right-bar">
-          <RightBarComponent />
-        </div>
+        <RightBarComponent />
       </div>
     </Router>
   );

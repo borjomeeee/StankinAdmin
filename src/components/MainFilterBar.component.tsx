@@ -1,12 +1,10 @@
 import React, { useState } from "react";
+
 import "./MainFilterBar.component.scss";
 
-import LabeledFilterSelectComponent from "./LabeledFilterSelect.component";
+import FilterSelect from "./FilterSelect.component";
 
-enum TypeFilterValues {
-  ALL = "Все",
-  WRONG_ONCE = "Только ошибочные",
-}
+import { TypeFilterValues } from "../utils/enums";
 
 const MainFilterBar = () => {
   const [typeFilterData, setTypeFilterData] = useState({
@@ -24,7 +22,7 @@ const MainFilterBar = () => {
     <div className="filter-bar">
       <div className="filter-bar__title">Все группы</div>
       <div className="filter-bar__option">
-        <LabeledFilterSelectComponent
+        <FilterSelect
           props={{
             className: "filter-bar__option-component",
           }}

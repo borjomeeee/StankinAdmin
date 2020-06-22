@@ -5,7 +5,7 @@ import "./Main.screen.scss";
 
 import MainFilterBar from "../components/MainFilterBar.component";
 import MainGroupComponent from "../components/MainGroup.component";
-import EditRemoveHOC from "../hooks/EditRemove.HOC";
+import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 
 type IGroup = {
   id: number;

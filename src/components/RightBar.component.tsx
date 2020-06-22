@@ -3,12 +3,14 @@ import { useLocation, useHistory } from "react-router-dom";
 
 import "./RightBar.component.scss";
 
+import MainRightBarComponent from "./MainRightBar.component";
+
 const RightBarComponent = () => {
   const history = useHistory();
   const location = useLocation();
 
   return location.pathname === "/" ? (
-    <h1 onClick={() => history.push("/group/1")}>MainRightBar</h1>
+    <MainRightBarComponent />
   ) : (
     <h1 onClick={() => history.push("/")}>GroupRightBar</h1>
   );

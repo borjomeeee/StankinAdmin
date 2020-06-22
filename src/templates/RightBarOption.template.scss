@@ -1,0 +1,14 @@
+.right-bar__option.option {
+  margin-top: 30px;
+
+  .option {
+    &__label {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    &__child {
+      margin-top: 20px;
+    }
+  }
+}

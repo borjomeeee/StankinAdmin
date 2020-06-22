@@ -18,14 +18,14 @@ const EditRemoveHOC = ({ children, onEdit, onRemove }: IEditRemoveHOC) => {
       <div className="edit-remove__child">{children}</div>
       <div className="edit-remove__options">
         <div
-          onClick={onEdit}
-          className="edit-remove__option edit-remove__option-edit"
+          onClick={onRemove}
+          className="edit-remove__option edit-remove__option-remove"
         >
           <Delete style={{ fontSize: 24 }} />
         </div>
         <div
-          onClick={onRemove}
-          className="edit-remove__option edit-remove__option-remove"
+          onClick={onEdit}
+          className="edit-remove__option edit-remove__option-edit"
         >
           <Create style={{ fontSize: 24 }} />
         </div>
