@@ -1,4 +1,5 @@
 import React from "react";
+
 import "./MainGroup.component.scss";
 
 type IMainGroupComponent = {

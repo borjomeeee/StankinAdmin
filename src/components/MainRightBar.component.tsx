@@ -8,6 +8,7 @@ import ButtonComponent from "./Button.component";
 
 const MainRightBarComponent = () => {
   const [nameGroup, setNameGroup] = useState("");
+
   return (
     <div className="right-bar">
       <RightBarOptionTemplate label="Найти группу">

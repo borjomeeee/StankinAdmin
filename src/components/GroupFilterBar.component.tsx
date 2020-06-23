@@ -3,11 +3,11 @@ import { useHistory } from "react-router-dom";
 
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
-type GroupFilterBarComponent = {
+type IGroupFilterBarComponent = {
   label: string;
 };
 
-const GroupFilterBarComponent = ({ label }: GroupFilterBarComponent) => {
+const GroupFilterBarComponent = ({ label }: IGroupFilterBarComponent) => {
   const history = useHistory();
   return (
     <div className="filter-bar">
