@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-import "./MainFilterBar.component.scss";
-
 import FilterSelect from "./FilterSelect.component";
 
 import { TypeFilterValues } from "../utils/enums";

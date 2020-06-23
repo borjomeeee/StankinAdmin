@@ -5,6 +5,8 @@
   margin: 0;
 
   font-family: "Open Sans";
+  color: #000;
+  text-decoration: none;
 
   box-sizing: border-box;
 }
@@ -19,4 +21,29 @@
 .filters {
   margin-top: 50px;
   margin-bottom: 30px;
+}
+
+.filter-bar {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+
+  &__back {
+    display: flex;
+    align-items: center;
+
+    margin-right: 30px;
+
+    cursor: pointer;
+  }
+
+  &__title {
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  &__option {
+    margin-left: 50px;
+  }
 }

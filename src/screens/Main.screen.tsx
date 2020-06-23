@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import "./Main.screen.scss";
 
@@ -7,7 +8,7 @@ import MainFilterBar from "../components/MainFilterBar.component";
 import MainGroupComponent from "../components/MainGroup.component";
 import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 
-type IGroup = {
+export type IGroup = {
   id: number;
   title: string;
 };
@@ -29,19 +30,28 @@ const groups: IGroup[] = [
 
 const MainScreen = () => {
   const MainGroups = () => (
-    <>
-      {groups.map(({ id, title }: IGroup) => (
+    <div className="main__groups">
+      {groups.map((group: IGroup) => (
         <EditRemoveHOC
-          onEdit={() => console.log(`Edit group: ${id}`)}
-          onRemove={() => console.log(`Remove group: ${id}`)}
+          onEdit={() => console.log(`Edit group: ${group.id}`)}
+          onRemove={() => console.log(`Remove group: ${group.id}`)}
         >
-          <MainGroupComponent
-            props={{ onClick: () => console.log(`Touched group: ${id}`) }}
-            title={title}
-          />
+          <Link
+            to={{
+              pathname: `/group/${group.id}`,
+              state: { group },
+            }}
+          >
+            <MainGroupComponent
+              props={{
+                onClick: () => console.log(`Touched group: ${group.id}`),
+              }}
+              title={group.title}
+            />
+          </Link>
         </EditRemoveHOC>
       ))}
-    </>
+    </div>
   );
   return (
     <div className="main">
@@ -50,9 +60,7 @@ const MainScreen = () => {
       </div>
 
       <div className="content main__content">
-        <div className="main__groups">
-          <MainGroups />
-        </div>
+        <MainGroups />
       </div>
     </div>
   );
