@@ -53,3 +53,12 @@
 .filter-select > div {
   width: 100%;
 }
+
+.filter-select  label {
+  background-color: #fff;
+  padding: 0 5px;
+}
+
+.MuiSelect-select:focus {
+  background-color: #fff !important;
+}

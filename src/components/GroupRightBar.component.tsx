@@ -110,6 +110,7 @@ const GroupRightBar = () => {
             itemSelected={studentGroupData.selected}
             selectData={studentGroupData.data}
             onChangeItem={handleChangeStudentGroup}
+            label="Группа"
           />
         </div>
       </RightBarOptionTemplate>
@@ -119,6 +120,7 @@ const GroupRightBar = () => {
           itemSelected={lessonTypeData.selected}
           selectData={lessonTypeData.data}
           onChangeItem={handleChangeLessonType}
+          label="Тип пары"
         />
       </RightBarOptionTemplate>
 
@@ -127,6 +129,7 @@ const GroupRightBar = () => {
           itemSelected={lessonTimeData.selected}
           selectData={lessonTimeData.data}
           onChangeItem={handleChangeLessonTime}
+          label="Время"
         />
       </RightBarOptionTemplate>
 
