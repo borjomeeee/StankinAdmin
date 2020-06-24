@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import Search from "@material-ui/icons/Search";
+
 import RightBarOptionTemplate from "../templates/RightBarOption.template";
 
 import IconedInputComponent from "./IconedInput.component";
@@ -16,6 +18,7 @@ const MainRightBarComponent = () => {
           label="Введите название группы"
           value={nameGroup}
           onChange={setNameGroup}
+          icon={<Search style={{ fontSize: 24 }} />}
         />
       </RightBarOptionTemplate>
       <RightBarOptionTemplate label="Добавить группу">

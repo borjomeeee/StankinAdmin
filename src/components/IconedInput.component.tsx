@@ -1,6 +1,6 @@
 import React from "react";
 
-import Search from "@material-ui/icons/Search";
+import Icon from "@material-ui/core/Icon";
 
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
@@ -10,12 +10,15 @@ type IIconedInputComponent = {
 
   value: string;
   onChange: (value: string) => void;
+
+  icon: React.ReactElement;
 };
 
 const IconedInputComponent = ({
   label,
   value,
   onChange,
+  icon,
 }: IIconedInputComponent) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
@@ -29,7 +32,7 @@ const IconedInputComponent = ({
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Search style={{ fontSize: 24 }} />
+              <Icon style={{ fontSize: 24 }}>{icon}</Icon>
             </InputAdornment>
           ),
         }}

@@ -3,9 +3,10 @@ import React from "react";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
 
 type IFilterSelectComponent = {
-  props: React.ComponentProps<typeof FormControl>;
+  props?: React.ComponentProps<typeof FormControl>;
 
   selectData: string[];
   itemSelected: string;
@@ -28,6 +29,7 @@ const FilterSelectComponent = ({
   return (
     <div className="filter-select">
       <FormControl variant="outlined" {...props}>
+        <InputLabel id="demo-simple-select-outlined-label">Age</InputLabel>
         <Select
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
