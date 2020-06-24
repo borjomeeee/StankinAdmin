@@ -1,14 +1,31 @@
-.right-bar__option.option {
-  margin-top: 30px;
+.right-bar {
+  background: #fff;
 
-  .option {
-    &__label {
-      font-weight: bold;
-      font-size: 18px;
+  &__option.option {
+    margin-top: 30px;
+
+    .option {
+      &__label {
+        font-weight: bold;
+        font-size: 18px;
+      }
+
+      &__child {
+        margin-top: 20px;
+      }
+    }
+  }
+
+  &__option-row {
+    display: flex;
+    flex-direction: row;
+
+    & > * {
+      margin-left: 20px;
     }
 
-    &__child {
-      margin-top: 20px;
+    & > *:nth-child(1) {
+      margin-left: 0;
     }
   }
 }

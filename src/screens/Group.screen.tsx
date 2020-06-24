@@ -83,12 +83,12 @@ const GroupScreen = () => {
   const GroupLessons = () => (
     <div className="group__lessons">
       {lessons.map((item: ILesson) => (
-        <div className="group-lesson">
+        <div className="group-lesson" key={item.id}>
           <EditRemoveHOC
             onEdit={() => console.log("Edit lesson: ", item.id)}
             onRemove={() => console.log("Remove lesson: ", item.id)}
           >
-            <GroupLessonCardComponent key={item.id} lesson={item} />
+            <GroupLessonCardComponent lesson={item} />
           </EditRemoveHOC>
         </div>
       ))}

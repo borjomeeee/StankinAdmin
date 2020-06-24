@@ -6,7 +6,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 
 type IIconedInputComponent = {
-  label: string;
+  label?: string;
 
   value: string;
   onChange: (value: string) => void;

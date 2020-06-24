@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import "./RightBar.component.scss";
 
@@ -8,6 +8,8 @@ import GroupRightBar from "./GroupRightBar.component";
 
 const RightBarComponent = () => {
   const location = useLocation();
+
+  console.log("Render!");
 
   return location.pathname === "/" ? (
     <MainRightBarComponent />

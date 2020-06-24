@@ -34,6 +34,7 @@ const MainScreen = () => {
     <div className="main__groups">
       {groups.map((group: IGroup) => (
         <EditRemoveHOC
+          key={group.id}
           onEdit={() => console.log(`Edit group: ${group.id}`)}
           onRemove={() => console.log(`Remove group: ${group.id}`)}
         >
