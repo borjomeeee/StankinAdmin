@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import "./Group.screen.scss";
+
 import { Location } from "history";
 import { useLocation } from "react-router-dom";
 
@@ -12,6 +14,7 @@ import GroupLessonCardComponent from "../components/GroupLessonCard.component";
 import { TypeLessonType, TypeStudentGroup } from "../utils/enums";
 
 import { ILessonTime, LessonTime } from "../models/LessonTime.model";
+import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 
 export type ILesson = {
   id: number;
@@ -80,7 +83,14 @@ const GroupScreen = () => {
   const GroupLessons = () => (
     <div className="group__lessons">
       {lessons.map((item: ILesson) => (
-        <GroupLessonCardComponent key={item.id} lesson={item} />
+        <div className="group-lesson">
+          <EditRemoveHOC
+            onEdit={() => console.log("Edit lesson: ", item.id)}
+            onRemove={() => console.log("Remove lesson: ", item.id)}
+          >
+            <GroupLessonCardComponent key={item.id} lesson={item} />
+          </EditRemoveHOC>
+        </div>
       ))}
     </div>
   );
