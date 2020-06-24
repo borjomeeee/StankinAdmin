@@ -5,17 +5,18 @@ import "./RightBarOption.template.scss";
 type IRightBarOptionTemplate = {
   label?: string;
 
-  children: React.ReactChild;
+  children: React.ReactChild[];
 };
 
 const RightBarOptionTemplate = ({
   label,
   children,
 }: IRightBarOptionTemplate) => {
+  // const items = 
   return (
-    <div className="right-bar__option option">
-      {label && <div className="option__label">{label}</div>}
-      <div className="option__child">{children}</div>
+    <div className="right-bar__section">
+      {label && <div className="section__label">{label}</div>}
+      <div className="section__child">{children}</div>
     </div>
   );
 };

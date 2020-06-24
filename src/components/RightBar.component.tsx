@@ -6,6 +6,8 @@ import "./RightBar.component.scss";
 import MainRightBarComponent from "./MainRightBar.component";
 import GroupRightBar from "./GroupRightBar.component";
 
+// export const RightBarSectionChild = () => <></.
+
 const RightBarComponent = () => {
   const location = useLocation();
 
