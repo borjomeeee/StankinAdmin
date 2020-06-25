@@ -2,10 +2,18 @@ import { combineReducers, applyMiddleware, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 
 import rootSaga from "../saga/Root.saga";
+import { IGroup } from "../screens/Main.screen";
+import { ILesson } from "../screens/Group.screen";
 
 export const initialState = {
-  groups: [],
-  lessons: new Map<number, []>(),
+  app: {
+    isConnection: false,
+    isloading: false,
+
+    error: "",
+  },
+  groups: new Array<IGroup>(),
+  lessons: new Map<number, ILesson[]>(),
 };
 
 const reducers = combineReducers([]);
