@@ -2,11 +2,11 @@ import React from "react";
 
 import "./GroupLessonCard.component.scss";
 
-import { ILesson } from "../screens/Group.screen";
-
 import DateMiniCardComponent from "./DateMiniCard.component";
 
 import { TypeStudentGroup } from "../utils/enums";
+
+import { ILesson } from "../models/Lesson.model";
 
 type IGroupLessonCardComponent = {
   lesson: ILesson;

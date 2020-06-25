@@ -4,32 +4,20 @@ import { Link } from "react-router-dom";
 
 import "./Main.screen.scss";
 
+import { IGroupsInitialState } from "../redux/store";
+
 import MainFilterBar from "../components/MainFilterBar.component";
 import MainGroupComponent from "../components/MainGroup.component";
 
 import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 
-export type IGroup = {
-  id: number;
-  title: string;
+import { IGroup } from "../models/Group.model";
+
+type IMainScreen = {
+  groups: IGroupsInitialState;
 };
 
-const groups: IGroup[] = [
-  {
-    id: 1,
-    title: "ИДБ-18-07",
-  },
-  {
-    id: 2,
-    title: "ИДБ-18-06",
-  },
-  {
-    id: 3,
-    title: "ИДБ-18-05",
-  },
-];
-
-const MainScreen = () => {
+const MainScreen = ({ groups }: IMainScreen) => {
   const MainGroups = () => (
     <div className="main__groups">
       {groups.map((group: IGroup) => (

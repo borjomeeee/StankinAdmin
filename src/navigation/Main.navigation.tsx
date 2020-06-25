@@ -13,13 +13,10 @@ const MainNavigation = () => {
       <div className="content">
         <div className="screen">
           <CommonHeaderComponent />
+
           <Switch>
-            <Route path="/group/:id" exact>
-              <GroupScreen />
-            </Route>
-            <Route path="/" exact>
-              <MainScreen />
-            </Route>
+            <Route path="/group/:groupId" exact component={GroupScreen} />
+            <Route path="/" exact component={MainScreen} />
           </Switch>
         </div>
 
