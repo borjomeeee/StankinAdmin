@@ -7,9 +7,16 @@ import Group, { IGroup } from "../models/Group.model";
 import Lesson, { ILesson } from "../models/Lesson.model";
 import { LessonTime } from "../models/LessonTime.model";
 
-import { TypeLessonType, TypeStudentGroup } from "../utils/enums";
+import {
+  TypeLessonType,
+  TypeStudentGroup,
+  TypeFilterValues,
+} from "../utils/enums";
+
 import GroupsReducer from "../reducers/Groups.reducer";
 import LessonsReducer from "../reducers/Lessons.reducer";
+import GroupScreenReducer from "../reducers/GroupScreen.reducer";
+import MainScreenReducer from "../reducers/MainScreen.reducer";
 
 export const initialState = {
   app: {
@@ -20,11 +27,22 @@ export const initialState = {
   },
   groups: new Array<IGroup>(),
   lessons: new Map<number, ILesson[]>(),
+
+  mainScreen: {
+    typeGroupFilter: TypeFilterValues.ALL,
+    searchGroupText: "",
+  },
+  groupScreen: {
+    searchLessonText: "",
+  },
 };
 
+export type IInitialState = typeof initialState;
 export type IAppInitialState = typeof initialState.app;
 export type IGroupsInitialState = typeof initialState.groups;
 export type ILessonsInitialState = typeof initialState.lessons;
+export type IMainScreenInitialState = typeof initialState.mainScreen;
+export type IGroupScreenInitialState = typeof initialState.groupScreen;
 
 initialState.groups = [
   new Group(1, "ИДБ-18-07"),
@@ -71,6 +89,9 @@ initialState.lessons.set(1, [
 const reducers = combineReducers({
   groups: GroupsReducer,
   lessons: LessonsReducer,
+
+  mainScreen: MainScreenReducer,
+  groupScreen: GroupScreenReducer,
 });
 
 // create the saga middleware

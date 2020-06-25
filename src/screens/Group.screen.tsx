@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 
 import "./Group.screen.scss";
 
@@ -8,21 +8,15 @@ import GroupFilterBarComponent from "../components/GroupFilterBar.component";
 import GroupLessonCardComponent from "../components/GroupLessonCard.component";
 
 import { ILesson } from "../models/Lesson.model";
+import { IGroup } from "../models/Group.model";
 
 import EditRemoveHOC from "../HOCs/EditRemove.HOC";
-import { ILessonsInitialState, IGroupsInitialState } from "../redux/store";
-import { IGroup } from "../models/Group.model";
 
 type IGroupScreenParamsProps = {
   groupId?: string;
 };
 
-type IGroupScreen = {
-  lessons: ILessonsInitialState;
-  groups: IGroupsInitialState;
-};
-
-const GroupScreen = ({ lessons, groups }: IGroupScreen) => {
+const GroupScreen = ({ lessons, groups }: ConnectedProps<typeof connector>) => {
   const history = useHistory();
   const { groupId }: IGroupScreenParamsProps = useParams();
 
@@ -77,6 +71,8 @@ const mapStateToProps = (state: any) => ({
   groups: state.groups,
 });
 
-const mapDsipatchToProps = null;
+const mapDispatchToProps = () => ({});
 
-export default connect(mapStateToProps, mapDsipatchToProps)(GroupScreen);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+export default connector(GroupScreen);

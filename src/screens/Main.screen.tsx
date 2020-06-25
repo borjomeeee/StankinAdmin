@@ -1,10 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 
 import "./Main.screen.scss";
 
-import { IGroupsInitialState } from "../redux/store";
+import { IInitialState } from "../redux/store";
 
 import MainFilterBar from "../components/MainFilterBar.component";
 import MainGroupComponent from "../components/MainGroup.component";
@@ -13,11 +13,7 @@ import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 
 import { IGroup } from "../models/Group.model";
 
-type IMainScreen = {
-  groups: IGroupsInitialState;
-};
-
-const MainScreen = ({ groups }: IMainScreen) => {
+const MainScreen = ({ groups }: ConnectedProps<typeof connector>) => {
   const MainGroups = () => (
     <div className="main__groups">
       {groups.map((group: IGroup) => (
@@ -56,10 +52,12 @@ const MainScreen = ({ groups }: IMainScreen) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: IInitialState) => ({
   groups: state.groups,
 });
 
-const mapDsipatchToProps = null;
+const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDsipatchToProps)(MainScreen);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+export default connector(MainScreen);

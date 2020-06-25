@@ -1,13 +1,19 @@
 import React, { useState, useMemo } from "react";
+import { connect, ConnectedProps } from "react-redux";
 
 import Search from "@material-ui/icons/Search";
 
 import IconedInputComponent from "./IconedInput.component";
 import LabeledInputComponent from "./LabeledInput.component";
 import ButtonComponent from "./Button.component";
+import { IInitialState } from "../redux/store";
 
-const MainRightBarComponent = () => {
-  const [searchGroupInputText, setSearchGroupInputText] = useState("");
+const MainRightBarComponent = ({
+  mainScreen,
+}: ConnectedProps<typeof connector>) => {
+  const [searchGroupInputText, setSearchGroupInputText] = useState(
+    mainScreen.searchGroupText
+  );
   const [addGroupInputText, setAddGroupInputText] = useState("");
 
   // ICONS
@@ -54,4 +60,12 @@ const MainRightBarComponent = () => {
   );
 };
 
-export default MainRightBarComponent;
+const mapStateToProps = (state: IInitialState) => ({
+  mainScreen: state.mainScreen,
+});
+
+const mapDispatchToProps = () => ({});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+export default connector(MainRightBarComponent);

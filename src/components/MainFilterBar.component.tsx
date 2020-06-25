@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import { connect, ConnectedProps } from "react-redux";
 
 import FilterSelect from "./FilterSelect.component";
 
 import { TypeFilterValues } from "../utils/enums";
+import { IInitialState } from "../redux/store";
 
-const MainFilterBar = () => {
+const MainFilterBar = ({ mainScreen }: ConnectedProps<typeof connector>) => {
   const [typeFilterData, setTypeFilterData] = useState({
     data: [TypeFilterValues.ALL, TypeFilterValues.WRONG_ONCE],
-    selected: TypeFilterValues.ALL,
+    selected: mainScreen.typeGroupFilter,
   });
 
   const onChangeTypeFilter = (value: string) => {
@@ -33,4 +35,12 @@ const MainFilterBar = () => {
   );
 };
 
-export default MainFilterBar;
+const mapStateToProps = (state: IInitialState) => ({
+  mainScreen: state.mainScreen,
+});
+
+const mapDispatchToProps = () => ({});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+export default connector(MainFilterBar);
