@@ -10,6 +10,9 @@ export type InferValueTypes<T> = T extends { [key: string]: infer U }
 // MainScreen
 export const CHANGE_SEARCH_GROUP_NAME = 'CHANGE_SEARCH_GROUP_NAME';
 
+// GroupScreen
+export const CHANGE_SEARCH_LESSON_NAME = 'CHANGE_SEARCH_LESSON_NAME';
+
 // Groups
 export const DOWNLOAD_GROUPS = "DOWNLOAD_GROUPS";
 export const DOWNLOAD_GROUPS_SUCCESS = "DOWNLOAD_GROUPS_SUCCESS";

@@ -13,6 +13,9 @@ import DateMiniCardComponent from "./DateMiniCard.component";
 import ButtonComponent from "./Button.component";
 
 import { TypeLessonType, TypeStudentGroup } from "../utils/enums";
+import { IInitialState } from "../redux/store";
+import { changeSearchLessonsNameAction } from "../actions/GroupScreen.actions";
+import { connect, ConnectedProps } from "react-redux";
 
 const time = new Map<string, number>();
 time.set("8:30 - 10:10", 1);
@@ -30,9 +33,15 @@ const dates = [
   new Date(2020, 10, 12),
 ];
 
-const GroupRightBar = () => {
+const GroupRightBar = ({
+  groupScreen,
+  changeSearhLessonName,
+}: ConnectedProps<typeof connector>) => {
   // States
-  const [searchLessonTitle, setSearchLessonTitle] = useState("");
+  const [searchLessonInputText, setSearchLessonInputText] = useState(
+    groupScreen.searchLessonText
+  );
+
   const [addLessonTitle, setAddLessonTitle] = useState("");
   const [roomLessonTitle, setRoomLessonTitle] = useState("");
   const [teacherLessonName, setTeacherLessonName] = useState("");
@@ -67,6 +76,11 @@ const GroupRightBar = () => {
     setLessonTimeData({ ...lessonTimeData, selected: value });
   };
 
+  const onSearchLessonInputEnter = () => {
+    if (searchLessonInputText !== groupScreen.searchLessonText)
+      changeSearhLessonName(searchLessonInputText);
+  };
+
   // Icons
   const searchLessonTitleIcon = useMemo(() => {
     return <Search style={{ fontSize: 24 }} />;
@@ -96,8 +110,9 @@ const GroupRightBar = () => {
         <div className="section__child">
           <IconedInputComponent
             label="Название пары"
-            value={searchLessonTitle}
-            onChange={setSearchLessonTitle}
+            value={searchLessonInputText}
+            onChange={setSearchLessonInputText}
+            onEnter={onSearchLessonInputEnter}
             icon={searchLessonTitleIcon}
           />
         </div>
@@ -182,4 +197,15 @@ const GroupRightBar = () => {
   );
 };
 
-export default GroupRightBar;
+const mapStateToProps = (state: IInitialState) => ({
+  groupScreen: state.groupScreen,
+});
+
+const mapDispatchToProps = {
+  changeSearhLessonName: (value: string) =>
+    changeSearchLessonsNameAction(value),
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+export default connector(GroupRightBar);

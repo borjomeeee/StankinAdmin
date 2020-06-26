@@ -1,4 +1,5 @@
 import { combineReducers, applyMiddleware, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 
 import rootSaga from "../saga/Root.saga";
@@ -56,7 +57,10 @@ const reducers = combineReducers({
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
 // mount it on the Store
-export const store = createStore(reducers, applyMiddleware(sagaMiddleware));
+export const store = createStore(
+  reducers,
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
+);
 
 // then run the saga
 sagaMiddleware.run(rootSaga);

@@ -12,6 +12,8 @@ import {
   downloadLessonsFailedAction,
 } from "../actions/Lessons.actions";
 
+import { changeSearchLessonsNameAction } from "../actions/GroupScreen.actions";
+
 // MainScreen
 export type IMainScreenActions =
   | ReturnType<typeof changeSearchGroupNameAction>
@@ -33,6 +35,7 @@ export type ILessonsActions =
 
 // GroupScreen
 export type IGroupScreenActions =
+  | ReturnType<typeof changeSearchLessonsNameAction>
   | ReturnType<typeof downloadLessonsAction>
   | ReturnType<typeof downloadLessonsSuccessAction>
   | ReturnType<typeof downloadLessonsFailedAction>;

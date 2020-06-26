@@ -13,6 +13,7 @@ import { IGroup } from "../models/Group.model";
 import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 import { useEffect } from "react";
 import { downloadLessonsAction } from "../actions/Lessons.actions";
+import { IInitialState } from "../redux/store";
 
 type IGroupScreenParamsProps = {
   groupId?: string;
@@ -21,6 +22,7 @@ type IGroupScreenParamsProps = {
 const GroupScreen = ({
   lessons,
   groups,
+  groupScreen,
   downloadLessons,
 }: ConnectedProps<typeof connector>) => {
   const history = useHistory();
@@ -53,16 +55,20 @@ const GroupScreen = ({
 
   const GroupLessons = () => (
     <div className="group__lessons">
-      {groupLessons.map((item: ILesson) => (
-        <div className="group-lesson" key={item.id}>
-          <EditRemoveHOC
-            onEdit={() => console.log("Edit lesson: ", item.id)}
-            onRemove={() => console.log("Remove lesson: ", item.id)}
-          >
-            <GroupLessonCardComponent lesson={item} />
-          </EditRemoveHOC>
-        </div>
-      ))}
+      {groupLessons
+        .filter((item: ILesson) =>
+          item.title.startsWith(groupScreen.searchLessonText)
+        )
+        .map((item: ILesson) => (
+          <div className="group-lesson" key={item.id}>
+            <EditRemoveHOC
+              onEdit={() => console.log("Edit lesson: ", item.id)}
+              onRemove={() => console.log("Remove lesson: ", item.id)}
+            >
+              <GroupLessonCardComponent lesson={item} />
+            </EditRemoveHOC>
+          </div>
+        ))}
     </div>
   );
 
@@ -78,9 +84,10 @@ const GroupScreen = ({
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: IInitialState) => ({
   lessons: state.lessons,
   groups: state.groups,
+  groupScreen: state.groupScreen,
 });
 
 const mapDispatchToProps = {
