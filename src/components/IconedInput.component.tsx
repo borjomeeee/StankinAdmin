@@ -10,6 +10,7 @@ type IIconedInputComponent = {
 
   value: string;
   onChange: (value: string) => void;
+  onEnter?: () => void;
 
   icon: React.ReactElement;
 };
@@ -18,10 +19,17 @@ const IconedInputComponent = ({
   label,
   value,
   onChange,
+  onEnter,
   icon,
 }: IIconedInputComponent) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && onEnter) {
+      onEnter();
+    }
   };
 
   return (
@@ -39,6 +47,7 @@ const IconedInputComponent = ({
         variant="outlined"
         value={value}
         onChange={handleChange}
+        onKeyPress={handleKeyPress}
         fullWidth
       />
     </div>

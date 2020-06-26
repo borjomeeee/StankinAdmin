@@ -39,7 +39,7 @@ const mapStateToProps = (state: IInitialState) => ({
   mainScreen: state.mainScreen,
 });
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = {};
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

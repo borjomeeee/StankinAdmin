@@ -11,14 +11,26 @@ import { ILesson } from "../models/Lesson.model";
 import { IGroup } from "../models/Group.model";
 
 import EditRemoveHOC from "../HOCs/EditRemove.HOC";
+import { useEffect } from "react";
+import { downloadLessonsAction } from "../actions/Lessons.actions";
 
 type IGroupScreenParamsProps = {
   groupId?: string;
 };
 
-const GroupScreen = ({ lessons, groups }: ConnectedProps<typeof connector>) => {
+const GroupScreen = ({
+  lessons,
+  groups,
+  downloadLessons,
+}: ConnectedProps<typeof connector>) => {
   const history = useHistory();
   const { groupId }: IGroupScreenParamsProps = useParams();
+
+  useEffect(() => {
+    if (groupId && +groupId) {
+      downloadLessons(+groupId);
+    }
+  }, [downloadLessons, groupId]);
 
   const group: IGroup | undefined = useMemo(
     () =>
@@ -37,7 +49,7 @@ const GroupScreen = ({ lessons, groups }: ConnectedProps<typeof connector>) => {
     return <></>;
   }
 
-  const groupLessons = lessons.get(group.id) || [];
+  let groupLessons = lessons.get(group.id) || [];
 
   const GroupLessons = () => (
     <div className="group__lessons">
@@ -71,7 +83,9 @@ const mapStateToProps = (state: any) => ({
   groups: state.groups,
 });
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = {
+  downloadLessons: (groupId: number) => downloadLessonsAction(groupId),
+};
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

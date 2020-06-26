@@ -2,10 +2,10 @@ import React from "react";
 
 import "./MainGroup.component.scss";
 
-type IMainGroupComponent = {
+interface IMainGroupComponent {
   props: React.ComponentProps<"div">;
   title: string;
-};
+}
 
 const MainGroupComponent = ({ props, title }: IMainGroupComponent) => {
   return (

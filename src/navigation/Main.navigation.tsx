@@ -6,8 +6,18 @@ import GroupScreen from "../screens/Group.screen";
 
 import RightBarComponent from "../components/RightBar.component";
 import CommonHeaderComponent from "../components/Header.component";
+import { IInitialState } from "../redux/store";
+import { downloadGroupsAction } from "../actions/Groups.actions";
+import { connect, ConnectedProps } from "react-redux";
+import { useEffect } from "react";
 
-const MainNavigation = () => {
+const MainNavigation = ({
+  downloadGroups,
+}: ConnectedProps<typeof connector>) => {
+  useEffect(() => {
+    downloadGroups();
+  }, [downloadGroups]);
+
   return (
     <Router>
       <div className="content">
@@ -26,4 +36,12 @@ const MainNavigation = () => {
   );
 };
 
-export default MainNavigation;
+const mapStateToProps = (state: IInitialState) => ({});
+
+const mapDispatchToProps = {
+  downloadGroups: () => downloadGroupsAction(),
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+export default connector(MainNavigation);

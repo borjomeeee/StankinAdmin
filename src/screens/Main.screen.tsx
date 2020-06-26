@@ -13,30 +13,37 @@ import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 
 import { IGroup } from "../models/Group.model";
 
-const MainScreen = ({ groups }: ConnectedProps<typeof connector>) => {
+const MainScreen = ({
+  groups,
+  mainScreen,
+}: ConnectedProps<typeof connector>) => {
   const MainGroups = () => (
     <div className="main__groups">
-      {groups.map((group: IGroup) => (
-        <EditRemoveHOC
-          key={group.id}
-          onEdit={() => console.log(`Edit group: ${group.id}`)}
-          onRemove={() => console.log(`Remove group: ${group.id}`)}
-        >
-          <Link
-            to={{
-              pathname: `/group/${group.id}`,
-              state: { group },
-            }}
+      {groups
+        .filter((group: IGroup) =>
+          group.title.startsWith(mainScreen.searchGroupText)
+        )
+        .map((group: IGroup) => (
+          <EditRemoveHOC
+            key={group.id}
+            onEdit={() => console.log(`Edit group: ${group.id}`)}
+            onRemove={() => console.log(`Remove group: ${group.id}`)}
           >
-            <MainGroupComponent
-              props={{
-                onClick: () => console.log(`Touched group: ${group.id}`),
+            <Link
+              to={{
+                pathname: `/group/${group.id}`,
+                state: { group },
               }}
-              title={group.title}
-            />
-          </Link>
-        </EditRemoveHOC>
-      ))}
+            >
+              <MainGroupComponent
+                props={{
+                  onClick: () => console.log(`Touched group: ${group.id}`),
+                }}
+                title={group.title}
+              />
+            </Link>
+          </EditRemoveHOC>
+        ))}
     </div>
   );
   return (
@@ -54,6 +61,7 @@ const MainScreen = ({ groups }: ConnectedProps<typeof connector>) => {
 
 const mapStateToProps = (state: IInitialState) => ({
   groups: state.groups,
+  mainScreen: state.mainScreen,
 });
 
 const mapDispatchToProps = {};
