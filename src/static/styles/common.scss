@@ -62,3 +62,7 @@
 .MuiSelect-select:focus {
   background-color: #fff !important;
 }
+
+.MuiPickersDay-daySelected .MuiTypography-colorInherit {
+  color: #fff;
+}

@@ -24,13 +24,14 @@ export const initialState = {
     error: "",
   },
   groups: new Array<IGroup>(),
-  lessons: new Map<number, ILesson[]>(),
+  lessons: new Map<string, ILesson[]>(),
 
   mainScreen: {
     typeGroupFilter: TypeFilterValues.ALL,
     searchGroupText: "",
 
     isLoadingGroups: false,
+    isAddingGroup: false,
   },
   groupScreen: {
     searchLessonText: "",

@@ -29,8 +29,8 @@ const GroupScreen = ({
   const { groupId }: IGroupScreenParamsProps = useParams();
 
   useEffect(() => {
-    if (groupId && +groupId) {
-      downloadLessons(+groupId);
+    if (groupId) {
+      downloadLessons(groupId);
     }
   }, [downloadLessons, groupId]);
 
@@ -39,7 +39,7 @@ const GroupScreen = ({
       groupId
         ? groups.reduce(
             (acc: undefined | IGroup, item: IGroup) =>
-              acc || (item.id === +groupId ? item : acc),
+              acc || (item.id === groupId ? item : acc),
             undefined
           )
         : undefined,
@@ -91,7 +91,7 @@ const mapStateToProps = (state: IInitialState) => ({
 });
 
 const mapDispatchToProps = {
-  downloadLessons: (groupId: number) => downloadLessonsAction(groupId),
+  downloadLessons: (groupId: string) => downloadLessonsAction(groupId),
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

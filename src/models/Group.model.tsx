@@ -1,13 +1,13 @@
 export interface IGroup {
-  id: number;
+  id: string;
   title: string;
 }
 
 export default class Group implements IGroup {
-  id: number;
+  id: string;
   title: string;
 
-  constructor(id: number, title: string) {
+  constructor(id: string, title: string) {
     this.id = id;
     this.title = title;
   }

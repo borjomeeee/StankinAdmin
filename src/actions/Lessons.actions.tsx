@@ -8,17 +8,17 @@ import {
 import { ILesson } from "../models/Lesson.model";
 
 export interface IDownloadLessonsSagaProps extends IAction {
-  payload: { groupId: number };
+  payload: { groupId: string };
 }
 
-export const downloadLessonsAction = (groupId: number) =>
+export const downloadLessonsAction = (groupId: string) =>
   ({
     type: DOWNLOAD_LESSONS,
     payload: { groupId },
   } as const);
 
 export const downloadLessonsSuccessAction = (
-  groupId: number,
+  groupId: string ,
   lessons: ILesson[]
 ) =>
   ({

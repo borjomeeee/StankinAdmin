@@ -1,10 +1,11 @@
 import React, { useState, useMemo } from "react";
+import { connect, ConnectedProps } from "react-redux";
+
+import { IInitialState } from "../redux/store";
 
 import Search from "@material-ui/icons/Search";
 import Room from "@material-ui/icons/Room";
 import School from "@material-ui/icons/School";
-
-import Button from "@material-ui/core/Button";
 
 import IconedInputComponent from "./IconedInput.component";
 import LabeledInputComponent from "./LabeledInput.component";
@@ -13,9 +14,14 @@ import DateMiniCardComponent from "./DateMiniCard.component";
 import ButtonComponent from "./Button.component";
 
 import { TypeLessonType, TypeStudentGroup } from "../utils/enums";
-import { IInitialState } from "../redux/store";
+
 import { changeSearchLessonsNameAction } from "../actions/GroupScreen.actions";
-import { connect, ConnectedProps } from "react-redux";
+
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const time = new Map<string, number>();
 time.set("8:30 - 10:10", 1);
@@ -27,12 +33,6 @@ time.set("18:00 - 19:30", 6);
 time.set("19:40 - 21:10", 7);
 time.set("21:20 - 22:50", 8);
 
-const dates = [
-  new Date(2020, 10, 10),
-  new Date(2020, 10, 11),
-  new Date(2020, 10, 12),
-];
-
 const GroupRightBar = ({
   groupScreen,
   changeSearhLessonName,
@@ -41,6 +41,9 @@ const GroupRightBar = ({
   const [searchLessonInputText, setSearchLessonInputText] = useState(
     groupScreen.searchLessonText
   );
+
+  const [selectedDate, setSelectedDate] = useState(new Date(Date.now()));
+  const [addLessonDates, setAddLessonDates] = useState<Date[]>([]);
 
   const [addLessonTitle, setAddLessonTitle] = useState("");
   const [roomLessonTitle, setRoomLessonTitle] = useState("");
@@ -81,6 +84,11 @@ const GroupRightBar = ({
       changeSearhLessonName(searchLessonInputText);
   };
 
+  const handleAddLessonDate = (date: Date | null) => {
+    setSelectedDate(date!);
+    setAddLessonDates([...addLessonDates, date!]);
+  };
+
   // Icons
   const searchLessonTitleIcon = useMemo(() => {
     return <Search style={{ fontSize: 24 }} />;
@@ -96,7 +104,7 @@ const GroupRightBar = ({
 
   const DatesCards = () => (
     <>
-      {dates.map((item: Date, index: number) => (
+      {addLessonDates.map((item: Date, index: number) => (
         <DateMiniCardComponent key={index} date={item} />
       ))}
     </>
@@ -175,9 +183,20 @@ const GroupRightBar = ({
         </div>
 
         <div className="section__child">
-          <Button variant="outlined" fullWidth>
-            Добавить дату
-          </Button>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              margin="normal"
+              id="date-picker-dialog"
+              label="Выберите дату"
+              format="dd/MM/yyyy"
+              value={selectedDate}
+              onChange={handleAddLessonDate}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+              fullWidth
+            />
+          </MuiPickersUtilsProvider>
         </div>
 
         <div className="section__child">
