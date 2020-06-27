@@ -52,13 +52,19 @@ const MainRightBarComponent = ({
     if (addGroupInputText !== "") {
       if (
         groups.filter((group: IGroup) => group.title === addGroupInputText)
-          .length === 0
+          .length !== 0
       ) {
-        addGroup(addGroupInputText);
-        setAddGroupInputText("");
-      } else {
         setAddGroupInputError("Такая группа уже существует");
+        return;
       }
+
+      if (!/\w{3}-\d{2}-\d{2}/.test(addGroupInputText)) {
+        setAddGroupInputError("Шаблон группы ИДБ-01-01")
+        return;
+      }
+
+      addGroup(addGroupInputText);
+      setAddGroupInputText("");
     } else {
       setAddGroupInputError("Введите название группы");
     }
