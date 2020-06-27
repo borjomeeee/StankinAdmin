@@ -1,14 +1,12 @@
-import {
-  changeSearchGroupNameAction,
-  addGroupAction,
-  addGroupSuccessAction,
-  addGroupFailedAction,
-} from "../actions/MainScreen.actions";
+import { changeSearchGroupNameAction } from "../actions/MainScreen.actions";
 
 import {
   downloadGroupsAction,
   downloadGroupsSuccessAction,
   downloadGroupsFailedAction,
+  createGroupAction,
+  createGroupSuccessAction,
+  createGroupFailedAction,
 } from "../actions/Groups.actions";
 
 import {
@@ -25,18 +23,18 @@ export type IMainScreenActions =
   | ReturnType<typeof downloadGroupsAction>
   | ReturnType<typeof downloadGroupsSuccessAction>
   | ReturnType<typeof downloadGroupsFailedAction>
-  | ReturnType<typeof addGroupAction>
-  | ReturnType<typeof addGroupSuccessAction>
-  | ReturnType<typeof addGroupFailedAction>;
+  | ReturnType<typeof createGroupAction>
+  | ReturnType<typeof createGroupSuccessAction>
+  | ReturnType<typeof createGroupFailedAction>;
 
 // Groups
 export type IGroupsActions =
   | ReturnType<typeof downloadGroupsAction>
   | ReturnType<typeof downloadGroupsSuccessAction>
   | ReturnType<typeof downloadGroupsFailedAction>
-  | ReturnType<typeof addGroupAction>
-  | ReturnType<typeof addGroupSuccessAction>
-  | ReturnType<typeof addGroupFailedAction>;
+  | ReturnType<typeof createGroupAction>
+  | ReturnType<typeof createGroupSuccessAction>
+  | ReturnType<typeof createGroupFailedAction>;
 
 // Lessons
 export type ILessonsActions =

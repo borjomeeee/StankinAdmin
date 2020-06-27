@@ -4,15 +4,12 @@ import { v4 as uuidv4 } from "uuid";
 import {
   downloadGroupsSuccessAction,
   downloadGroupsFailedAction,
+  CreateGroupSaga,
+  createGroupSuccessAction,
+  createGroupFailedAction,
 } from "../actions/Groups.actions";
 
-import {
-  AddGroupSaga,
-  addGroupSuccessAction,
-  addGroupFailedAction,
-} from "../actions/MainScreen.actions";
-
-import { DOWNLOAD_GROUPS, ADD_GROUP } from "../utils/constants";
+import { DOWNLOAD_GROUPS, CREATE_GROUP } from "../utils/constants";
 
 import Group from "../models/Group.model";
 
@@ -40,7 +37,7 @@ export function* downloadGroupsSaga() {
   }
 }
 
-export function* addGroupSaga({ payload }: AddGroupSaga) {
+export function* addGroupSaga({ payload }: CreateGroupSaga) {
   try {
     yield delay(1000);
     // SEND GROUP DATA TO SERVER AND GET NEW GROUP DATA OR ERROR
@@ -51,16 +48,16 @@ export function* addGroupSaga({ payload }: AddGroupSaga) {
     let group = new Group(uuidv4(), payload.groupName);
 
     if (ok) {
-      yield put(addGroupSuccessAction(group));
+      yield put(createGroupSuccessAction(group));
     } else {
-      yield put(addGroupFailedAction(message));
+      yield put(createGroupFailedAction(message));
     }
   } catch (e) {
-    yield put(addGroupFailedAction("Ошибка добавления группы"));
+    yield put(createGroupFailedAction("Ошибка добавления группы"));
   }
 }
 
 export default function* groupsSaga() {
   yield takeEvery(DOWNLOAD_GROUPS, downloadGroupsSaga);
-  yield takeEvery(ADD_GROUP, addGroupSaga);
+  yield takeEvery(CREATE_GROUP, addGroupSaga);
 }

@@ -9,10 +9,8 @@ import IconedInputComponent from "./IconedInput.component";
 import LabeledInputComponent from "./LabeledInput.component";
 import ButtonComponent from "./Button.component";
 
-import {
-  changeSearchGroupNameAction,
-  addGroupAction,
-} from "../actions/MainScreen.actions";
+import { createGroupAction } from "../actions/Groups.actions";
+import { changeSearchGroupNameAction } from "../actions/MainScreen.actions";
 
 import { IGroup } from "../models/Group.model";
 
@@ -21,7 +19,7 @@ const MainRightBarComponent = ({
   groups,
 
   changeSearchGroupName,
-  addGroup,
+  createGroup,
 }: ConnectedProps<typeof connector>) => {
   const [searchGroupInputText, setSearchGroupInputText] = useState(
     mainScreen.searchGroupText
@@ -59,11 +57,11 @@ const MainRightBarComponent = ({
       }
 
       if (!/\w{3}-\d{2}-\d{2}/.test(addGroupInputText)) {
-        setAddGroupInputError("Шаблон группы ИДБ-01-01")
+        setAddGroupInputError("Шаблон группы ИДБ-01-01");
         return;
       }
 
-      addGroup(addGroupInputText);
+      createGroup(addGroupInputText);
       setAddGroupInputText("");
     } else {
       setAddGroupInputError("Введите название группы");
@@ -115,7 +113,7 @@ const mapStateToProps = (state: IInitialState) => ({
 
 const mapDispatchToProps = {
   changeSearchGroupName: (value: string) => changeSearchGroupNameAction(value),
-  addGroup: (groupName: string) => addGroupAction(groupName),
+  createGroup: (groupName: string) => createGroupAction(groupName),
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

@@ -1,6 +1,6 @@
 import { initialState, IGroupsInitialState } from "../redux/store";
 
-import { DOWNLOAD_GROUPS_SUCCESS, ADD_GROUP_SUCCESS } from "../utils/constants";
+import { DOWNLOAD_GROUPS_SUCCESS, CREATE_GROUP_SUCCESS } from "../utils/constants";
 import { IGroupsActions } from "../utils/types";
 
 export default (
@@ -10,7 +10,7 @@ export default (
   switch (action.type) {
     case DOWNLOAD_GROUPS_SUCCESS:
       return action.payload.groups;
-    case ADD_GROUP_SUCCESS:
+    case CREATE_GROUP_SUCCESS:
       return [...state, action.payload.group];
     default:
       return state;

@@ -7,9 +7,9 @@ import {
   DOWNLOAD_GROUPS,
   DOWNLOAD_GROUPS_SUCCESS,
   DOWNLOAD_GROUPS_FAILED,
-  ADD_GROUP,
-  ADD_GROUP_SUCCESS,
-  ADD_GROUP_FAILED,
+  CREATE_GROUP,
+  CREATE_GROUP_FAILED,
+  CREATE_GROUP_SUCCESS,
 } from "../utils/constants";
 
 export default (
@@ -26,10 +26,10 @@ export default (
     case DOWNLOAD_GROUPS_FAILED:
       return { ...state, isLoadingGroups: false };
 
-    case ADD_GROUP:
+    case CREATE_GROUP:
       return { ...state, isAddingGroup: true };
-    case ADD_GROUP_SUCCESS:
-    case ADD_GROUP_FAILED:
+    case CREATE_GROUP_SUCCESS:
+    case CREATE_GROUP_FAILED:
       return { ...state, isAddingGroup: false };
     default:
       return state;
