@@ -4,12 +4,19 @@ import { v4 as uuidv4 } from "uuid";
 import {
   downloadGroupsSuccessAction,
   downloadGroupsFailedAction,
-  CreateGroupSaga,
+  ICreateGroupSaga,
   createGroupSuccessAction,
   createGroupFailedAction,
+  IRemoveGroupSaga,
+  removeGroupSuccessAction,
+  removeGroupFailedAction,
 } from "../actions/Groups.actions";
 
-import { DOWNLOAD_GROUPS, CREATE_GROUP } from "../utils/constants";
+import {
+  DOWNLOAD_GROUPS,
+  CREATE_GROUP,
+  REMOVE_GROUP,
+} from "../utils/constants";
 
 import Group from "../models/Group.model";
 
@@ -37,7 +44,7 @@ export function* downloadGroupsSaga() {
   }
 }
 
-export function* addGroupSaga({ payload }: CreateGroupSaga) {
+export function* addGroupSaga({ payload }: ICreateGroupSaga) {
   try {
     yield delay(1000);
     // SEND GROUP DATA TO SERVER AND GET NEW GROUP DATA OR ERROR
@@ -57,7 +64,26 @@ export function* addGroupSaga({ payload }: CreateGroupSaga) {
   }
 }
 
+export function* removeGroupSaga({ payload }: IRemoveGroupSaga) {
+  try {
+    yield delay(1000);
+    // SEND GROUP ID TO SERVER AND GET STATUS ANSWER
+
+    let ok = true;
+    let message = "Ошибка удаления группы";
+
+    if (ok) {
+      yield put(removeGroupSuccessAction(payload.groupId));
+    } else {
+      yield put(removeGroupFailedAction(message));
+    }
+  } catch (e) {
+    yield put(removeGroupFailedAction("Ошибка удаления группы"));
+  }
+}
+
 export default function* groupsSaga() {
   yield takeEvery(DOWNLOAD_GROUPS, downloadGroupsSaga);
   yield takeEvery(CREATE_GROUP, addGroupSaga);
+  yield takeEvery(REMOVE_GROUP, removeGroupSaga);
 }

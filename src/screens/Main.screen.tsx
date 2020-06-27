@@ -12,11 +12,19 @@ import MainGroupComponent from "../components/MainGroup.component";
 import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 
 import { IGroup } from "../models/Group.model";
+import { removeGroupAction } from "../actions/Groups.actions";
 
 const MainScreen = ({
   groups,
   mainScreen,
+
+  removeGroup,
 }: ConnectedProps<typeof connector>) => {
+  // Handlers
+  const onRemoveGroup = (groupId: string) => {
+    removeGroup(groupId);
+  };
+
   const MainGroups = () => (
     <div className="main__groups">
       {groups
@@ -27,7 +35,7 @@ const MainScreen = ({
           <EditRemoveHOC
             key={group.id}
             onEdit={() => console.log(`Edit group: ${group.id}`)}
-            onRemove={() => console.log(`Remove group: ${group.id}`)}
+            onRemove={() => onRemoveGroup(group.id)}
           >
             <Link
               to={{
@@ -64,7 +72,9 @@ const mapStateToProps = (state: IInitialState) => ({
   mainScreen: state.mainScreen,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  removeGroup: (groupId: string) => removeGroupAction(groupId),
+};
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

@@ -7,6 +7,9 @@ import {
   createGroupAction,
   createGroupSuccessAction,
   createGroupFailedAction,
+  removeGroupAction,
+  removeGroupSuccessAction,
+  removeGroupFailedAction,
 } from "../actions/Groups.actions";
 
 import {
@@ -17,15 +20,22 @@ import {
 
 import { changeSearchLessonsNameAction } from "../actions/GroupScreen.actions";
 
-// MainScreen
-export type IMainScreenActions =
-  | ReturnType<typeof changeSearchGroupNameAction>
+export type IAppActions =
   | ReturnType<typeof downloadGroupsAction>
   | ReturnType<typeof downloadGroupsSuccessAction>
   | ReturnType<typeof downloadGroupsFailedAction>
   | ReturnType<typeof createGroupAction>
   | ReturnType<typeof createGroupSuccessAction>
-  | ReturnType<typeof createGroupFailedAction>;
+  | ReturnType<typeof createGroupFailedAction>
+  | ReturnType<typeof downloadLessonsAction>
+  | ReturnType<typeof downloadLessonsSuccessAction>
+  | ReturnType<typeof downloadLessonsFailedAction>
+  | ReturnType<typeof removeGroupAction>
+  | ReturnType<typeof removeGroupSuccessAction>
+  | ReturnType<typeof removeGroupFailedAction>;
+
+// MainScreen
+export type IMainScreenActions = ReturnType<typeof changeSearchGroupNameAction>;
 
 // Groups
 export type IGroupsActions =
@@ -34,7 +44,10 @@ export type IGroupsActions =
   | ReturnType<typeof downloadGroupsFailedAction>
   | ReturnType<typeof createGroupAction>
   | ReturnType<typeof createGroupSuccessAction>
-  | ReturnType<typeof createGroupFailedAction>;
+  | ReturnType<typeof createGroupFailedAction>
+  | ReturnType<typeof removeGroupAction>
+  | ReturnType<typeof removeGroupSuccessAction>
+  | ReturnType<typeof removeGroupFailedAction>;
 
 // Lessons
 export type ILessonsActions =
@@ -43,8 +56,6 @@ export type ILessonsActions =
   | ReturnType<typeof downloadLessonsFailedAction>;
 
 // GroupScreen
-export type IGroupScreenActions =
-  | ReturnType<typeof changeSearchLessonsNameAction>
-  | ReturnType<typeof downloadLessonsAction>
-  | ReturnType<typeof downloadLessonsSuccessAction>
-  | ReturnType<typeof downloadLessonsFailedAction>;
+export type IGroupScreenActions = ReturnType<
+  typeof changeSearchLessonsNameAction
+>;

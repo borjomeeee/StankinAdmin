@@ -8,15 +8,22 @@ import {
   CREATE_GROUP,
   CREATE_GROUP_SUCCESS,
   CREATE_GROUP_FAILED,
+  REMOVE_GROUP,
+  REMOVE_GROUP_SUCCESS,
+  REMOVE_GROUP_FAILED,
 } from "../utils/constants";
 
 import { IGroup } from "../models/Group.model";
 
 export interface IDownloadGroupsSagaProps extends IAction {}
-export interface CreateGroupSaga extends IAction {
+export interface ICreateGroupSaga extends IAction {
   payload: { groupName: string };
 }
+export interface IRemoveGroupSaga extends IAction {
+  payload: { groupId: string };
+}
 
+// Downloads
 export const downloadGroupsAction = () =>
   ({
     type: DOWNLOAD_GROUPS,
@@ -34,6 +41,7 @@ export const downloadGroupsFailedAction = (error: string) =>
     payload: { error },
   } as const);
 
+// Create
 export const createGroupAction = (groupName: string) =>
   ({
     type: CREATE_GROUP,
@@ -49,5 +57,24 @@ export const createGroupSuccessAction = (group: IGroup) =>
 export const createGroupFailedAction = (error: string) =>
   ({
     type: CREATE_GROUP_FAILED,
+    payload: { error },
+  } as const);
+
+// Remove
+export const removeGroupAction = (groupId: string) =>
+  ({
+    type: REMOVE_GROUP,
+    payload: { groupId },
+  } as const);
+
+export const removeGroupSuccessAction = (groupId: string) =>
+  ({
+    type: REMOVE_GROUP_SUCCESS,
+    paylaod: { groupId },
+  } as const);
+
+export const removeGroupFailedAction = (error: string) =>
+  ({
+    type: REMOVE_GROUP_FAILED,
     payload: { error },
   } as const);

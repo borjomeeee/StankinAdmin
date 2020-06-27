@@ -13,13 +13,14 @@ import GroupsReducer from "../reducers/Groups.reducer";
 import LessonsReducer from "../reducers/Lessons.reducer";
 import GroupScreenReducer from "../reducers/GroupScreen.reducer";
 import MainScreenReducer from "../reducers/MainScreen.reducer";
+import AppReducer from "../reducers/App.reducer";
 
 export const initialState = {
   app: {
     appKey: "",
 
     isConnection: false,
-    isloading: false,
+    isLoading: false,
 
     error: "",
   },
@@ -29,14 +30,9 @@ export const initialState = {
   mainScreen: {
     typeGroupFilter: TypeFilterValues.ALL,
     searchGroupText: "",
-
-    isLoadingGroups: false,
-    isAddingGroup: false,
   },
   groupScreen: {
     searchLessonText: "",
-
-    isLoadingLessons: false,
   },
 };
 
@@ -48,6 +44,7 @@ export type IMainScreenInitialState = typeof initialState.mainScreen;
 export type IGroupScreenInitialState = typeof initialState.groupScreen;
 
 const reducers = combineReducers({
+  app: AppReducer,
   groups: GroupsReducer,
   lessons: LessonsReducer,
 
