@@ -10,6 +10,9 @@ import {
   removeGroupAction,
   removeGroupSuccessAction,
   removeGroupFailedAction,
+  changeGroupTitleAction,
+  changeGroupTitleSuccessAction,
+  changeGroupTitleFailedAction,
 } from "../actions/Groups.actions";
 
 import {
@@ -32,7 +35,10 @@ export type IAppActions =
   | ReturnType<typeof downloadLessonsFailedAction>
   | ReturnType<typeof removeGroupAction>
   | ReturnType<typeof removeGroupSuccessAction>
-  | ReturnType<typeof removeGroupFailedAction>;
+  | ReturnType<typeof removeGroupFailedAction>
+  | ReturnType<typeof changeGroupTitleAction>
+  | ReturnType<typeof changeGroupTitleSuccessAction>
+  | ReturnType<typeof changeGroupTitleFailedAction>;
 
 // MainScreen
 export type IMainScreenActions = ReturnType<typeof changeSearchGroupNameAction>;
@@ -47,7 +53,10 @@ export type IGroupsActions =
   | ReturnType<typeof createGroupFailedAction>
   | ReturnType<typeof removeGroupAction>
   | ReturnType<typeof removeGroupSuccessAction>
-  | ReturnType<typeof removeGroupFailedAction>;
+  | ReturnType<typeof removeGroupFailedAction>
+  | ReturnType<typeof changeGroupTitleAction>
+  | ReturnType<typeof changeGroupTitleSuccessAction>
+  | ReturnType<typeof changeGroupTitleFailedAction>;
 
 // Lessons
 export type ILessonsActions =

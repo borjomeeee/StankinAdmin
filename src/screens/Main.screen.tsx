@@ -6,15 +6,18 @@ import "./Main.screen.scss";
 
 import { IInitialState } from "../redux/store";
 
+import { removeGroupAction } from "../actions/Groups.actions";
+
 import MainFilterBar from "../components/MainFilterBar.component";
 import MainGroupComponent from "../components/MainGroup.component";
+import EditGroupModalComponent from "../components/EditGroupModal.component";
 
 import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 
 import { IGroup } from "../models/Group.model";
-import { removeGroupAction } from "../actions/Groups.actions";
+
 import ModalTemplate from "../templates/Modal.template";
-import EditGroupModalComponent from "../components/EditGroupModal.component";
+
 
 const MainScreen = ({
   groups,
@@ -23,6 +26,7 @@ const MainScreen = ({
   removeGroup,
 }: ConnectedProps<typeof connector>) => {
   const [currEditGroup, setCurrEditGroup] = useState<IGroup | null>(null);
+
   // Handlers
   const onRemoveGroup = (groupId: string) => {
     removeGroup(groupId);
@@ -30,6 +34,10 @@ const MainScreen = ({
 
   const onEditGroup = (groupId: IGroup) => {
     setCurrEditGroup(groupId);
+  };
+
+  const onSubmitEditGroup = () => {
+    setCurrEditGroup(null);
   };
 
   const MainGroups = () => (
@@ -76,7 +84,10 @@ const MainScreen = ({
           title="Изменение группы"
           onClose={() => setCurrEditGroup(null)}
         >
-          <EditGroupModalComponent group={currEditGroup} />
+          <EditGroupModalComponent
+            group={currEditGroup}
+            onClose={onSubmitEditGroup}
+          />
         </ModalTemplate>
       )}
     </div>

@@ -13,6 +13,9 @@ import {
   REMOVE_GROUP,
   REMOVE_GROUP_SUCCESS,
   REMOVE_GROUP_FAILED,
+  CHANGE_GROUP_TITLE,
+  CHANGE_GROUP_TITLE_SUCCESS,
+  CHANGE_GROUP_TITLE_FAILED,
 } from "../utils/constants";
 
 import { IAppActions } from "../utils/types";
@@ -48,6 +51,13 @@ export default (
     case DOWNLOAD_LESSONS_SUCCESS:
       return { ...state, isLoading: false };
     case DOWNLOAD_LESSONS_FAILED:
+      return { ...state, isLoading: false, error: action.payload.error };
+
+    case CHANGE_GROUP_TITLE:
+      return { ...state, isLoading: true };
+    case CHANGE_GROUP_TITLE_SUCCESS:
+      return { ...state, isLoading: false };
+    case CHANGE_GROUP_TITLE_FAILED:
       return { ...state, isLoading: false, error: action.payload.error };
     default:
       return state;

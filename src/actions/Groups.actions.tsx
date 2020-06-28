@@ -11,6 +11,9 @@ import {
   REMOVE_GROUP,
   REMOVE_GROUP_SUCCESS,
   REMOVE_GROUP_FAILED,
+  CHANGE_GROUP_TITLE,
+  CHANGE_GROUP_TITLE_SUCCESS,
+  CHANGE_GROUP_TITLE_FAILED,
 } from "../utils/constants";
 
 import { IGroup } from "../models/Group.model";
@@ -21,6 +24,9 @@ export interface ICreateGroupSaga extends IAction {
 }
 export interface IRemoveGroupSaga extends IAction {
   payload: { groupId: string };
+}
+export interface IChangeGroupTitleSaga extends IAction {
+  payload: { groupId: string; groupTitle: string };
 }
 
 // Downloads
@@ -76,5 +82,24 @@ export const removeGroupSuccessAction = (groupId: string) =>
 export const removeGroupFailedAction = (error: string) =>
   ({
     type: REMOVE_GROUP_FAILED,
+    payload: { error },
+  } as const);
+
+// Change
+export const changeGroupTitleAction = (groupId: string, groupTitle: string) =>
+  ({
+    type: CHANGE_GROUP_TITLE,
+    payload: { groupId, groupTitle },
+  } as const);
+
+export const changeGroupTitleSuccessAction = (groupId: string, groupTitle: string) =>
+  ({
+    type: CHANGE_GROUP_TITLE_SUCCESS,
+    payload: { groupId, groupTitle },
+  } as const);
+
+export const changeGroupTitleFailedAction = (error: string) =>
+  ({
+    type: CHANGE_GROUP_TITLE_FAILED,
     payload: { error },
   } as const);

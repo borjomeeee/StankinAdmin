@@ -10,12 +10,16 @@ import {
   IRemoveGroupSaga,
   removeGroupSuccessAction,
   removeGroupFailedAction,
+  IChangeGroupTitleSaga,
+  changeGroupTitleSuccessAction,
+  changeGroupTitleFailedAction,
 } from "../actions/Groups.actions";
 
 import {
   DOWNLOAD_GROUPS,
   CREATE_GROUP,
   REMOVE_GROUP,
+  CHANGE_GROUP_TITLE,
 } from "../utils/constants";
 
 import Group from "../models/Group.model";
@@ -82,8 +86,29 @@ export function* removeGroupSaga({ payload }: IRemoveGroupSaga) {
   }
 }
 
+export function* changeTitleGroupSaga({ payload }: IChangeGroupTitleSaga) {
+  try {
+    yield delay(1000);
+    // SEND DATA TO SERVER AND GET STATUS ANSWER
+
+    let ok = true;
+    let message = "Ошибка изменения навания группы";
+
+    if (ok) {
+      yield put(
+        changeGroupTitleSuccessAction(payload.groupId, payload.groupTitle)
+      );
+    } else {
+      yield put(changeGroupTitleFailedAction(message));
+    }
+  } catch (e) {
+    yield put(changeGroupTitleFailedAction("Ошибка изменения навания группы"));
+  }
+}
+
 export default function* groupsSaga() {
   yield takeEvery(DOWNLOAD_GROUPS, downloadGroupsSaga);
   yield takeEvery(CREATE_GROUP, addGroupSaga);
   yield takeEvery(REMOVE_GROUP, removeGroupSaga);
+  yield takeEvery(CHANGE_GROUP_TITLE, changeTitleGroupSaga);
 }

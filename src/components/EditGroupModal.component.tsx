@@ -8,14 +8,19 @@ import ButtonComponent from "./Button.component";
 import { IGroup } from "../models/Group.model";
 import { IInitialState } from "../redux/store";
 import { connect, ConnectedProps } from "react-redux";
+import { changeGroupTitleAction } from "../actions/Groups.actions";
 
 type IEditGroupModalComponent = {
   group: IGroup;
+
+  onClose: () => void;
 };
 
 const EditGroupModalComponent = ({
   group,
   groups,
+  editGroup,
+  onClose
 }: ConnectedProps<typeof connector> & IEditGroupModalComponent) => {
   const [groupTitle, setGroupTitle] = useState(group.title);
   const [groupTitleError, setGroupTitleError] = useState("");
@@ -30,8 +35,8 @@ const EditGroupModalComponent = ({
   const onSubmitEditGroup = () => {
     if (groupTitle !== "") {
       if (
-        groups.filter((group: IGroup) => group.title === groupTitle)
-          .length !== 0
+        groups.filter((group: IGroup) => group.title === groupTitle).length !==
+        0
       ) {
         setGroupTitleError("Такая группа уже существует");
         return;
@@ -42,8 +47,8 @@ const EditGroupModalComponent = ({
         return;
       }
 
-      // createGroup(groupTitleError);
-      setGroupTitle("");
+      editGroup(group.id, groupTitle);  
+      onClose()
     } else {
       setGroupTitleError("Введите название группы");
     }
@@ -72,7 +77,10 @@ const mapStateToProps = (state: IInitialState) => ({
   groups: state.groups,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  editGroup: (groupId: string, groupTitle: string) =>
+    changeGroupTitleAction(groupId, groupTitle),
+};
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
