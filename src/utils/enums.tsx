@@ -1,15 +1,15 @@
-export enum TypeFilterValues {
+export enum FilterValuesGroupType {
   ALL = "Все",
   WRONG_ONCE = "Только ошибочные",
 }
 
-export enum TypeLessonType {
+export enum LessonType {
   LECTURE = "Лекция",
   LAB = "Лаба",
   SEMINAR = "Семинар",
 }
 
-export enum TypeStudentGroup {
+export enum StudentGroupType {
   NONE = "Нет",
   A = "A",
   B = "Б",

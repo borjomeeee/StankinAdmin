@@ -7,7 +7,7 @@ import rootSaga from "../saga/Root.saga";
 import { IGroup } from "../models/Group.model";
 import { ILesson } from "../models/Lesson.model";
 
-import { TypeFilterValues } from "../utils/enums";
+import { FilterValuesGroupType } from "../utils/enums";
 
 import GroupsReducer from "../reducers/Groups.reducer";
 import LessonsReducer from "../reducers/Lessons.reducer";
@@ -28,7 +28,7 @@ export const initialState = {
   lessons: new Map<string, ILesson[]>(),
 
   mainScreen: {
-    typeGroupFilter: TypeFilterValues.ALL,
+    typeGroupFilter: FilterValuesGroupType.ALL,
     searchGroupText: "",
   },
   groupScreen: {

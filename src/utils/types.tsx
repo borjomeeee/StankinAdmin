@@ -19,6 +19,9 @@ import {
   downloadLessonsAction,
   downloadLessonsSuccessAction,
   downloadLessonsFailedAction,
+  createLessonAction,
+  createLessonSuccessAction,
+  createLessonFailedAction,
 } from "../actions/Lessons.actions";
 
 import { changeSearchLessonsNameAction } from "../actions/GroupScreen.actions";
@@ -33,6 +36,9 @@ export type IAppActions =
   | ReturnType<typeof downloadLessonsAction>
   | ReturnType<typeof downloadLessonsSuccessAction>
   | ReturnType<typeof downloadLessonsFailedAction>
+  | ReturnType<typeof createLessonAction>
+  | ReturnType<typeof createLessonSuccessAction>
+  | ReturnType<typeof createLessonFailedAction>
   | ReturnType<typeof removeGroupAction>
   | ReturnType<typeof removeGroupSuccessAction>
   | ReturnType<typeof removeGroupFailedAction>
@@ -62,7 +68,10 @@ export type IGroupsActions =
 export type ILessonsActions =
   | ReturnType<typeof downloadLessonsAction>
   | ReturnType<typeof downloadLessonsSuccessAction>
-  | ReturnType<typeof downloadLessonsFailedAction>;
+  | ReturnType<typeof downloadLessonsFailedAction>
+  | ReturnType<typeof createLessonAction>
+  | ReturnType<typeof createLessonSuccessAction>
+  | ReturnType<typeof createLessonFailedAction>;
 
 // GroupScreen
 export type IGroupScreenActions = ReturnType<

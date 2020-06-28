@@ -4,7 +4,7 @@ import "./GroupLessonCard.component.scss";
 
 import DateMiniCardComponent from "./DateMiniCard.component";
 
-import { TypeStudentGroup } from "../utils/enums";
+import { StudentGroupType } from "../utils/enums";
 
 import { ILesson } from "../models/Lesson.model";
 
@@ -34,7 +34,7 @@ const GroupLessonCardComponent = ({ lesson }: IGroupLessonCardComponent) => {
         </div>
       </div>
 
-      {lesson.studentGroup !== TypeStudentGroup.NONE && (
+      {lesson.studentGroup !== StudentGroupType.NONE && (
         <div className="group-lesson__student-group">{lesson.studentGroup}</div>
       )}
     </div>

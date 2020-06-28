@@ -16,6 +16,9 @@ import {
   CHANGE_GROUP_TITLE,
   CHANGE_GROUP_TITLE_SUCCESS,
   CHANGE_GROUP_TITLE_FAILED,
+  CREATE_LESSON,
+  CREATE_LESSON_FAILED,
+  CREATE_LESSON_SUCCESS,
 } from "../utils/constants";
 
 import { IAppActions } from "../utils/types";
@@ -58,6 +61,13 @@ export default (
     case CHANGE_GROUP_TITLE_SUCCESS:
       return { ...state, isLoading: false };
     case CHANGE_GROUP_TITLE_FAILED:
+      return { ...state, isLoading: false, error: action.payload.error };
+
+    case CREATE_LESSON:
+      return { ...state, isLoading: true };
+    case CREATE_LESSON_SUCCESS:
+      return { ...state, isLoading: false };
+    case CREATE_LESSON_FAILED:
       return { ...state, isLoading: false, error: action.payload.error };
     default:
       return state;

@@ -13,7 +13,7 @@ import FilterSelectComponent from "./FilterSelect.component";
 import DateMiniCardComponent from "./DateMiniCard.component";
 import ButtonComponent from "./Button.component";
 
-import { TypeLessonType, TypeStudentGroup } from "../utils/enums";
+import { LessonType, StudentGroupType } from "../utils/enums";
 
 import { changeSearchLessonsNameAction } from "../actions/GroupScreen.actions";
 
@@ -50,12 +50,12 @@ const GroupRightBar = ({
   const [teacherLessonName, setTeacherLessonName] = useState("");
 
   const [lessonTypeData, setLessonTypeData] = useState({
-    data: [TypeLessonType.LECTURE, TypeLessonType.LAB, TypeLessonType.SEMINAR],
-    selected: TypeLessonType.LECTURE,
+    data: [LessonType.LECTURE, LessonType.LAB, LessonType.SEMINAR],
+    selected: LessonType.LECTURE,
   });
   const [studentGroupData, setStudentGroupData] = useState({
-    data: [TypeStudentGroup.NONE, TypeStudentGroup.A, TypeStudentGroup.B],
-    selected: TypeStudentGroup.NONE,
+    data: [StudentGroupType.NONE, StudentGroupType.A, StudentGroupType.B],
+    selected: StudentGroupType.NONE,
   });
 
   const [lessonTimeData, setLessonTimeData] = useState({
@@ -65,13 +65,13 @@ const GroupRightBar = ({
 
   // Handlers
   const handleChangeLessonType = (value: string) => {
-    setLessonTypeData({ ...lessonTypeData, selected: value as TypeLessonType });
+    setLessonTypeData({ ...lessonTypeData, selected: value as LessonType });
   };
 
   const handleChangeStudentGroup = (value: string) => {
     setStudentGroupData({
       ...studentGroupData,
-      selected: value as TypeStudentGroup,
+      selected: value as StudentGroupType,
     });
   };
 
@@ -85,8 +85,10 @@ const GroupRightBar = ({
   };
 
   const handleAddLessonDate = (date: Date | null) => {
-    setSelectedDate(date!);
-    setAddLessonDates([...addLessonDates, date!]);
+    if (date) {
+      setSelectedDate(date);
+      setAddLessonDates([...addLessonDates, date]);
+    }
   };
 
   // Icons

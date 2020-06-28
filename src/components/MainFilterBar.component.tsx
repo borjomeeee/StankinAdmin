@@ -3,19 +3,19 @@ import { connect, ConnectedProps } from "react-redux";
 
 import FilterSelect from "./FilterSelect.component";
 
-import { TypeFilterValues } from "../utils/enums";
+import { FilterValuesGroupType } from "../utils/enums";
 import { IInitialState } from "../redux/store";
 
 const MainFilterBar = ({ mainScreen }: ConnectedProps<typeof connector>) => {
   const [typeFilterData, setTypeFilterData] = useState({
-    data: [TypeFilterValues.ALL, TypeFilterValues.WRONG_ONCE],
+    data: [FilterValuesGroupType.ALL, FilterValuesGroupType.WRONG_ONCE],
     selected: mainScreen.typeGroupFilter,
   });
 
   const onChangeTypeFilter = (value: string) => {
     setTypeFilterData({
       ...typeFilterData,
-      selected: value as TypeFilterValues,
+      selected: value as FilterValuesGroupType,
     });
   };
   return (

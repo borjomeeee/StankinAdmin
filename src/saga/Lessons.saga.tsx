@@ -1,4 +1,5 @@
 import { takeEvery, delay, put } from "redux-saga/effects";
+import { v4 as uuidv4 } from "uuid";
 
 import { DOWNLOAD_LESSONS } from "../utils/constants";
 
@@ -6,11 +7,14 @@ import {
   IDownloadLessonsSagaProps,
   downloadLessonsSuccessAction,
   downloadLessonsFailedAction,
+  ICreateLessonSaga,
+  createLessonSuccessAction,
+  createLessonFailedAction,
 } from "../actions/Lessons.actions";
 
-import { TypeLessonType, TypeStudentGroup } from "../utils/enums";
+import { LessonType, StudentGroupType } from "../utils/enums";
 
-import Lesson from "../models/Lesson.model";
+import Lesson, { ILesson } from "../models/Lesson.model";
 import { LessonTime } from "../models/LessonTime.model";
 
 export function* downloadLessonsSaga({ payload }: IDownloadLessonsSagaProps) {
@@ -22,37 +26,37 @@ export function* downloadLessonsSaga({ payload }: IDownloadLessonsSagaProps) {
 
     let lessons = [
       new Lesson(
-        1,
+        uuidv4(),
         "Технологии программирования",
         "Иванов Иван Иванович",
-        TypeLessonType.LECTURE,
+        LessonType.LECTURE,
         [new Date(2020, 6, 23), new Date(2020, 6, 22), new Date(2020, 6, 21)],
         new LessonTime(1),
         "0101",
-        TypeStudentGroup.NONE,
-        1
+        StudentGroupType.NONE,
+        payload.groupId
       ),
       new Lesson(
-        2,
+        uuidv4(),
         "Политология",
         "Саркисова Валерия Петровна",
-        TypeLessonType.LAB,
+        LessonType.LAB,
         [new Date(2020, 5, 23), new Date(2020, 5, 22), new Date(2020, 5, 21)],
         new LessonTime(2),
         "0101",
-        TypeStudentGroup.A,
-        1
+        StudentGroupType.A,
+        payload.groupId
       ),
       new Lesson(
-        3,
+        uuidv4(),
         "Архитектура ЭВМ",
         "Мурашкин Денис Дмитриевич",
-        TypeLessonType.SEMINAR,
+        LessonType.SEMINAR,
         [new Date(2020, 6, 1), new Date(2020, 6, 2), new Date(2020, 6, 3)],
         new LessonTime(3),
         "0101",
-        TypeStudentGroup.B,
-        1
+        StudentGroupType.B,
+        payload.groupId
       ),
     ];
 
@@ -63,6 +67,36 @@ export function* downloadLessonsSaga({ payload }: IDownloadLessonsSagaProps) {
     }
   } catch (e) {
     yield put(downloadLessonsFailedAction("Ошибка при скачивании пар"));
+  }
+}
+
+export function* createLessonSaga({ payload }: ICreateLessonSaga) {
+  try {
+    yield delay(1000);
+    // SEND DATA ABOUT LESSON TO SERVER AND GET NEW LESSON OBJECT OR ERROR
+
+    let ok = true;
+    let message = "Ошибка создания пары";
+
+    let lesson: ILesson = new Lesson(
+      uuidv4(),
+      payload.lessonTitle,
+      payload.teacher,
+      payload.lessonType,
+      payload.lessonDates,
+      payload.time,
+      payload.lessonPlace,
+      payload.studentGroupType,
+      payload.groupId
+    );
+
+    if (ok) {
+      yield put(createLessonSuccessAction(payload.groupId, lesson));
+    } else {
+      yield put(createLessonFailedAction(message));
+    }
+  } catch (e) {
+    yield put(createLessonFailedAction("Ошибка создания пары"));
   }
 }
 

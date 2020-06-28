@@ -1,40 +1,40 @@
-import { TypeLessonType, TypeStudentGroup } from "../utils/enums";
+import { LessonType, StudentGroupType } from "../utils/enums";
 
 import { ILessonTime } from "./LessonTime.model";
 
 export interface ILesson {
-  id: number;
+  id: string;
   title: string;
   teacher: string;
-  type: TypeLessonType;
+  type: LessonType;
   dates: Date[];
   time: ILessonTime;
   place: string;
-  studentGroup: TypeStudentGroup;
-  groupId: number;
+  studentGroup: StudentGroupType;
+  groupId: string;
 }
 
 export default class Lesson implements ILesson {
-  id: number;
+  id: string;
   title: string;
   teacher: string;
-  type: TypeLessonType;
+  type: LessonType;
   dates: Date[];
   time: ILessonTime;
   place: string;
-  studentGroup: TypeStudentGroup;
-  groupId: number;
+  studentGroup: StudentGroupType;
+  groupId: string;
 
   constructor(
-    id: number,
+    id: string,
     title: string,
     teacher: string,
-    type: TypeLessonType,
+    type: LessonType,
     dates: Date[],
     time: ILessonTime,
     place: string,
-    studentGroup: TypeStudentGroup,
-    groupId: number
+    studentGroup: StudentGroupType,
+    groupId: string
   ) {
     this.id = id;
     this.title = title;
