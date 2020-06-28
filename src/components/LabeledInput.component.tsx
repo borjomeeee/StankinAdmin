@@ -7,6 +7,7 @@ type ILabeledInputComponent = {
   value: string;
 
   error?: string;
+  autoFocus?: boolean;
   onChange: (value: string) => void;
 };
 
@@ -15,6 +16,7 @@ const LabeledInputComponent = ({
   value,
 
   error,
+  autoFocus,
   onChange,
 }: ILabeledInputComponent) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,6 +33,7 @@ const LabeledInputComponent = ({
         value={value}
         onChange={handleChange}
         helperText={error || ""}
+        autoFocus={autoFocus}
         fullWidth
       />
     </div>

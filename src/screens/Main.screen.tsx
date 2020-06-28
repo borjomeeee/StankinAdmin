@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -14,6 +14,7 @@ import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 import { IGroup } from "../models/Group.model";
 import { removeGroupAction } from "../actions/Groups.actions";
 import ModalTemplate from "../templates/Modal.template";
+import EditGroupModalComponent from "../components/EditGroupModal.component";
 
 const MainScreen = ({
   groups,
@@ -21,9 +22,14 @@ const MainScreen = ({
 
   removeGroup,
 }: ConnectedProps<typeof connector>) => {
+  const [currEditGroup, setCurrEditGroup] = useState<IGroup | null>(null);
   // Handlers
   const onRemoveGroup = (groupId: string) => {
     removeGroup(groupId);
+  };
+
+  const onEditGroup = (groupId: IGroup) => {
+    setCurrEditGroup(groupId);
   };
 
   const MainGroups = () => (
@@ -35,7 +41,7 @@ const MainScreen = ({
         .map((group: IGroup) => (
           <EditRemoveHOC
             key={group.id}
-            onEdit={() => console.log(`Edit group: ${group.id}`)}
+            onEdit={() => onEditGroup(group)}
             onRemove={() => onRemoveGroup(group.id)}
           >
             <Link
@@ -65,9 +71,14 @@ const MainScreen = ({
         <MainGroups />
       </div>
 
-      <ModalTemplate title="Изменить" onClose={() => console.log("Модальное окно закрыто!")}>
-        <div className="hello">Hello</div>
-      </ModalTemplate>
+      {currEditGroup && (
+        <ModalTemplate
+          title="Изменение группы"
+          onClose={() => setCurrEditGroup(null)}
+        >
+          <EditGroupModalComponent group={currEditGroup} />
+        </ModalTemplate>
+      )}
     </div>
   );
 };
