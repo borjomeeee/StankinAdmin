@@ -56,7 +56,7 @@ const MainRightBarComponent = ({
         return;
       }
 
-      if (!/\w{3}-\d{2}-\d{2}/.test(addGroupInputText)) {
+      if (!/[А-Яа-я]{3}-\d{2}-\d{2}/.test(addGroupInputText)) {
         setAddGroupInputError("Шаблон группы ИДБ-01-01");
         return;
       }
