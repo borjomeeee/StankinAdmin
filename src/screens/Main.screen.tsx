@@ -13,6 +13,7 @@ import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 
 import { IGroup } from "../models/Group.model";
 import { removeGroupAction } from "../actions/Groups.actions";
+import ModalTemplate from "../templates/Modal.template";
 
 const MainScreen = ({
   groups,
@@ -63,6 +64,10 @@ const MainScreen = ({
       <div className="content main__content">
         <MainGroups />
       </div>
+
+      <ModalTemplate title="Изменить" onClose={() => console.log("Модальное окно закрыто!")}>
+        <div className="hello">Hello</div>
+      </ModalTemplate>
     </div>
   );
 };
