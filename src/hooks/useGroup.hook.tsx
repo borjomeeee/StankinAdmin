@@ -29,18 +29,23 @@ const useGroup = () => {
     lessonRoomError,
     handleChangeLessonRoom,
     checkValidLessonRoom,
-  ] = useDefaultInput("");
+  ] = useDefaultInput("", false);
 
   const [
     lessonTeacherName,
     lessonTeacherNameError,
     handleChangeLessonTeacherName,
     checkValidLessonTeacherName,
-  ] = useDefaultInput("");
+  ] = useDefaultInput("", false);
 
   const [lessonTypeData, setLessonTypeData] = useState({
-    data: [LessonType.LECTURE, LessonType.LAB, LessonType.SEMINAR],
-    selected: LessonType.LECTURE,
+    data: [
+      LessonType.NONE,
+      LessonType.LECTURE,
+      LessonType.LAB,
+      LessonType.SEMINAR,
+    ],
+    selected: LessonType.NONE,
   });
   const [studentGroupData, setStudentGroupData] = useState({
     data: [StudentGroupType.NONE, StudentGroupType.A, StudentGroupType.B],

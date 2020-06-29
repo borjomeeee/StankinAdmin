@@ -4,6 +4,7 @@ export enum FilterValuesGroupType {
 }
 
 export enum LessonType {
+  NONE = "Нет",
   LECTURE = "Лекция",
   LAB = "Лаба",
   SEMINAR = "Семинар",

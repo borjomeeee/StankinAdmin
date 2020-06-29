@@ -45,6 +45,7 @@ const GroupRightBar = ({
   );
 
   const [selectedDate, setSelectedDate] = useState(new Date(Date.now()));
+  const [lessonDatesError, setLessonDatesError] = useState("");
 
   const {
     lessonTitle,
@@ -78,10 +79,23 @@ const GroupRightBar = ({
       changeSearhLessonName(searchLessonInputText);
   };
 
+  const checkValidLessonDates = (): boolean => {
+    if (lessonDates.length === 0) {
+      setLessonDatesError("Выберите хотя бы одну дату");
+      console.log(1)
+      return false;
+    }
+    return true;
+  };
+
   const onAddLessonDate = (date: Date | null) => {
     if (date) {
       setSelectedDate(date);
       handleAddLessonDate(date);
+
+      if (lessonDatesError) {
+        setLessonDatesError("");
+      }
     }
   };
 
@@ -91,7 +105,8 @@ const GroupRightBar = ({
       lessonTime &&
       checkValidLessonTitle() &&
       checkValidLessonRoom() &&
-      checkValidLessonTeacherName()
+      checkValidLessonTeacherName() &&
+      checkValidLessonDates()
     ) {
       createLesson(
         group.id,
@@ -221,7 +236,13 @@ const GroupRightBar = ({
 
         <div className="section__child">
           <div className="right-bar__section-row">
-            <DatesCards />
+            {lessonDatesError === "" ? (
+              <DatesCards />
+            ) : (
+              <div className="right-bar__dates-card-error">
+                {lessonDatesError}
+              </div>
+            )}
           </div>
         </div>
 

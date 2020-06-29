@@ -21,7 +21,7 @@ const DateMiniCardComponent = ({ date, onRemove }: IDateMiniCardComponent) => {
           month.length === 1 ? "0" : ""
         }${month}`}
       </div>
-      { onRemove && <div className="date-card__remove" onClick={onRemove}></div>}
+      {onRemove && <div className="date-card__remove" onClick={onRemove}></div>}
     </div>
   );
 };

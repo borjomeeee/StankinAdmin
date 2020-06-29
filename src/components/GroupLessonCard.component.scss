@@ -39,13 +39,15 @@
         margin-top: 5px;
 
         display: grid;
-        grid-template-columns: auto auto auto;
+        grid-template-columns: repeat(3, 50px);
 
         column-gap: 5px;
         row-gap: 5px;
 
         .date-card {
-          margin-left: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .date-card:nth-child(1) {
