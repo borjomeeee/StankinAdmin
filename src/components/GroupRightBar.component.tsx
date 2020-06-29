@@ -13,8 +13,6 @@ import FilterSelectComponent from "./FilterSelect.component";
 import DateMiniCardComponent from "./DateMiniCard.component";
 import ButtonComponent from "./Button.component";
 
-import { LessonType, StudentGroupType } from "../utils/enums";
-
 import { changeSearchLessonsNameAction } from "../actions/GroupScreen.actions";
 
 import {
@@ -22,6 +20,7 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import useGroup from "../hooks/useGroup.hook";
 
 const time = new Map<string, number>();
 time.set("8:30 - 10:10", 1);
@@ -43,51 +42,53 @@ const GroupRightBar = ({
   );
 
   const [selectedDate, setSelectedDate] = useState(new Date(Date.now()));
-  const [addLessonDates, setAddLessonDates] = useState<Date[]>([]);
 
-  const [addLessonTitle, setAddLessonTitle] = useState("");
-  const [roomLessonTitle, setRoomLessonTitle] = useState("");
-  const [teacherLessonName, setTeacherLessonName] = useState("");
+  const {
+    lessonTitle,
+    lessonTitleError,
+    handleChangeLessonTitle,
+    checkValidLessonTitle,
 
-  const [lessonTypeData, setLessonTypeData] = useState({
-    data: [LessonType.LECTURE, LessonType.LAB, LessonType.SEMINAR],
-    selected: LessonType.LECTURE,
-  });
-  const [studentGroupData, setStudentGroupData] = useState({
-    data: [StudentGroupType.NONE, StudentGroupType.A, StudentGroupType.B],
-    selected: StudentGroupType.NONE,
-  });
+    lessonRoom,
+    lessonRoomError,
+    handleChangeLessonRoom,
+    checkValidLessonRoom,
 
-  const [lessonTimeData, setLessonTimeData] = useState({
-    data: Array.from(time.keys()),
-    selected: Array.from(time.keys())[0],
-  });
+    lessonTeacherName,
+    lessonTeacherNameError,
+    handleChangeLessonTeacherName,
+    checkValidLessonTeacherName,
 
-  // Handlers
-  const handleChangeLessonType = (value: string) => {
-    setLessonTypeData({ ...lessonTypeData, selected: value as LessonType });
-  };
+    lessonDates,
+    lessonTypeData,
+    studentGroupData,
+    lessonTimeData,
 
-  const handleChangeStudentGroup = (value: string) => {
-    setStudentGroupData({
-      ...studentGroupData,
-      selected: value as StudentGroupType,
-    });
-  };
-
-  const handleChangeLessonTime = (value: string) => {
-    setLessonTimeData({ ...lessonTimeData, selected: value });
-  };
+    handleChangeLessonType,
+    handleChangeStudentGroup,
+    handleChangeLessonTime,
+    handleAddLessonDate,
+  } = useGroup();
 
   const onSearchLessonInputEnter = () => {
     if (searchLessonInputText !== groupScreen.searchLessonText)
       changeSearhLessonName(searchLessonInputText);
   };
 
-  const handleAddLessonDate = (date: Date | null) => {
+  const onAddLessonDate = (date: Date | null) => {
     if (date) {
       setSelectedDate(date);
-      setAddLessonDates([...addLessonDates, date]);
+      handleAddLessonDate(date);
+    }
+  };
+
+  const onAddLesson = () => {
+    if (
+      checkValidLessonTitle() &&
+      checkValidLessonRoom() &&
+      checkValidLessonTeacherName()
+    ) {
+      console.log("Добавление группы");
     }
   };
 
@@ -106,7 +107,7 @@ const GroupRightBar = ({
 
   const DatesCards = () => (
     <>
-      {addLessonDates.map((item: Date, index: number) => (
+      {lessonDates.map((item: Date, index: number) => (
         <DateMiniCardComponent key={index} date={item} />
       ))}
     </>
@@ -135,8 +136,9 @@ const GroupRightBar = ({
           <div className="right-bar__section-row">
             <LabeledInputComponent
               label="Название пары"
-              value={addLessonTitle}
-              onChange={setAddLessonTitle}
+              value={lessonTitle}
+              onChange={handleChangeLessonTitle}
+              error={lessonTitleError}
             />
 
             <FilterSelectComponent
@@ -169,18 +171,20 @@ const GroupRightBar = ({
         <div className="section__child">
           <IconedInputComponent
             label="Аудитория"
-            value={roomLessonTitle}
-            onChange={setRoomLessonTitle}
+            value={lessonRoom}
+            onChange={handleChangeLessonRoom}
             icon={roomLessonTitleIcon}
+            error={lessonRoomError}
           />
         </div>
 
         <div className="section__child">
           <IconedInputComponent
             label="Преподаватель"
-            value={teacherLessonName}
-            onChange={setTeacherLessonName}
+            value={lessonTeacherName}
+            onChange={handleChangeLessonTeacherName}
             icon={teacherLessonNameIcon}
+            error={lessonTeacherNameError}
           />
         </div>
 
@@ -192,7 +196,7 @@ const GroupRightBar = ({
               label="Выберите дату"
               format="dd/MM/yyyy"
               value={selectedDate}
-              onChange={handleAddLessonDate}
+              onChange={onAddLessonDate}
               KeyboardButtonProps={{
                 "aria-label": "change date",
               }}
@@ -208,10 +212,7 @@ const GroupRightBar = ({
         </div>
 
         <div className="section__child">
-          <ButtonComponent
-            label="Добавить"
-            onClick={() => console.log("Добавить пару!")}
-          />
+          <ButtonComponent label="Добавить" onClick={onAddLesson} />
         </div>
       </div>
     </div>

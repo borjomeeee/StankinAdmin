@@ -3,7 +3,7 @@ import { useState } from "react";
 const useDefaultInput = (
   defaultValue: string,
   isRequired: boolean = true
-): [string, string, (value: string) => void, () => void] => {
+): [string, string, (value: string) => void, () => boolean] => {
   const [inputValue, setInputValue] = useState(defaultValue);
   const [inputError, setInputError] = useState("");
 

@@ -13,6 +13,8 @@ type IIconedInputComponent = {
   onEnter?: () => void;
 
   icon: React.ReactElement;
+  error?: string;
+  autoFocus?: boolean;
 };
 
 const IconedInputComponent = ({
@@ -21,6 +23,8 @@ const IconedInputComponent = ({
   onChange,
   onEnter,
   icon,
+  error,
+  autoFocus,
 }: IIconedInputComponent) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
@@ -36,7 +40,7 @@ const IconedInputComponent = ({
     <div className="iconed-input">
       <TextField
         label={label || ""}
-        id="outlined-start-adornment"
+        id={error ? "outlined-error-helper-text" : "outlined-start-adornment"}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -48,6 +52,9 @@ const IconedInputComponent = ({
         value={value}
         onChange={handleChange}
         onKeyPress={handleKeyPress}
+        helperText={error || ""}
+        autoFocus={autoFocus}
+        error={error !== undefined && error.length > 1}
         fullWidth
       />
     </div>
