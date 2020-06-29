@@ -3,6 +3,8 @@ import { connect, ConnectedProps } from "react-redux";
 
 import { IInitialState } from "../redux/store";
 
+import useGroup from "../hooks/useGroup.hook";
+
 import Search from "@material-ui/icons/Search";
 import Room from "@material-ui/icons/Room";
 import School from "@material-ui/icons/School";
@@ -15,27 +17,23 @@ import ButtonComponent from "./Button.component";
 
 import { changeSearchLessonsNameAction } from "../actions/GroupScreen.actions";
 
+import { IGroup } from "../models/Group.model";
+
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import useGroup from "../hooks/useGroup.hook";
 
-const time = new Map<string, number>();
-time.set("8:30 - 10:10", 1);
-time.set("10:20 - 12:00", 2);
-time.set("12:20 - 14:00", 3);
-time.set("14:10 - 15:50", 4);
-time.set("16:00 - 17:40", 5);
-time.set("18:00 - 19:30", 6);
-time.set("19:40 - 21:10", 7);
-time.set("21:20 - 22:50", 8);
+type IGroupRightBar = {
+  group: IGroup;
+};
 
 const GroupRightBar = ({
+  group,
   groupScreen,
   changeSearhLessonName,
-}: ConnectedProps<typeof connector>) => {
+}: ConnectedProps<typeof connector> & IGroupRightBar) => {
   // States
   const [searchLessonInputText, setSearchLessonInputText] = useState(
     groupScreen.searchLessonText
@@ -88,7 +86,7 @@ const GroupRightBar = ({
       checkValidLessonRoom() &&
       checkValidLessonTeacherName()
     ) {
-      console.log("Добавление группы");
+      console.log(`Добавлена группа ${group.id}`);
     }
   };
 

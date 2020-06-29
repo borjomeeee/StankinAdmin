@@ -14,6 +14,7 @@ import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 import { useEffect } from "react";
 import { downloadLessonsAction } from "../actions/Lessons.actions";
 import { IInitialState } from "../redux/store";
+import GroupRightBarComponent from "../components/GroupRightBar.component";
 
 type IGroupScreenParamsProps = {
   groupId?: string;
@@ -80,6 +81,8 @@ const GroupScreen = ({
       <div className="content group__content">
         <GroupLessons />
       </div>
+
+      <GroupRightBarComponent group={group} />
     </div>
   );
 };

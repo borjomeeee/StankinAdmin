@@ -17,7 +17,7 @@ import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 import { IGroup } from "../models/Group.model";
 
 import ModalTemplate from "../templates/Modal.template";
-
+import MainRightBarComponent from "../components/MainRightBar.component";
 
 const MainScreen = ({
   groups,
@@ -90,6 +90,8 @@ const MainScreen = ({
           />
         </ModalTemplate>
       )}
+
+      <MainRightBarComponent />
     </div>
   );
 };

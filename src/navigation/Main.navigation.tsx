@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { connect, ConnectedProps } from "react-redux";
 
 import MainScreen from "../screens/Main.screen";
 import GroupScreen from "../screens/Group.screen";
 
-import RightBarComponent from "../components/RightBar.component";
 import CommonHeaderComponent from "../components/Header.component";
-import { IInitialState } from "../redux/store";
+
 import { downloadGroupsAction } from "../actions/Groups.actions";
-import { connect, ConnectedProps } from "react-redux";
-import { useEffect } from "react";
 
 const MainNavigation = ({
   downloadGroups,
@@ -26,17 +24,17 @@ const MainNavigation = ({
 
           <Switch>
             <Route path="/group/:groupId" exact component={GroupScreen} />
-            <Route path="/" exact component={MainScreen} />
+            <Route path="/" exact>
+              <MainScreen />
+            </Route>
           </Switch>
         </div>
-
-        <RightBarComponent />
       </div>
     </Router>
   );
 };
 
-const mapStateToProps = (state: IInitialState) => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {
   downloadGroups: () => downloadGroupsAction(),
