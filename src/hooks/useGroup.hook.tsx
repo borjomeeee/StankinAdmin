@@ -19,23 +19,23 @@ const useGroup = () => {
 
   const [
     lessonTitle,
-    setLessonTitle,
+    lessonTitleError,
     handleChangeLessonTitle,
     checkValidLessonTitle,
   ] = useDefaultInput("");
 
   const [
-    roomLessonTitle,
-    setRoomLessonTitle,
-    handleChangeRoomLessonTitle,
-    checkValidRoomLessonTitle,
+    lessonRoom,
+    lessonRoomError,
+    handleChangeLessonRoom,
+    checkValidLessonRoom,
   ] = useDefaultInput("");
 
   const [
-    teacherLessonName,
-    setTeacherLessonName,
-    handleChangeTeacherLessonName,
-    checkValidTeacherLessonName,
+    lessonTeacherName,
+    lessonTeacherNameError,
+    handleChangeLessonTeacherName,
+    checkValidLessonTeacherName,
   ] = useDefaultInput("");
 
   const [lessonTypeData, setLessonTypeData] = useState({
@@ -73,19 +73,19 @@ const useGroup = () => {
 
   return {
     lessonTitle,
-    setLessonTitle,
+    lessonTitleError,
     handleChangeLessonTitle,
     checkValidLessonTitle,
 
-    roomLessonTitle,
-    setRoomLessonTitle,
-    handleChangeRoomLessonTitle,
-    checkValidRoomLessonTitle,
+    lessonRoom,
+    lessonRoomError,
+    handleChangeLessonRoom,
+    checkValidLessonRoom,
 
-    teacherLessonName,
-    setTeacherLessonName,
-    handleChangeTeacherLessonName,
-    checkValidTeacherLessonName,
+    lessonTeacherName,
+    lessonTeacherNameError,
+    handleChangeLessonTeacherName,
+    checkValidLessonTeacherName,
 
     lessonDates,
     lessonTypeData,

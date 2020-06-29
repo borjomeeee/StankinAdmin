@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const useDefaultInput = (defaultValue: string, isRequired: boolean = true) => {
+const useDefaultInput = (
+  defaultValue: string,
+  isRequired: boolean = true
+): [string, string, (value: string) => void, () => void] => {
   const [inputValue, setInputValue] = useState(defaultValue);
   const [inputError, setInputError] = useState("");
 
@@ -15,19 +18,13 @@ const useDefaultInput = (defaultValue: string, isRequired: boolean = true) => {
     if (!isRequired) return true;
 
     if (inputValue === "") {
-      setInputError("Поле не должно быть пустым")
+      setInputError("Поле не должно быть пустым");
       return false;
     }
     return true;
-  }
+  };
 
-  return [
-    inputValue,
-    inputError,
-
-    onChangeInputValue,
-    checkValidInputValue
-  ];
+  return [inputValue, inputError, onChangeInputValue, checkValidInputValue];
 };
 
 export default useDefaultInput;
