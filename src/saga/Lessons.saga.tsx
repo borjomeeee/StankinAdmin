@@ -1,7 +1,11 @@
 import { takeEvery, delay, put } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";
 
-import { DOWNLOAD_LESSONS, CREATE_LESSON } from "../utils/constants";
+import {
+  DOWNLOAD_LESSONS,
+  CREATE_LESSON,
+  REMOVE_LESSON,
+} from "../utils/constants";
 
 import {
   IDownloadLessonsSagaProps,
@@ -10,6 +14,9 @@ import {
   ICreateLessonSaga,
   createLessonSuccessAction,
   createLessonFailedAction,
+  IRemoveLessonSaga,
+  removeLessonSuccessAction,
+  removeLessonFailedAction,
 } from "../actions/Lessons.actions";
 
 import { LessonType, StudentGroupType } from "../utils/enums";
@@ -100,7 +107,26 @@ export function* createLessonSaga({ payload }: ICreateLessonSaga) {
   }
 }
 
+export function* removeLessonSaga({ payload }: IRemoveLessonSaga) {
+  try {
+    yield delay(1000);
+    // SEND DATA TO SERVER AND GET STATUS ACTION
+
+    let ok = true;
+    let message = "Ошибка удаления пары";
+
+    if (ok) {
+      yield put(removeLessonSuccessAction(payload.groupId, payload.lessonId));
+    } else {
+      yield put(removeLessonFailedAction(message));
+    }
+  } catch (e) {
+    yield put(removeLessonFailedAction("Ошибка удаления пары"));
+  }
+}
+
 export default function* lessonsSaga() {
   yield takeEvery(DOWNLOAD_LESSONS, downloadLessonsSaga);
   yield takeEvery(CREATE_LESSON, createLessonSaga);
+  yield takeEvery(REMOVE_LESSON, removeLessonSaga);
 }

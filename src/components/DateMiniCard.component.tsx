@@ -4,9 +4,6 @@ import "./DateMiniCard.component.scss";
 
 import Close from "@material-ui/icons/Close";
 
-// Добавить крестик к карточке даты и
-// переделать под это стили
-
 type IDateMiniCardComponent = {
   date: Date;
 

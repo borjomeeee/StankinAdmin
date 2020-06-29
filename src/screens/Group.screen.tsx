@@ -12,7 +12,10 @@ import { IGroup } from "../models/Group.model";
 
 import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 import { useEffect } from "react";
-import { downloadLessonsAction } from "../actions/Lessons.actions";
+import {
+  downloadLessonsAction,
+  removeLessonAction,
+} from "../actions/Lessons.actions";
 import { IInitialState } from "../redux/store";
 import GroupRightBarComponent from "../components/GroupRightBar.component";
 
@@ -25,6 +28,7 @@ const GroupScreen = ({
   groups,
   groupScreen,
   downloadLessons,
+  removeLesson,
 }: ConnectedProps<typeof connector>) => {
   const history = useHistory();
   const { groupId }: IGroupScreenParamsProps = useParams();
@@ -64,7 +68,7 @@ const GroupScreen = ({
           <div className="group-lesson" key={item.id}>
             <EditRemoveHOC
               onEdit={() => console.log("Edit lesson: ", item.id)}
-              onRemove={() => console.log("Remove lesson: ", item.id)}
+              onRemove={() => removeLesson(group.id, item.id)}
             >
               <GroupLessonCardComponent lesson={item} />
             </EditRemoveHOC>
@@ -95,6 +99,8 @@ const mapStateToProps = (state: IInitialState) => ({
 
 const mapDispatchToProps = {
   downloadLessons: (groupId: string) => downloadLessonsAction(groupId),
+  removeLesson: (groupId: string, lessonId: string) =>
+    removeLessonAction(groupId, lessonId),
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

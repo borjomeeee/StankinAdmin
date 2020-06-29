@@ -19,6 +19,9 @@ import {
   CREATE_LESSON,
   CREATE_LESSON_FAILED,
   CREATE_LESSON_SUCCESS,
+  REMOVE_LESSON,
+  REMOVE_LESSON_SUCCESS,
+  REMOVE_LESSON_FAILED,
 } from "../utils/constants";
 
 import { IAppActions } from "../utils/types";
@@ -68,6 +71,13 @@ export default (
     case CREATE_LESSON_SUCCESS:
       return { ...state, isLoading: false };
     case CREATE_LESSON_FAILED:
+      return { ...state, isLoading: false, error: action.payload.error };
+
+    case REMOVE_LESSON:
+      return { ...state, isLoading: true };
+    case REMOVE_LESSON_SUCCESS:
+      return { ...state, isLoading: false };
+    case REMOVE_LESSON_FAILED:
       return { ...state, isLoading: false, error: action.payload.error };
     default:
       return state;

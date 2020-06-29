@@ -6,6 +6,9 @@ import {
   CREATE_LESSON,
   CREATE_LESSON_SUCCESS,
   CREATE_LESSON_FAILED,
+  REMOVE_LESSON,
+  REMOVE_LESSON_SUCCESS,
+  REMOVE_LESSON_FAILED,
 } from "../utils/constants";
 
 import { LessonType, StudentGroupType } from "../utils/enums";
@@ -27,6 +30,9 @@ export interface ICreateLessonSaga extends IAction {
     lessonPlace: string;
     teacher: string;
   };
+}
+export interface IRemoveLessonSaga extends IAction {
+  payload: { groupId: string; lessonId: string };
 }
 
 // Downloads
@@ -85,5 +91,24 @@ export const createLessonSuccessAction = (groupId: string, lesson: ILesson) =>
 export const createLessonFailedAction = (error: string) =>
   ({
     type: CREATE_LESSON_FAILED,
+    payload: { error },
+  } as const);
+
+// Remove
+export const removeLessonAction = (groupId: string, lessonId: string) =>
+  ({
+    type: REMOVE_LESSON,
+    payload: { groupId, lessonId },
+  } as const);
+
+export const removeLessonSuccessAction = (groupId: string, lessonId: string) =>
+  ({
+    type: REMOVE_LESSON_SUCCESS,
+    paylaod: { groupId, lessonId },
+  } as const);
+
+export const removeLessonFailedAction = (error: string) =>
+  ({
+    type: REMOVE_LESSON_FAILED,
     payload: { error },
   } as const);
