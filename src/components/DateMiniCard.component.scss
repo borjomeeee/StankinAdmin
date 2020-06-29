@@ -1,9 +1,20 @@
 .date-card {
+  display: flex;
+  align-items: center;
+
   padding: 2px 4px;
 
   border: 1px solid #000;
 
   &__date {
     font-size: 12px;
+  }
+
+  &__remove {
+    display: flex;
+    align-items: center;
+
+    margin-left: 3px;
+    cursor: pointer;
   }
 }

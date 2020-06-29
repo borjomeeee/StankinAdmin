@@ -36,6 +36,7 @@ type IGroupRightBar = {
 const GroupRightBar = ({
   group,
   groupScreen,
+  lessons,
   changeSearhLessonName,
   createLesson,
 }: ConnectedProps<typeof connector> & IGroupRightBar) => {
@@ -50,20 +51,24 @@ const GroupRightBar = ({
   const {
     lessonTitle,
     lessonTitleError,
+    // setLessonTitleError,
     handleChangeLessonTitle,
     checkValidLessonTitle,
 
     lessonRoom,
     lessonRoomError,
+    // setLessonRoomError,
     handleChangeLessonRoom,
     checkValidLessonRoom,
 
     lessonTeacherName,
     lessonTeacherNameError,
+    // setLessonTeacherNameError,
     handleChangeLessonTeacherName,
     checkValidLessonTeacherName,
 
     lessonDates,
+    setLessonDates,
     lessonTypeData,
     studentGroupData,
     lessonTimeData,
@@ -82,7 +87,6 @@ const GroupRightBar = ({
   const checkValidLessonDates = (): boolean => {
     if (lessonDates.length === 0) {
       setLessonDatesError("Выберите хотя бы одну дату");
-      console.log(1)
       return false;
     }
     return true;
@@ -121,6 +125,15 @@ const GroupRightBar = ({
     }
   };
 
+  const onRemoveLessonDate = (touchedDate: Date) => {
+    setLessonDates(
+      lessonDates.filter(
+        (date: Date) =>
+          date.toLocaleDateString() !== touchedDate.toLocaleDateString()
+      )
+    );
+  };
+
   // Icons
   const searchLessonTitleIcon = useMemo(() => {
     return <Search style={{ fontSize: 24 }} />;
@@ -137,7 +150,11 @@ const GroupRightBar = ({
   const DatesCards = () => (
     <>
       {lessonDates.map((item: Date, index: number) => (
-        <DateMiniCardComponent key={index} date={item} />
+        <DateMiniCardComponent
+          key={index}
+          date={item}
+          onRemove={() => onRemoveLessonDate(item)}
+        />
       ))}
     </>
   );
@@ -256,6 +273,7 @@ const GroupRightBar = ({
 
 const mapStateToProps = (state: IInitialState) => ({
   groupScreen: state.groupScreen,
+  lessons: state.lessons,
 });
 
 const mapDispatchToProps = {

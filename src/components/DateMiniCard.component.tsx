@@ -2,6 +2,8 @@ import React from "react";
 
 import "./DateMiniCard.component.scss";
 
+import Close from "@material-ui/icons/Close";
+
 // Добавить крестик к карточке даты и
 // переделать под это стили
 
@@ -21,7 +23,11 @@ const DateMiniCardComponent = ({ date, onRemove }: IDateMiniCardComponent) => {
           month.length === 1 ? "0" : ""
         }${month}`}
       </div>
-      {onRemove && <div className="date-card__remove" onClick={onRemove}></div>}
+      {onRemove && (
+        <div className="date-card__remove" onClick={onRemove}>
+          <Close style={{ fontSize: 16 }}/>
+        </div>
+      )}
     </div>
   );
 };

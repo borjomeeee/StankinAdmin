@@ -20,6 +20,7 @@ const useGroup = () => {
   const [
     lessonTitle,
     lessonTitleError,
+    setLessonTitleError,
     handleChangeLessonTitle,
     checkValidLessonTitle,
   ] = useDefaultInput("");
@@ -27,6 +28,7 @@ const useGroup = () => {
   const [
     lessonRoom,
     lessonRoomError,
+    setLessonRoomError,
     handleChangeLessonRoom,
     checkValidLessonRoom,
   ] = useDefaultInput("", false);
@@ -34,6 +36,7 @@ const useGroup = () => {
   const [
     lessonTeacherName,
     lessonTeacherNameError,
+    setLessonTeacherNameError,
     handleChangeLessonTeacherName,
     checkValidLessonTeacherName,
   ] = useDefaultInput("", false);
@@ -79,20 +82,25 @@ const useGroup = () => {
   return {
     lessonTitle,
     lessonTitleError,
+    setLessonTitleError,
     handleChangeLessonTitle,
     checkValidLessonTitle,
 
     lessonRoom,
     lessonRoomError,
+    setLessonRoomError,
     handleChangeLessonRoom,
     checkValidLessonRoom,
 
     lessonTeacherName,
     lessonTeacherNameError,
+    setLessonTeacherNameError,
     handleChangeLessonTeacherName,
     checkValidLessonTeacherName,
 
     lessonDates,
+    setLessonDates,
+    
     lessonTypeData,
     studentGroupData,
     lessonTimeData,

@@ -3,7 +3,13 @@ import { useState } from "react";
 const useDefaultInput = (
   defaultValue: string,
   isRequired: boolean = true
-): [string, string, (value: string) => void, () => boolean] => {
+): [
+  string,
+  string,
+  (error: string) => void,
+  (value: string) => void,
+  () => boolean
+] => {
   const [inputValue, setInputValue] = useState(defaultValue);
   const [inputError, setInputError] = useState("");
 
@@ -24,7 +30,17 @@ const useDefaultInput = (
     return true;
   };
 
-  return [inputValue, inputError, onChangeInputValue, checkValidInputValue];
+  const setErrorInput = (error: string) => {
+    setInputError(error);
+  };
+
+  return [
+    inputValue,
+    inputError,
+    setErrorInput,
+    onChangeInputValue,
+    checkValidInputValue,
+  ];
 };
 
 export default useDefaultInput;
