@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from "react-redux";
 
 import { IInitialState } from "../redux/store";
 
-import useGroup from "../hooks/useGroup.hook";
+import useGroup, { time } from "../hooks/useGroup.hook";
 
 import Search from "@material-ui/icons/Search";
 import Room from "@material-ui/icons/Room";
@@ -16,8 +16,12 @@ import DateMiniCardComponent from "./DateMiniCard.component";
 import ButtonComponent from "./Button.component";
 
 import { changeSearchLessonsNameAction } from "../actions/GroupScreen.actions";
+import { createLessonAction } from "../actions/Lessons.actions";
 
 import { IGroup } from "../models/Group.model";
+import { ILessonTime, LessonTime } from "../models/LessonTime.model";
+
+import { StudentGroupType, LessonType } from "../utils/enums";
 
 import {
   MuiPickersUtilsProvider,
@@ -33,6 +37,7 @@ const GroupRightBar = ({
   group,
   groupScreen,
   changeSearhLessonName,
+  createLesson,
 }: ConnectedProps<typeof connector> & IGroupRightBar) => {
   // States
   const [searchLessonInputText, setSearchLessonInputText] = useState(
@@ -81,12 +86,23 @@ const GroupRightBar = ({
   };
 
   const onAddLesson = () => {
+    const lessonTime = time.get(lessonTimeData.selected);
     if (
+      lessonTime &&
       checkValidLessonTitle() &&
       checkValidLessonRoom() &&
       checkValidLessonTeacherName()
     ) {
-      console.log(`Добавлена группа ${group.id}`);
+      createLesson(
+        group.id,
+        lessonTitle,
+        studentGroupData.selected,
+        lessonTypeData.selected,
+        lessonDates,
+        new LessonTime(lessonTime),
+        lessonRoom,
+        lessonTeacherName
+      );
     }
   };
 
@@ -224,6 +240,26 @@ const mapStateToProps = (state: IInitialState) => ({
 const mapDispatchToProps = {
   changeSearhLessonName: (value: string) =>
     changeSearchLessonsNameAction(value),
+  createLesson: (
+    groupId: string,
+    lessonTitle: string,
+    studentGroupType: StudentGroupType,
+    lessonType: LessonType,
+    lessonDates: Date[],
+    time: ILessonTime,
+    lessonPlace: string,
+    teacher: string
+  ) =>
+    createLessonAction(
+      groupId,
+      lessonTitle,
+      studentGroupType,
+      lessonType,
+      lessonDates,
+      time,
+      lessonPlace,
+      teacher
+    ),
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

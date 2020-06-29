@@ -4,7 +4,7 @@ import { LessonType, StudentGroupType } from "../utils/enums";
 
 import useDefaultInput from "./useDefaultInput.hook";
 
-const time = new Map<string, number>();
+export const time = new Map<string, number>();
 time.set("8:30 - 10:10", 1);
 time.set("10:20 - 12:00", 2);
 time.set("12:20 - 14:00", 3);

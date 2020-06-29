@@ -1,7 +1,7 @@
 import { takeEvery, delay, put } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";
 
-import { DOWNLOAD_LESSONS } from "../utils/constants";
+import { DOWNLOAD_LESSONS, CREATE_LESSON } from "../utils/constants";
 
 import {
   IDownloadLessonsSagaProps,
@@ -102,4 +102,5 @@ export function* createLessonSaga({ payload }: ICreateLessonSaga) {
 
 export default function* lessonsSaga() {
   yield takeEvery(DOWNLOAD_LESSONS, downloadLessonsSaga);
+  yield takeEvery(CREATE_LESSON, createLessonSaga);
 }
