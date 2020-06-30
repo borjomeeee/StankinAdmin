@@ -22,6 +22,9 @@ import {
   REMOVE_LESSON,
   REMOVE_LESSON_SUCCESS,
   REMOVE_LESSON_FAILED,
+  CHANGE_LESSON,
+  CHANGE_LESSON_SUCCESS,
+  CHANGE_LESSON_FAILED,
 } from "../utils/constants";
 
 import { IAppActions } from "../utils/types";
@@ -78,6 +81,13 @@ export default (
     case REMOVE_LESSON_SUCCESS:
       return { ...state, isLoading: false };
     case REMOVE_LESSON_FAILED:
+      return { ...state, isLoading: false, error: action.payload.error };
+
+    case CHANGE_LESSON:
+      return { ...state, isLoading: true };
+    case CHANGE_LESSON_SUCCESS:
+      return { ...state, isLoading: false };
+    case CHANGE_LESSON_FAILED:
       return { ...state, isLoading: false, error: action.payload.error };
     default:
       return state;

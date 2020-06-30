@@ -20,6 +20,11 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import ButtonComponent from "./Button.component";
+import { checkLessonExist } from "../utils";
+import { IInitialState } from "../redux/store";
+import { connect, ConnectedProps } from "react-redux";
+import { LessonTime } from "../models/LessonTime.model";
+import { changeLessonAction } from "../actions/Lessons.actions";
 
 type IEditLessonModalComponent = {
   lesson: ILesson;
@@ -28,9 +33,12 @@ type IEditLessonModalComponent = {
 
 const EditLessonModalComponent = ({
   lesson,
+  lessons,
   onSubmit,
-}: IEditLessonModalComponent) => {
+  editLesson,
+}: ConnectedProps<typeof connector> & IEditLessonModalComponent) => {
   const [selectedDate, setSelectedDate] = useState(new Date(Date.now()));
+  const [isErrorEdit, setIsErrorEdit] = useState(false);
 
   const {
     lessonTitle,
@@ -88,9 +96,33 @@ const EditLessonModalComponent = ({
       checkValidLessonTeacherName() &&
       checkValidLessonDates()
     ) {
-      // SAVE LESSON
-      console.log("Пара сохранена");
-      onSubmit();
+      if (
+        !checkLessonExist(
+          (lessons.get(lesson.groupId) || []).filter(
+            (item: ILesson) => item.id !== lesson.id
+          ),
+          lessonTitle,
+          studentGroupData.selected,
+          lessonTypeData.selected,
+          new LessonTime(lessonTime),
+          lessonRoom,
+          lessonTeacherName
+        )
+      ) {
+        editLesson({
+          ...lesson,
+          title: lessonTitle,
+          studentGroup: studentGroupData.selected,
+          type: lessonTypeData.selected,
+          time: new LessonTime(lessonTime),
+          place: lessonRoom,
+          teacher: lessonTeacherName,
+          dates: lessonDates,
+        });
+        onSubmit();
+      } else {
+        setIsErrorEdit(true);
+      }
     }
   };
 
@@ -114,6 +146,9 @@ const EditLessonModalComponent = ({
       ))}
     </>
   );
+
+  if (isErrorEdit)
+    return <div className="modal-text">Такая пара уже существует!</div>;
 
   return (
     <div className="modal__edit-lesson">
@@ -192,17 +227,25 @@ const EditLessonModalComponent = ({
         {lessonDatesError === "" ? (
           <DatesCards />
         ) : (
-          <div className="error-message">
-            {lessonDatesError}
-          </div>
+          <div className="error-message">{lessonDatesError}</div>
         )}
       </div>
 
       <div className="edit-lesson__section">
-        <ButtonComponent label="Добавить" onClick={onSaveLesson} />
+        <ButtonComponent label="Сохранить" onClick={onSaveLesson} />
       </div>
     </div>
   );
 };
 
-export default EditLessonModalComponent;
+const mapStateToProps = (state: IInitialState) => ({
+  lessons: state.lessons,
+});
+
+const mapDispatchToProps = {
+  editLesson: (lesson: ILesson) => changeLessonAction(lesson),
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+export default connector(EditLessonModalComponent);

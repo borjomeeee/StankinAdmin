@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import {
   downloadLessonsAction,
   removeLessonAction,
+  changeLessonAction,
 } from "../actions/Lessons.actions";
 import { IInitialState } from "../redux/store";
 import GroupRightBarComponent from "../components/GroupRightBar.component";
@@ -31,6 +32,7 @@ const GroupScreen = ({
   groupScreen,
   downloadLessons,
   removeLesson,
+  changeLesson
 }: ConnectedProps<typeof connector>) => {
   const history = useHistory();
   const { groupId }: IGroupScreenParamsProps = useParams();
@@ -117,6 +119,7 @@ const mapDispatchToProps = {
   downloadLessons: (groupId: string) => downloadLessonsAction(groupId),
   removeLesson: (groupId: string, lessonId: string) =>
     removeLessonAction(groupId, lessonId),
+  changeLesson: (lesson: ILesson) => changeLessonAction(lesson),
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

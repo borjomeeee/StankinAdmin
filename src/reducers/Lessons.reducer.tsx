@@ -4,6 +4,7 @@ import {
   DOWNLOAD_LESSONS_SUCCESS,
   CREATE_LESSON_SUCCESS,
   REMOVE_LESSON_SUCCESS,
+  CHANGE_LESSON_SUCCESS,
 } from "../utils/constants";
 
 import { ILessonsActions } from "../utils/types";
@@ -30,6 +31,15 @@ export default (
         action.paylaod.groupId,
         lessons.filter(
           (lesson: ILesson) => lesson.id !== action.paylaod.lessonId
+        )
+      );
+      return new Map(state.entries());
+    case CHANGE_LESSON_SUCCESS:
+      const changeLessons = state.get(action.payload.lesson.groupId) || [];
+      state.set(
+        action.payload.lesson.groupId,
+        changeLessons.map((item: ILesson) =>
+          item.id === action.payload.lesson.id ? action.payload.lesson : item
         )
       );
       return new Map(state.entries());

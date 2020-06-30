@@ -25,6 +25,9 @@ import {
   removeLessonAction,
   removeLessonSuccessAction,
   removeLessonFailedAction,
+  changeLessonSuccessAction,
+  changeLessonFailedAction,
+  changeLessonAction,
 } from "../actions/Lessons.actions";
 
 import { changeSearchLessonsNameAction } from "../actions/GroupScreen.actions";
@@ -50,7 +53,10 @@ export type IAppActions =
   | ReturnType<typeof changeGroupTitleFailedAction>
   | ReturnType<typeof removeLessonAction>
   | ReturnType<typeof removeLessonSuccessAction>
-  | ReturnType<typeof removeLessonFailedAction>;
+  | ReturnType<typeof removeLessonFailedAction>
+  | ReturnType<typeof changeLessonAction>
+  | ReturnType<typeof changeLessonSuccessAction>
+  | ReturnType<typeof changeLessonFailedAction>;
 
 // MainScreen
 export type IMainScreenActions = ReturnType<typeof changeSearchGroupNameAction>;
@@ -80,7 +86,10 @@ export type ILessonsActions =
   | ReturnType<typeof createLessonFailedAction>
   | ReturnType<typeof removeLessonAction>
   | ReturnType<typeof removeLessonSuccessAction>
-  | ReturnType<typeof removeLessonFailedAction>;
+  | ReturnType<typeof removeLessonFailedAction>
+  | ReturnType<typeof changeLessonAction>
+  | ReturnType<typeof changeLessonSuccessAction>
+  | ReturnType<typeof changeLessonFailedAction>;
 
 // GroupScreen
 export type IGroupScreenActions = ReturnType<

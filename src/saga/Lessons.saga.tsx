@@ -5,6 +5,7 @@ import {
   DOWNLOAD_LESSONS,
   CREATE_LESSON,
   REMOVE_LESSON,
+  CHANGE_LESSON,
 } from "../utils/constants";
 
 import {
@@ -17,6 +18,9 @@ import {
   IRemoveLessonSaga,
   removeLessonSuccessAction,
   removeLessonFailedAction,
+  IChangeLessonSaga,
+  changeLessonSuccessAction,
+  changeLessonFailedAction,
 } from "../actions/Lessons.actions";
 
 import { LessonType, StudentGroupType } from "../utils/enums";
@@ -125,8 +129,27 @@ export function* removeLessonSaga({ payload }: IRemoveLessonSaga) {
   }
 }
 
+export function* changeLessonSaga({ payload }: IChangeLessonSaga) {
+  try {
+    yield delay(1000);
+    // SEND DATA TO SERVER AND GET STATUS ANSWER
+
+    let ok = true;
+    let message = "Ошибка изменения пары";
+
+    if (ok) {
+      yield put(changeLessonSuccessAction(payload.lesson));
+    } else {
+      yield put(changeLessonFailedAction(message));
+    }
+  } catch (e) {
+    yield put(changeLessonFailedAction("Ошибка изменения пары"));
+  }
+}
+
 export default function* lessonsSaga() {
   yield takeEvery(DOWNLOAD_LESSONS, downloadLessonsSaga);
   yield takeEvery(CREATE_LESSON, createLessonSaga);
   yield takeEvery(REMOVE_LESSON, removeLessonSaga);
+  yield takeEvery(CHANGE_LESSON, changeLessonSaga);
 }
