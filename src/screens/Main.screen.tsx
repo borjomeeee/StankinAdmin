@@ -22,6 +22,8 @@ import { IGroup } from "../models/Group.model";
 
 import ModalTemplate from "../templates/Modal.template";
 
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 const MainScreen = ({
   app,
   groups,
@@ -48,6 +50,14 @@ const MainScreen = ({
   const onSubmitEditGroup = () => {
     setCurrEditGroup(null);
   };
+
+  if (app.isLoading) {
+    return (
+      <div className="loader">
+        <CircularProgress />
+      </div>
+    );
+  }
 
   const MainGroups = () => (
     <div className="main__groups">

@@ -22,6 +22,8 @@ import {
 
 import ModalTemplate from "../templates/Modal.template";
 
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 type IGroupScreenParamsProps = {
   groupId?: string;
 };
@@ -56,6 +58,14 @@ const GroupScreen = ({
         : undefined,
     [groupId, groups]
   );
+
+  if (app.isLoading) {
+    return (
+      <div className="loader">
+        <CircularProgress />
+      </div>
+    );
+  }
 
   if (!group) {
     history.push("/");

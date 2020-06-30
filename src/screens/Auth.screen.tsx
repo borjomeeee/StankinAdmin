@@ -3,16 +3,29 @@ import { connect, ConnectedProps } from "react-redux";
 
 import "./Auth.screen.scss";
 
+import { IInitialState } from "../redux/store";
+
 import LabeledInputComponent from "../components/LabeledInput.component";
 import ButtonComponent from "../components/Button.component";
+
 import { checkAdminKeyAction } from "../actions/App.actions";
 
-const AuthScreen = ({ checkKey }: ConnectedProps<typeof connector>) => {
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+const AuthScreen = ({ app, checkKey }: ConnectedProps<typeof connector>) => {
   const [keyInputValue, setKeyInputValue] = useState("");
 
   const onSubmitAuth = () => {
     checkKey(keyInputValue);
   };
+
+  if (app.isLoading) {
+    return (
+      <div className="loader">
+        <CircularProgress />
+      </div>
+    );
+  }
 
   return (
     <div className="auth">
@@ -35,7 +48,9 @@ const AuthScreen = ({ checkKey }: ConnectedProps<typeof connector>) => {
   );
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state: IInitialState) => ({
+  app: state.app,
+});
 
 const mapDispatchToProps = {
   checkKey: (key: string) => checkAdminKeyAction(key),
