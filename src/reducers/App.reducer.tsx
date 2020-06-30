@@ -40,7 +40,12 @@ export default (
     case CHECK_ADMIN_KEY:
       return { ...state, isAuth: false, isLoading: true };
     case CHECK_ADMIN_KEY_SUCCESS:
-      return { ...state, isAuth: true, isLoading: false };
+      return {
+        ...state,
+        isAuth: true,
+        appKey: action.payload.key,
+        isLoading: false,
+      };
     case CHECK_ADMIN_KEY_FAILED:
       return {
         ...state,

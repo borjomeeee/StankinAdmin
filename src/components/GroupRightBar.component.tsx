@@ -38,6 +38,7 @@ type IGroupRightBar = {
 };
 
 const GroupRightBar = ({
+  app,
   group,
   groupScreen,
   lessons,
@@ -124,6 +125,7 @@ const GroupRightBar = ({
         )
       ) {
         createLesson(
+          app.appKey,
           group.id,
           lessonTitle,
           studentGroupData.selected,
@@ -135,7 +137,6 @@ const GroupRightBar = ({
         );
       } else {
         setModalExistLessonVisible(true);
-        console.log("Такая пара уже существует!");
       }
     }
   };
@@ -284,6 +285,7 @@ const GroupRightBar = ({
 };
 
 const mapStateToProps = (state: IInitialState) => ({
+  app: state.app,
   groupScreen: state.groupScreen,
   lessons: state.lessons,
 });
@@ -292,6 +294,7 @@ const mapDispatchToProps = {
   changeSearhLessonName: (value: string) =>
     changeSearchLessonsNameAction(value),
   createLesson: (
+    key: string,
     groupId: string,
     lessonTitle: string,
     studentGroupType: StudentGroupType,
@@ -302,6 +305,7 @@ const mapDispatchToProps = {
     teacher: string
   ) =>
     createLessonAction(
+      key,
       groupId,
       lessonTitle,
       studentGroupType,

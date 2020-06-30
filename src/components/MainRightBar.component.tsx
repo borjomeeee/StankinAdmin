@@ -15,6 +15,7 @@ import { changeSearchGroupNameAction } from "../actions/MainScreen.actions";
 import { IGroup } from "../models/Group.model";
 
 const MainRightBarComponent = ({
+  app,
   mainScreen,
   groups,
 
@@ -61,7 +62,7 @@ const MainRightBarComponent = ({
         return;
       }
 
-      createGroup(addGroupInputText);
+      createGroup(app.appKey, addGroupInputText);
       setAddGroupInputText("");
     } else {
       setAddGroupInputError("Введите название группы");
@@ -107,13 +108,15 @@ const MainRightBarComponent = ({
 };
 
 const mapStateToProps = (state: IInitialState) => ({
+  app: state.app,
   mainScreen: state.mainScreen,
   groups: state.groups,
 });
 
 const mapDispatchToProps = {
   changeSearchGroupName: (value: string) => changeSearchGroupNameAction(value),
-  createGroup: (groupName: string) => createGroupAction(groupName),
+  createGroup: (key: string, groupName: string) =>
+    createGroupAction(key, groupName),
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

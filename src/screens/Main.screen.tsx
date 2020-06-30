@@ -23,6 +23,7 @@ import { IGroup } from "../models/Group.model";
 import ModalTemplate from "../templates/Modal.template";
 
 const MainScreen = ({
+  app,
   groups,
   mainScreen,
 
@@ -32,12 +33,12 @@ const MainScreen = ({
   const [currEditGroup, setCurrEditGroup] = useState<IGroup | null>(null);
 
   useEffect(() => {
-    downloadGroups();
-  }, [downloadGroups]);
+    downloadGroups(app.appKey);
+  }, [downloadGroups, app.appKey]);
 
   // Handlers
   const onRemoveGroup = (groupId: string) => {
-    removeGroup(groupId);
+    removeGroup(app.appKey, groupId);
   };
 
   const onEditGroup = (groupId: IGroup) => {
@@ -105,13 +106,15 @@ const MainScreen = ({
 };
 
 const mapStateToProps = (state: IInitialState) => ({
+  app: state.app,
   groups: state.groups,
   mainScreen: state.mainScreen,
 });
 
 const mapDispatchToProps = {
-  removeGroup: (groupId: string) => removeGroupAction(groupId),
-  downloadGroups: () => downloadGroupsAction(),
+  removeGroup: (key: string, groupId: string) =>
+    removeGroupAction(key, groupId),
+  downloadGroups: (key: string) => downloadGroupsAction(key),
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

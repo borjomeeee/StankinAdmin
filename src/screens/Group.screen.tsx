@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { connect, ConnectedProps } from "react-redux";
 
@@ -15,11 +15,9 @@ import { ILesson } from "../models/Lesson.model";
 import { IGroup } from "../models/Group.model";
 
 import EditRemoveHOC from "../HOCs/EditRemove.HOC";
-import { useEffect } from "react";
 import {
   downloadLessonsAction,
   removeLessonAction,
-  changeLessonAction,
 } from "../actions/Lessons.actions";
 
 import ModalTemplate from "../templates/Modal.template";
@@ -29,12 +27,12 @@ type IGroupScreenParamsProps = {
 };
 
 const GroupScreen = ({
+  app,
   lessons,
   groups,
   groupScreen,
   downloadLessons,
   removeLesson,
-  changeLesson,
 }: ConnectedProps<typeof connector>) => {
   const history = useHistory();
   const { groupId }: IGroupScreenParamsProps = useParams();
@@ -43,9 +41,9 @@ const GroupScreen = ({
 
   useEffect(() => {
     if (groupId) {
-      downloadLessons(groupId);
+      downloadLessons(app.appKey, groupId);
     }
-  }, [downloadLessons, groupId]);
+  }, [downloadLessons, groupId, app.appKey]);
 
   const group: IGroup | undefined = useMemo(
     () =>
@@ -76,7 +74,7 @@ const GroupScreen = ({
           <div className="group-lesson" key={item.id}>
             <EditRemoveHOC
               onEdit={setCurrEditLesson.bind(null, item)}
-              onRemove={() => removeLesson(group.id, item.id)}
+              onRemove={() => removeLesson(app.appKey, group.id, item.id)}
             >
               <GroupLessonCardComponent lesson={item} />
             </EditRemoveHOC>
@@ -112,16 +110,17 @@ const GroupScreen = ({
 };
 
 const mapStateToProps = (state: IInitialState) => ({
+  app: state.app,
   lessons: state.lessons,
   groups: state.groups,
   groupScreen: state.groupScreen,
 });
 
 const mapDispatchToProps = {
-  downloadLessons: (groupId: string) => downloadLessonsAction(groupId),
-  removeLesson: (groupId: string, lessonId: string) =>
-    removeLessonAction(groupId, lessonId),
-  changeLesson: (lesson: ILesson) => changeLessonAction(lesson),
+  downloadLessons: (key: string, groupId: string) =>
+    downloadLessonsAction(key, groupId),
+  removeLesson: (key: string, groupId: string, lessonId: string) =>
+    removeLessonAction(key, groupId, lessonId),
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

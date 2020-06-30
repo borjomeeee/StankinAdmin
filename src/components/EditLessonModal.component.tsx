@@ -35,6 +35,7 @@ type IEditLessonModalComponent = {
 };
 
 const EditLessonModalComponent = ({
+  app,
   lesson,
   lessons,
   onSubmit,
@@ -112,7 +113,7 @@ const EditLessonModalComponent = ({
           lessonTeacherName
         )
       ) {
-        editLesson({
+        editLesson(app.appKey, {
           ...lesson,
           title: lessonTitle,
           studentGroup: studentGroupData.selected,
@@ -242,11 +243,12 @@ const EditLessonModalComponent = ({
 };
 
 const mapStateToProps = (state: IInitialState) => ({
+  app: state.app,
   lessons: state.lessons,
 });
 
 const mapDispatchToProps = {
-  editLesson: (lesson: ILesson) => changeLessonAction(lesson),
+  editLesson: (key: string, lesson: ILesson) => changeLessonAction(key, lesson),
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

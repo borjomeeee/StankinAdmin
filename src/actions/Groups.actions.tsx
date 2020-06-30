@@ -18,21 +18,24 @@ import {
 
 import { IGroup } from "../models/Group.model";
 
-export interface IDownloadGroupsSagaProps extends IAction {}
+export interface IDownloadGroupsSagaProps extends IAction {
+  payload: { key: string };
+}
 export interface ICreateGroupSaga extends IAction {
-  payload: { groupName: string };
+  payload: { key: string; groupName: string };
 }
 export interface IRemoveGroupSaga extends IAction {
-  payload: { groupId: string };
+  payload: { key: string; groupId: string };
 }
 export interface IChangeGroupTitleSaga extends IAction {
-  payload: { groupId: string; groupTitle: string };
+  payload: { key: string; groupId: string; groupTitle: string };
 }
 
 // Downloads
-export const downloadGroupsAction = () =>
+export const downloadGroupsAction = (key: string) =>
   ({
     type: DOWNLOAD_GROUPS,
+    payload: { key },
   } as const);
 
 export const downloadGroupsSuccessAction = (groups: IGroupsInitialState) =>
@@ -48,10 +51,10 @@ export const downloadGroupsFailedAction = (error: string) =>
   } as const);
 
 // Create
-export const createGroupAction = (groupName: string) =>
+export const createGroupAction = (key: string, groupName: string) =>
   ({
     type: CREATE_GROUP,
-    payload: { groupName },
+    payload: { key, groupName },
   } as const);
 
 export const createGroupSuccessAction = (group: IGroup) =>
@@ -67,10 +70,10 @@ export const createGroupFailedAction = (error: string) =>
   } as const);
 
 // Remove
-export const removeGroupAction = (groupId: string) =>
+export const removeGroupAction = (key: string, groupId: string) =>
   ({
     type: REMOVE_GROUP,
-    payload: { groupId },
+    payload: { key, groupId },
   } as const);
 
 export const removeGroupSuccessAction = (groupId: string) =>
@@ -86,13 +89,16 @@ export const removeGroupFailedAction = (error: string) =>
   } as const);
 
 // Change
-export const changeGroupTitleAction = (groupId: string, groupTitle: string) =>
+export const changeGroupTitleAction = (key: string, groupId: string, groupTitle: string) =>
   ({
     type: CHANGE_GROUP_TITLE,
-    payload: { groupId, groupTitle },
+    payload: { key, groupId, groupTitle },
   } as const);
 
-export const changeGroupTitleSuccessAction = (groupId: string, groupTitle: string) =>
+export const changeGroupTitleSuccessAction = (
+  groupId: string,
+  groupTitle: string
+) =>
   ({
     type: CHANGE_GROUP_TITLE_SUCCESS,
     payload: { groupId, groupTitle },

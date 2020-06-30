@@ -20,7 +20,6 @@ export const initialState = {
     isAuth: false,
     appKey: "",
 
-    isConnection: false,
     isLoading: false,
 
     error: "",

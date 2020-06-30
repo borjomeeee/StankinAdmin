@@ -17,10 +17,11 @@ type IEditGroupModalComponent = {
 };
 
 const EditGroupModalComponent = ({
+  app,
   group,
   groups,
   editGroup,
-  onClose
+  onClose,
 }: ConnectedProps<typeof connector> & IEditGroupModalComponent) => {
   const [groupTitle, setGroupTitle] = useState(group.title);
   const [groupTitleError, setGroupTitleError] = useState("");
@@ -47,8 +48,8 @@ const EditGroupModalComponent = ({
         return;
       }
 
-      editGroup(group.id, groupTitle);  
-      onClose()
+      editGroup(app.appKey, group.id, groupTitle);
+      onClose();
     } else {
       setGroupTitleError("Введите название группы");
     }
@@ -74,12 +75,13 @@ const EditGroupModalComponent = ({
 };
 
 const mapStateToProps = (state: IInitialState) => ({
+  app: state.app,
   groups: state.groups,
 });
 
 const mapDispatchToProps = {
-  editGroup: (groupId: string, groupTitle: string) =>
-    changeGroupTitleAction(groupId, groupTitle),
+  editGroup: (key: string, groupId: string, groupTitle: string) =>
+    changeGroupTitleAction(key, groupId, groupTitle),
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

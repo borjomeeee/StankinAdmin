@@ -20,10 +20,11 @@ import { ILesson } from "../models/Lesson.model";
 import { ILessonTime } from "../models/LessonTime.model";
 
 export interface IDownloadLessonsSagaProps extends IAction {
-  payload: { groupId: string };
+  payload: { key: string; groupId: string };
 }
 export interface ICreateLessonSaga extends IAction {
   payload: {
+    key: string;
     groupId: string;
     lessonTitle: string;
     studentGroupType: StudentGroupType;
@@ -35,17 +36,17 @@ export interface ICreateLessonSaga extends IAction {
   };
 }
 export interface IRemoveLessonSaga extends IAction {
-  payload: { groupId: string; lessonId: string };
+  payload: { key: string; groupId: string; lessonId: string };
 }
 export interface IChangeLessonSaga extends IAction {
-  payload: { lesson: ILesson };
+  payload: { key: string; lesson: ILesson };
 }
 
 // Downloads
-export const downloadLessonsAction = (groupId: string) =>
+export const downloadLessonsAction = (key: string, groupId: string) =>
   ({
     type: DOWNLOAD_LESSONS,
-    payload: { groupId },
+    payload: { key, groupId },
   } as const);
 
 export const downloadLessonsSuccessAction = (
@@ -65,6 +66,7 @@ export const downloadLessonsFailedAction = (error: string) =>
 
 // Adding
 export const createLessonAction = (
+  key: string,
   groupId: string,
   lessonTitle: string,
   studentGroupType: StudentGroupType,
@@ -77,6 +79,7 @@ export const createLessonAction = (
   ({
     type: CREATE_LESSON,
     payload: {
+      key,
       groupId,
       lessonTitle,
       studentGroupType,
@@ -101,10 +104,10 @@ export const createLessonFailedAction = (error: string) =>
   } as const);
 
 // Remove
-export const removeLessonAction = (groupId: string, lessonId: string) =>
+export const removeLessonAction = (key: string, groupId: string, lessonId: string) =>
   ({
     type: REMOVE_LESSON,
-    payload: { groupId, lessonId },
+    payload: { key, groupId, lessonId },
   } as const);
 
 export const removeLessonSuccessAction = (groupId: string, lessonId: string) =>
@@ -120,10 +123,10 @@ export const removeLessonFailedAction = (error: string) =>
   } as const);
 
 // Change
-export const changeLessonAction = (lesson: ILesson) =>
+export const changeLessonAction = (key: string, lesson: ILesson) =>
   ({
     type: CHANGE_LESSON,
-    payload: { lesson },
+    payload: { key, lesson },
   } as const);
 
 export const changeLessonSuccessAction = (lesson: ILesson) =>
