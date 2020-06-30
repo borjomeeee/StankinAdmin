@@ -2,6 +2,10 @@
 
 In the project directory, you can run:
 
+### `npm i`
+
+For install all dependencies
+
 ### `npm start`
 
 For run project on local server
