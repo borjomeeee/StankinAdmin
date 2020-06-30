@@ -25,6 +25,9 @@ import {
   CHANGE_LESSON,
   CHANGE_LESSON_SUCCESS,
   CHANGE_LESSON_FAILED,
+  CHECK_ADMIN_KEY,
+  CHECK_ADMIN_KEY_SUCCESS,
+  CHECK_ADMIN_KEY_FAILED,
 } from "../utils/constants";
 
 import { IAppActions } from "../utils/types";
@@ -34,6 +37,18 @@ export default (
   action: IAppActions
 ): IAppInitialState => {
   switch (action.type) {
+    case CHECK_ADMIN_KEY:
+      return { ...state, isAuth: false, isLoading: true };
+    case CHECK_ADMIN_KEY_SUCCESS:
+      return { ...state, isAuth: true, isLoading: false };
+    case CHECK_ADMIN_KEY_FAILED:
+      return {
+        ...state,
+        isAuth: false,
+        isLoading: false,
+        error: action.payload.error,
+      };
+
     case DOWNLOAD_GROUPS:
       return { ...state, isLoading: true };
     case DOWNLOAD_GROUPS_SUCCESS:
@@ -53,7 +68,7 @@ export default (
     case REMOVE_GROUP_SUCCESS:
       return { ...state, isLoading: false };
     case REMOVE_GROUP_FAILED:
-      return { ...state, error: action.payload.error };
+      return { ...state, isLoading: false, error: action.payload.error };
 
     case DOWNLOAD_LESSONS:
       return { ...state, isLoading: true };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -6,7 +6,10 @@ import "./Main.screen.scss";
 
 import { IInitialState } from "../redux/store";
 
-import { removeGroupAction } from "../actions/Groups.actions";
+import {
+  removeGroupAction,
+  downloadGroupsAction,
+} from "../actions/Groups.actions";
 
 import MainFilterBar from "../components/MainFilterBar.component";
 import MainGroupComponent from "../components/MainGroup.component";
@@ -24,8 +27,13 @@ const MainScreen = ({
   mainScreen,
 
   removeGroup,
+  downloadGroups,
 }: ConnectedProps<typeof connector>) => {
   const [currEditGroup, setCurrEditGroup] = useState<IGroup | null>(null);
+
+  useEffect(() => {
+    downloadGroups();
+  }, [downloadGroups]);
 
   // Handlers
   const onRemoveGroup = (groupId: string) => {
@@ -103,6 +111,7 @@ const mapStateToProps = (state: IInitialState) => ({
 
 const mapDispatchToProps = {
   removeGroup: (groupId: string) => removeGroupAction(groupId),
+  downloadGroups: () => downloadGroupsAction(),
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

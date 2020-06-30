@@ -5,12 +5,13 @@ import "./Auth.screen.scss";
 
 import LabeledInputComponent from "../components/LabeledInput.component";
 import ButtonComponent from "../components/Button.component";
+import { checkAdminKeyAction } from "../actions/App.actions";
 
-const AuthScreen = ({}: ConnectedProps<typeof connector>) => {
+const AuthScreen = ({ checkKey }: ConnectedProps<typeof connector>) => {
   const [keyInputValue, setKeyInputValue] = useState("");
 
   const onSubmitAuth = () => {
-    console.log("Войти");
+    checkKey(keyInputValue);
   };
 
   return (
@@ -36,7 +37,9 @@ const AuthScreen = ({}: ConnectedProps<typeof connector>) => {
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  checkKey: (key: string) => checkAdminKeyAction(key),
+};
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

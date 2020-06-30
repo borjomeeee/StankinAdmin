@@ -32,6 +32,12 @@ import {
 
 import { changeSearchLessonsNameAction } from "../actions/GroupScreen.actions";
 
+import {
+  checkAdminKeyAction,
+  checkAdminKeySuccessAction,
+  checkAdminKeyFailedAction,
+} from "../actions/App.actions";
+
 export type IAppActions =
   | ReturnType<typeof downloadGroupsAction>
   | ReturnType<typeof downloadGroupsSuccessAction>
@@ -56,7 +62,10 @@ export type IAppActions =
   | ReturnType<typeof removeLessonFailedAction>
   | ReturnType<typeof changeLessonAction>
   | ReturnType<typeof changeLessonSuccessAction>
-  | ReturnType<typeof changeLessonFailedAction>;
+  | ReturnType<typeof changeLessonFailedAction>
+  | ReturnType<typeof checkAdminKeyAction>
+  | ReturnType<typeof checkAdminKeySuccessAction>
+  | ReturnType<typeof checkAdminKeyFailedAction>;
 
 // MainScreen
 export type IMainScreenActions = ReturnType<typeof changeSearchGroupNameAction>;

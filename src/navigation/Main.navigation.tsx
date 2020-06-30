@@ -1,26 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect, ConnectedProps } from "react-redux";
 
+import { IInitialState } from "../redux/store";
+
 import MainScreen from "../screens/Main.screen";
 import GroupScreen from "../screens/Group.screen";
+import AuthScreen from "../screens/Auth.screen";
 
 import CommonHeaderComponent from "../components/Header.component";
 
-import { downloadGroupsAction } from "../actions/Groups.actions";
-import { IInitialState } from "../redux/store";
-import { useState } from "react";
 import ModalTemplate from "../templates/Modal.template";
-import AuthScreen from "../screens/Auth.screen";
 
-const MainNavigation = ({
-  app,
-  downloadGroups,
-}: ConnectedProps<typeof connector>) => {
+const MainNavigation = ({ app }: ConnectedProps<typeof connector>) => {
   const [appModalErrorVisible, setAppModalVisible] = useState(false);
-  useEffect(() => {
-    downloadGroups();
-  }, [downloadGroups]);
 
   useEffect(() => {
     setAppModalVisible(true);
@@ -63,9 +56,7 @@ const mapStateToProps = (state: IInitialState) => ({
   app: state.app,
 });
 
-const mapDispatchToProps = {
-  downloadGroups: () => downloadGroupsAction(),
-};
+const mapDispatchToProps = {};
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

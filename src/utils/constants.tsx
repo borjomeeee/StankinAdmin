@@ -7,6 +7,11 @@ export type InferValueTypes<T> = T extends { [key: string]: infer U }
   ? U
   : never;
 
+// App
+export const CHECK_ADMIN_KEY = "CHECK_ADMIN_KEY";
+export const CHECK_ADMIN_KEY_SUCCESS = "CHECK_ADMIN_KEY_SUCCESS";
+export const CHECK_ADMIN_KEY_FAILED = "CHECK_ADMIN_KEY_FAILED";
+
 // MainScreen
 export const CHANGE_SEARCH_GROUP_NAME = "CHANGE_SEARCH_GROUP_NAME";
 
