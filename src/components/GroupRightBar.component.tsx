@@ -28,6 +28,8 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import { checkLessonExist } from "../utils";
+import ModalTemplate from "../templates/Modal.template";
 
 type IGroupRightBar = {
   group: IGroup;
@@ -46,6 +48,7 @@ const GroupRightBar = ({
   );
 
   const [selectedDate, setSelectedDate] = useState(new Date(Date.now()));
+  const [modalExistLessonVisible, setModalExistLessonVisible] = useState(false);
 
   const {
     lessonTitle,
@@ -107,16 +110,31 @@ const GroupRightBar = ({
       checkValidLessonTeacherName() &&
       checkValidLessonDates()
     ) {
-      createLesson(
-        group.id,
-        lessonTitle,
-        studentGroupData.selected,
-        lessonTypeData.selected,
-        lessonDates,
-        new LessonTime(lessonTime),
-        lessonRoom,
-        lessonTeacherName
-      );
+      if (
+        !checkLessonExist(
+          lessons.get(group.id) || [],
+          lessonTitle,
+          studentGroupData.selected,
+          lessonTypeData.selected,
+          new LessonTime(lessonTime),
+          lessonRoom,
+          lessonTeacherName
+        )
+      ) {
+        createLesson(
+          group.id,
+          lessonTitle,
+          studentGroupData.selected,
+          lessonTypeData.selected,
+          lessonDates,
+          new LessonTime(lessonTime),
+          lessonRoom,
+          lessonTeacherName
+        );
+      } else {
+        setModalExistLessonVisible(true);
+        console.log("Такая пара уже существует!");
+      }
     }
   };
   // Icons
@@ -241,9 +259,7 @@ const GroupRightBar = ({
             {lessonDatesError === "" ? (
               <DatesCards />
             ) : (
-              <div className="error-message">
-                {lessonDatesError}
-              </div>
+              <div className="error-message">{lessonDatesError}</div>
             )}
           </div>
         </div>
@@ -251,6 +267,15 @@ const GroupRightBar = ({
         <div className="section__child">
           <ButtonComponent label="Добавить" onClick={onAddLesson} />
         </div>
+
+        {modalExistLessonVisible && (
+          <ModalTemplate
+            onClose={setModalExistLessonVisible.bind(null, false)}
+            title="Предупреждение"
+          >
+            <div className="modal__text">Такая пара уже существует!</div>
+          </ModalTemplate>
+        )}
       </div>
     </div>
   );
