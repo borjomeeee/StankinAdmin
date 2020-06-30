@@ -28,7 +28,9 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+
 import { checkLessonExist } from "../utils";
+
 import ModalTemplate from "../templates/Modal.template";
 
 type IGroupRightBar = {

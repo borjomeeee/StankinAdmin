@@ -17,6 +17,7 @@ import AppReducer from "../reducers/App.reducer";
 
 export const initialState = {
   app: {
+    isAuth: false,
     appKey: "",
 
     isConnection: false,

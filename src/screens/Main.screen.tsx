@@ -11,13 +11,13 @@ import { removeGroupAction } from "../actions/Groups.actions";
 import MainFilterBar from "../components/MainFilterBar.component";
 import MainGroupComponent from "../components/MainGroup.component";
 import EditGroupModalComponent from "../components/EditGroupModal.component";
+import MainRightBarComponent from "../components/MainRightBar.component";
 
 import EditRemoveHOC from "../HOCs/EditRemove.HOC";
 
 import { IGroup } from "../models/Group.model";
 
 import ModalTemplate from "../templates/Modal.template";
-import MainRightBarComponent from "../components/MainRightBar.component";
 
 const MainScreen = ({
   groups,

@@ -1,0 +1,29 @@
+.auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  &__container {
+    width: 400px;
+
+    margin-bottom: 150px;
+  }
+
+  &__title {
+    font-weight: bold;
+    font-size: 24px;
+
+    margin-bottom: 20px;
+  }
+
+  &__submit {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    margin-top: 20px;
+  }
+}

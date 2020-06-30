@@ -1,8 +1,12 @@
 import React, { useMemo, useState } from "react";
+import { connect, ConnectedProps } from "react-redux";
 
 import "./EditLessonModal.component.scss";
 
+import { IInitialState } from "../redux/store";
+
 import { ILesson } from "../models/Lesson.model";
+import { LessonTime } from "../models/LessonTime.model";
 
 import useLesson, { time } from "../hooks/useLesson.hook";
 
@@ -10,6 +14,7 @@ import LabeledInputComponent from "./LabeledInput.component";
 import FilterSelectComponent from "./FilterSelect.component";
 import IconedInputComponent from "./IconedInput.component";
 import DateMiniCardComponent from "./DateMiniCard.component";
+import ButtonComponent from "./Button.component";
 
 import Room from "@material-ui/icons/Room";
 import School from "@material-ui/icons/School";
@@ -19,11 +24,9 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import ButtonComponent from "./Button.component";
+
 import { checkLessonExist } from "../utils";
-import { IInitialState } from "../redux/store";
-import { connect, ConnectedProps } from "react-redux";
-import { LessonTime } from "../models/LessonTime.model";
+
 import { changeLessonAction } from "../actions/Lessons.actions";
 
 type IEditLessonModalComponent = {

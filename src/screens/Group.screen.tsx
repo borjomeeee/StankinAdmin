@@ -4,8 +4,12 @@ import { connect, ConnectedProps } from "react-redux";
 
 import "./Group.screen.scss";
 
+import { IInitialState } from "../redux/store";
+
 import GroupFilterBarComponent from "../components/GroupFilterBar.component";
 import GroupLessonCardComponent from "../components/GroupLessonCard.component";
+import EditLessonModalComponent from "../components/EditLessonModal.component";
+import GroupRightBarComponent from "../components/GroupRightBar.component";
 
 import { ILesson } from "../models/Lesson.model";
 import { IGroup } from "../models/Group.model";
@@ -17,10 +21,8 @@ import {
   removeLessonAction,
   changeLessonAction,
 } from "../actions/Lessons.actions";
-import { IInitialState } from "../redux/store";
-import GroupRightBarComponent from "../components/GroupRightBar.component";
+
 import ModalTemplate from "../templates/Modal.template";
-import EditLessonModalComponent from "../components/EditLessonModal.component";
 
 type IGroupScreenParamsProps = {
   groupId?: string;
@@ -32,7 +34,7 @@ const GroupScreen = ({
   groupScreen,
   downloadLessons,
   removeLesson,
-  changeLesson
+  changeLesson,
 }: ConnectedProps<typeof connector>) => {
   const history = useHistory();
   const { groupId }: IGroupScreenParamsProps = useParams();
