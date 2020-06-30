@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { connect, ConnectedProps } from "react-redux";
 
@@ -18,6 +18,8 @@ import {
 } from "../actions/Lessons.actions";
 import { IInitialState } from "../redux/store";
 import GroupRightBarComponent from "../components/GroupRightBar.component";
+import ModalTemplate from "../templates/Modal.template";
+import EditLessonModalComponent from "../components/EditLessonModal.component";
 
 type IGroupScreenParamsProps = {
   groupId?: string;
@@ -32,6 +34,8 @@ const GroupScreen = ({
 }: ConnectedProps<typeof connector>) => {
   const history = useHistory();
   const { groupId }: IGroupScreenParamsProps = useParams();
+
+  const [currEditLesson, setCurrEditLesson] = useState<null | ILesson>(null);
 
   useEffect(() => {
     if (groupId) {
@@ -67,7 +71,7 @@ const GroupScreen = ({
         .map((item: ILesson) => (
           <div className="group-lesson" key={item.id}>
             <EditRemoveHOC
-              onEdit={() => console.log("Edit lesson: ", item.id)}
+              onEdit={setCurrEditLesson.bind(null, item)}
               onRemove={() => removeLesson(group.id, item.id)}
             >
               <GroupLessonCardComponent lesson={item} />
@@ -87,6 +91,18 @@ const GroupScreen = ({
       </div>
 
       <GroupRightBarComponent group={group} />
+
+      {currEditLesson && (
+        <ModalTemplate
+          title="Изменение пары"
+          onClose={() => setCurrEditLesson(null)}
+        >
+          <EditLessonModalComponent
+            lesson={currEditLesson}
+            onSubmit={() => setCurrEditLesson(null)}
+          />
+        </ModalTemplate>
+      )}
     </div>
   );
 };

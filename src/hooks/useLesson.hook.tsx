@@ -4,6 +4,9 @@ import { LessonType, StudentGroupType } from "../utils/enums";
 
 import useDefaultInput from "./useDefaultInput.hook";
 
+import { ILesson } from "../models/Lesson.model";
+
+// Переделать возможность выбора времени пары
 export const time = new Map<string, number>();
 time.set("8:30 - 10:10", 1);
 time.set("10:20 - 12:00", 2);
@@ -14,8 +17,17 @@ time.set("18:00 - 19:30", 6);
 time.set("19:40 - 21:10", 7);
 time.set("21:20 - 22:50", 8);
 
-const useGroup = () => {
-  const [lessonDates, setLessonDates] = useState<Date[]>([]);
+const useLesson = (lesson?: ILesson) => {
+  const [lessonDates, setLessonDates] = useState<Date[]>(lesson?.dates || []);
+  const [lessonDatesError, setLessonDatesError] = useState("");
+
+  const checkValidLessonDates = (): boolean => {
+    if (lessonDates.length === 0) {
+      setLessonDatesError("Выберите хотя бы одну дату");
+      return false;
+    }
+    return true;
+  };
 
   const [
     lessonTitle,
@@ -23,7 +35,7 @@ const useGroup = () => {
     setLessonTitleError,
     handleChangeLessonTitle,
     checkValidLessonTitle,
-  ] = useDefaultInput("");
+  ] = useDefaultInput(lesson?.title || "");
 
   const [
     lessonRoom,
@@ -31,7 +43,7 @@ const useGroup = () => {
     setLessonRoomError,
     handleChangeLessonRoom,
     checkValidLessonRoom,
-  ] = useDefaultInput("", false);
+  ] = useDefaultInput(lesson?.place || "", false);
 
   const [
     lessonTeacherName,
@@ -39,7 +51,7 @@ const useGroup = () => {
     setLessonTeacherNameError,
     handleChangeLessonTeacherName,
     checkValidLessonTeacherName,
-  ] = useDefaultInput("", false);
+  ] = useDefaultInput(lesson?.teacher || "", false);
 
   const [lessonTypeData, setLessonTypeData] = useState({
     data: [
@@ -48,16 +60,18 @@ const useGroup = () => {
       LessonType.LAB,
       LessonType.SEMINAR,
     ],
-    selected: LessonType.NONE,
+    selected: lesson?.type || LessonType.NONE,
   });
   const [studentGroupData, setStudentGroupData] = useState({
     data: [StudentGroupType.NONE, StudentGroupType.A, StudentGroupType.B],
-    selected: StudentGroupType.NONE,
+    selected: lesson?.studentGroup || StudentGroupType.NONE,
   });
 
   const [lessonTimeData, setLessonTimeData] = useState({
     data: Array.from(time.keys()),
-    selected: Array.from(time.keys())[0],
+    selected: lesson
+      ? `${lesson.time.startAt} - ${lesson.time.endAt}`
+      : Array.from(time.keys())[0],
   });
 
   const handleChangeLessonType = (value: string) => {
@@ -77,6 +91,15 @@ const useGroup = () => {
 
   const handleAddLessonDate = (date: Date) => {
     setLessonDates([...lessonDates, date]);
+  };
+
+  const handleRemoveLessonDate = (date: Date) => {
+    setLessonDates(
+      lessonDates.filter(
+        (currDate: Date) =>
+          currDate.toLocaleDateString() !== date.toLocaleDateString()
+      )
+    );
   };
 
   return {
@@ -99,8 +122,12 @@ const useGroup = () => {
     checkValidLessonTeacherName,
 
     lessonDates,
-    setLessonDates,
-    
+    lessonDatesError,
+    setLessonDatesError,
+    handleAddLessonDate,
+    handleRemoveLessonDate,
+    checkValidLessonDates,
+
     lessonTypeData,
     studentGroupData,
     lessonTimeData,
@@ -108,8 +135,7 @@ const useGroup = () => {
     handleChangeLessonType,
     handleChangeStudentGroup,
     handleChangeLessonTime,
-    handleAddLessonDate,
   };
 };
 
-export default useGroup;
+export default useLesson;

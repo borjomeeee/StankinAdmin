@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from "react-redux";
 
 import { IInitialState } from "../redux/store";
 
-import useGroup, { time } from "../hooks/useGroup.hook";
+import useLesson, { time } from "../hooks/useLesson.hook";
 
 import Search from "@material-ui/icons/Search";
 import Room from "@material-ui/icons/Room";
@@ -46,7 +46,6 @@ const GroupRightBar = ({
   );
 
   const [selectedDate, setSelectedDate] = useState(new Date(Date.now()));
-  const [lessonDatesError, setLessonDatesError] = useState("");
 
   const {
     lessonTitle,
@@ -68,7 +67,12 @@ const GroupRightBar = ({
     checkValidLessonTeacherName,
 
     lessonDates,
-    setLessonDates,
+    lessonDatesError,
+    setLessonDatesError,
+    handleAddLessonDate,
+    handleRemoveLessonDate,
+    checkValidLessonDates,
+
     lessonTypeData,
     studentGroupData,
     lessonTimeData,
@@ -76,20 +80,11 @@ const GroupRightBar = ({
     handleChangeLessonType,
     handleChangeStudentGroup,
     handleChangeLessonTime,
-    handleAddLessonDate,
-  } = useGroup();
+  } = useLesson();
 
   const onSearchLessonInputEnter = () => {
     if (searchLessonInputText !== groupScreen.searchLessonText)
       changeSearhLessonName(searchLessonInputText);
-  };
-
-  const checkValidLessonDates = (): boolean => {
-    if (lessonDates.length === 0) {
-      setLessonDatesError("Выберите хотя бы одну дату");
-      return false;
-    }
-    return true;
   };
 
   const onAddLessonDate = (date: Date | null) => {
@@ -124,16 +119,6 @@ const GroupRightBar = ({
       );
     }
   };
-
-  const onRemoveLessonDate = (touchedDate: Date) => {
-    setLessonDates(
-      lessonDates.filter(
-        (date: Date) =>
-          date.toLocaleDateString() !== touchedDate.toLocaleDateString()
-      )
-    );
-  };
-
   // Icons
   const searchLessonTitleIcon = useMemo(() => {
     return <Search style={{ fontSize: 24 }} />;
@@ -153,7 +138,7 @@ const GroupRightBar = ({
         <DateMiniCardComponent
           key={index}
           date={item}
-          onRemove={() => onRemoveLessonDate(item)}
+          onRemove={handleRemoveLessonDate.bind(null, item)}
         />
       ))}
     </>
@@ -256,7 +241,7 @@ const GroupRightBar = ({
             {lessonDatesError === "" ? (
               <DatesCards />
             ) : (
-              <div className="right-bar__dates-card-error">
+              <div className="error-message">
                 {lessonDatesError}
               </div>
             )}
