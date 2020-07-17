@@ -12,6 +12,7 @@ import CommonHeaderComponent from "../components/Header.component";
 
 import ModalTemplate from "../templates/Modal.template";
 
+// TODO: Отвязать навигацию от редакса + создать хуки для управления отображением модалки и лоадера
 const MainNavigation = ({ app }: ConnectedProps<typeof connector>) => {
   const [appModalErrorVisible, setAppModalVisible] = useState(false);
 

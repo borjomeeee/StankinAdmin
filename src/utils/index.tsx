@@ -32,6 +32,19 @@ export const getDatesFromString = (dates: string) => {
   });
 };
 
+export const getStringFromDates = (dates: Date[]) => {
+  return dates
+    .map((date: Date) => {
+      const day = date.getDate().toString();
+      const month = (date.getMonth() + 1).toString();
+
+      return `${day.length === 1 ? "0" : ""}${day}/${
+        month.length === 1 ? "0" : ""
+      }${month}`;
+    })
+    .join(",");
+};
+
 export const checkValueInEnum = <T, G>(value: T, enumArr: G) => {
   return (Object.values(enumArr) as T[]).includes(value);
 };
@@ -50,6 +63,21 @@ export const getLessonTypeFromString = (type: string) => {
   }
 };
 
+export const getStringFromLessonType = (type: LessonType) => {
+  switch (type) {
+    case LessonType.LECTURE:
+      return "лекции";
+    case LessonType.LAB:
+      return "лабораторные занятия";
+    case LessonType.SEMINAR:
+      return "семинар";
+    case LessonType.NONE:
+      return "";
+    default:
+      throw new Error();
+  }
+};
+
 export const getStudentGroupFromString = (studentGroup: string) => {
   studentGroup = studentGroup.toUpperCase();
   switch (studentGroup) {
@@ -59,5 +87,18 @@ export const getStudentGroupFromString = (studentGroup: string) => {
       return StudentGroupType.B;
     default:
       return StudentGroupType.NONE;
+  }
+};
+
+export const getStringFromStudentGroup = (studentGroup: StudentGroupType) => {
+  switch (studentGroup) {
+    case StudentGroupType.A:
+      return "А";
+    case StudentGroupType.B:
+      return "Б";
+    case StudentGroupType.NONE:
+      return "";
+    default:
+      throw new Error();
   }
 };

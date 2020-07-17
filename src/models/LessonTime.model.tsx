@@ -1,12 +1,17 @@
 export interface ILessonTime {
   startAt: string;
   endAt: string;
+
+  num: number;
 }
 
 export class LessonTime implements ILessonTime {
   startAt: string;
   endAt: string;
+
+  num: number;
   constructor(num: number) {
+    this.num = num;
     switch (num) {
       case 1:
         this.startAt = "8:30";

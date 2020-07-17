@@ -28,6 +28,9 @@ import {
   getDatesFromString,
   getLessonTypeFromString,
   getStudentGroupFromString,
+  getStringFromLessonType,
+  getStringFromStudentGroup,
+  getStringFromDates,
 } from "../utils";
 
 import Lesson, { ILesson } from "../models/Lesson.model";
@@ -82,28 +85,43 @@ export function* downloadLessonsSaga({ payload }: IDownloadLessonsSagaProps) {
 
 export function* createLessonSaga({ payload }: ICreateLessonSaga) {
   try {
-    yield delay(1000);
-    // SEND DATA ABOUT LESSON TO SERVER AND GET NEW LESSON OBJECT OR ERROR
+    const lesson = {
+      title: payload.lessonTitle,
+      type: getStringFromLessonType(payload.lessonType),
+      user_group: getStringFromStudentGroup(payload.studentGroupType),
+      room: payload.lessonPlace,
+      teacher: payload.teacher,
+      dates: getStringFromDates(payload.lessonDates),
+      num: payload.time.num,
+      group_id: payload.groupId,
+    };
 
-    let ok = true;
-    let message = "Ошибка создания пары";
+    const res = yield fetch(`http://localhost:5000/api/admin/create-lesson`, {
+      method: "POST",
+      body: JSON.stringify({ key: payload.key, lesson }),
+    });
 
-    let lesson: ILesson = new Lesson(
-      uuidv4(),
-      payload.lessonTitle,
-      payload.teacher,
-      payload.lessonType,
-      payload.lessonDates,
-      payload.time,
-      payload.lessonPlace,
-      payload.studentGroupType,
-      payload.groupId
-    );
+    if (res.status === 200) {
+      const lessonId = yield res.json();
 
-    if (ok) {
-      yield put(createLessonSuccessAction(payload.groupId, lesson));
+      let newLesson: ILesson = new Lesson(
+        lessonId["lesson_id"],
+        payload.lessonTitle,
+        payload.teacher,
+        payload.lessonType,
+        payload.lessonDates,
+        payload.time,
+        payload.lessonPlace,
+        payload.studentGroupType,
+        payload.groupId
+      );
+      yield put(createLessonSuccessAction(payload.groupId, newLesson));
+    } else if (res.status === 401) {
+      const err = yield res.json();
+      checkAdminKeyFailedAction(err);
     } else {
-      yield put(createLessonFailedAction(message));
+      const err = yield res.json();
+      yield put(createLessonFailedAction(err));
     }
   } catch (e) {
     yield put(createLessonFailedAction("Ошибка создания пары"));
