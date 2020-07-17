@@ -57,18 +57,25 @@ export function* downloadGroupsSaga({ payload }: IDownloadGroupsSagaProps) {
 
 export function* addGroupSaga({ payload }: ICreateGroupSaga) {
   try {
-    yield delay(1000);
-    // SEND GROUP DATA TO SERVER AND GET NEW GROUP DATA OR ERROR
+    const res = yield fetch("http://localhost:5000/api/admin/add-group", {
+      method: "POST",
+      body: JSON.stringify({ key: payload.key, groupName: payload.groupName }),
+    });
 
-    let ok = true;
-    let message = "Ошибка добавления группы";
-
-    let group = new Group(uuidv4(), payload.groupName, Date.now());
-
-    if (ok) {
-      yield put(createGroupSuccessAction(group));
+    if (res.status === 200) {
+      const groupData = yield res.json();
+      const newGroup = new Group(
+        groupData["_id"],
+        groupData["name"],
+        groupData["last_update"]
+      );
+      yield put(createGroupSuccessAction(newGroup));
+    } else if (res.status === 401) {
+      const err = yield res.json();
+      checkAdminKeyFailedAction(err);
     } else {
-      yield put(createGroupFailedAction(message));
+      const err = yield res.json();
+      yield put(createGroupFailedAction(err));
     }
   } catch (e) {
     yield put(createGroupFailedAction("Ошибка добавления группы"));
