@@ -84,16 +84,22 @@ export function* addGroupSaga({ payload }: ICreateGroupSaga) {
 
 export function* removeGroupSaga({ payload }: IRemoveGroupSaga) {
   try {
-    yield delay(1000);
-    // SEND GROUP ID TO SERVER AND GET STATUS ANSWER
+    const res = yield fetch(
+      `http://localhost:5000/api/admin/remove-group/${payload.groupId}`,
+      {
+        method: "POST",
+        body: JSON.stringify({ key: payload.key }),
+      }
+    );
 
-    let ok = true;
-    let message = "Ошибка удаления группы";
-
-    if (ok) {
+    if (res.status === 200) {
       yield put(removeGroupSuccessAction(payload.groupId));
+    } else if (res.status === 401) {
+      const err = yield res.json();
+      checkAdminKeyFailedAction(err);
     } else {
-      yield put(removeGroupFailedAction(message));
+      const err = yield res.json();
+      yield put(removeGroupFailedAction(err));
     }
   } catch (e) {
     yield put(removeGroupFailedAction("Ошибка удаления группы"));
