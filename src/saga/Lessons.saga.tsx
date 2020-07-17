@@ -1,5 +1,4 @@
-import { takeEvery, delay, put } from "redux-saga/effects";
-import { v4 as uuidv4 } from "uuid";
+import { takeEvery, put } from "redux-saga/effects";
 
 import {
   DOWNLOAD_LESSONS,
@@ -154,16 +153,32 @@ export function* removeLessonSaga({ payload }: IRemoveLessonSaga) {
 
 export function* changeLessonSaga({ payload }: IChangeLessonSaga) {
   try {
-    yield delay(1000);
-    // SEND DATA TO SERVER AND GET STATUS ANSWER
+    const lesson = {
+      title: payload.lesson.title,
+      type: getStringFromLessonType(payload.lesson.type),
+      user_group: getStringFromStudentGroup(payload.lesson.studentGroup),
+      room: payload.lesson.place,
+      teacher: payload.lesson.teacher,
+      dates: getStringFromDates(payload.lesson.dates),
+      num: payload.lesson.time.num,
+    };
 
-    let ok = true;
-    let message = "Ошибка изменения пары";
+    const res = yield fetch(
+      `http://localhost:5000/api/admin/update-lesson/${payload.lesson.id}`,
+      {
+        method: "POST",
+        body: JSON.stringify({ key: payload.key, lesson }),
+      }
+    );
 
-    if (ok) {
+    if (res.status === 200) {
       yield put(changeLessonSuccessAction(payload.lesson));
+    } else if (res.status === 401) {
+      const err = yield res.json();
+      checkAdminKeyFailedAction(err["err"]);
     } else {
-      yield put(changeLessonFailedAction(message));
+      const err = yield res.json();
+      yield put(changeLessonFailedAction(err["err"]));
     }
   } catch (e) {
     yield put(changeLessonFailedAction("Ошибка изменения пары"));
