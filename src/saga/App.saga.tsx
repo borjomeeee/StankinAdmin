@@ -8,7 +8,7 @@ import {
 
 export function* checkAdminKeySaga({ payload }: ICheckAdminKeySaga) {
   try {
-    const res = yield fetch("http://localhost:5000//api/admin/hello_admin", {
+    const res = yield fetch("http://localhost:5000/api/admin/hello_admin", {
       method: "POST",
       body: JSON.stringify({ key: payload.key }),
     });

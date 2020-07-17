@@ -13,7 +13,9 @@ import {
   IChangeGroupTitleSaga,
   changeGroupTitleSuccessAction,
   changeGroupTitleFailedAction,
+  IDownloadGroupsSagaProps,
 } from "../actions/Groups.actions";
+import { checkAdminKeyFailedAction } from "../actions/App.actions";
 
 import {
   DOWNLOAD_GROUPS,
@@ -24,26 +26,31 @@ import {
 
 import Group from "../models/Group.model";
 
-export function* downloadGroupsSaga() {
+export function* downloadGroupsSaga({ payload }: IDownloadGroupsSagaProps) {
   try {
-    yield delay(1000);
-    // DOWNLOAD DATA FROM SERVER
+    const res = yield fetch("http://localhost:5000/api/admin/load-schedules", {
+      method: "POST",
+      body: JSON.stringify({ key: payload.key }),
+    });
 
-    let ok = true;
-    let message = "Ошибка скачивания раписаний";
+    if (res.status === 200) {
+      const groups = yield res.json();
 
-    const groups = [
-      new Group(uuidv4(), "ИДБ-18-07"),
-      new Group(uuidv4(), "ИДБ-18-06"),
-      new Group(uuidv4(), "ИДБ-18-06"),
-    ];
+      const validGroups = groups.map(
+        (group: any) =>
+          new Group(group["_id"], group["name"], group["last_update"])
+      );
 
-    if (ok) {
-      yield put(downloadGroupsSuccessAction(groups));
+      yield put(downloadGroupsSuccessAction(validGroups));
+    } else if (res.status === 401) {
+      const err = yield res.json();
+      checkAdminKeyFailedAction(err);
     } else {
-      yield put(downloadGroupsFailedAction(message));
+      const err = yield res.json();
+      yield put(downloadGroupsFailedAction(err));
     }
   } catch (e) {
+    console.log(e);
     yield put(downloadGroupsFailedAction("Ошибка скачивания раписаний"));
   }
 }
@@ -56,7 +63,7 @@ export function* addGroupSaga({ payload }: ICreateGroupSaga) {
     let ok = true;
     let message = "Ошибка добавления группы";
 
-    let group = new Group(uuidv4(), payload.groupName);
+    let group = new Group(uuidv4(), payload.groupName, Date.now());
 
     if (ok) {
       yield put(createGroupSuccessAction(group));
