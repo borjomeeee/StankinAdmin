@@ -43,10 +43,10 @@ export function* downloadGroupsSaga({ payload }: IDownloadGroupsSagaProps) {
       yield put(downloadGroupsSuccessAction(validGroups));
     } else if (res.status === 401) {
       const err = yield res.json();
-      checkAdminKeyFailedAction(err);
+      checkAdminKeyFailedAction(err["err"]);
     } else {
       const err = yield res.json();
-      yield put(downloadGroupsFailedAction(err));
+      yield put(downloadGroupsFailedAction(err["errr"]));
     }
   } catch (e) {
     console.log(e);
@@ -71,10 +71,10 @@ export function* addGroupSaga({ payload }: ICreateGroupSaga) {
       yield put(createGroupSuccessAction(newGroup));
     } else if (res.status === 401) {
       const err = yield res.json();
-      checkAdminKeyFailedAction(err);
+      checkAdminKeyFailedAction(err["err"]);
     } else {
       const err = yield res.json();
-      yield put(createGroupFailedAction(err));
+      yield put(createGroupFailedAction(err["err"]));
     }
   } catch (e) {
     yield put(createGroupFailedAction("Ошибка добавления группы"));
@@ -95,10 +95,10 @@ export function* removeGroupSaga({ payload }: IRemoveGroupSaga) {
       yield put(removeGroupSuccessAction(payload.groupId));
     } else if (res.status === 401) {
       const err = yield res.json();
-      checkAdminKeyFailedAction(err);
+      checkAdminKeyFailedAction(err["err"]);
     } else {
       const err = yield res.json();
-      yield put(removeGroupFailedAction(err));
+      yield put(removeGroupFailedAction(err["err"]));
     }
   } catch (e) {
     yield put(removeGroupFailedAction("Ошибка удаления группы"));
@@ -123,10 +123,10 @@ export function* changeTitleGroupSaga({ payload }: IChangeGroupTitleSaga) {
       yield put(changeGroupTitleSuccessAction(group["_id"], group["name"]));
     } else if (res.status === 401) {
       const err = yield res.json();
-      checkAdminKeyFailedAction(err);
+      checkAdminKeyFailedAction(err["err"]);
     } else {
       const err = yield res.json();
-      yield put(changeGroupTitleFailedAction(err));
+      yield put(changeGroupTitleFailedAction(err["err"]));
     }
   } catch (e) {
     yield put(changeGroupTitleFailedAction("Ошибка изменения навания группы"));

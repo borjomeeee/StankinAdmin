@@ -73,10 +73,10 @@ export function* downloadLessonsSaga({ payload }: IDownloadLessonsSagaProps) {
       yield put(downloadLessonsSuccessAction(payload.groupId, validLessons));
     } else if (res.status === 401) {
       const err = yield res.json();
-      checkAdminKeyFailedAction(err);
+      checkAdminKeyFailedAction(err["err"]);
     } else {
       const err = yield res.json();
-      yield put(downloadLessonsFailedAction(err));
+      yield put(downloadLessonsFailedAction(err["err"]));
     }
   } catch (e) {
     yield put(downloadLessonsFailedAction("Ошибка при скачивании пар"));
@@ -118,10 +118,10 @@ export function* createLessonSaga({ payload }: ICreateLessonSaga) {
       yield put(createLessonSuccessAction(payload.groupId, newLesson));
     } else if (res.status === 401) {
       const err = yield res.json();
-      checkAdminKeyFailedAction(err);
+      checkAdminKeyFailedAction(err["err"]);
     } else {
       const err = yield res.json();
-      yield put(createLessonFailedAction(err));
+      yield put(createLessonFailedAction(err["err"]));
     }
   } catch (e) {
     yield put(createLessonFailedAction("Ошибка создания пары"));
@@ -130,16 +130,22 @@ export function* createLessonSaga({ payload }: ICreateLessonSaga) {
 
 export function* removeLessonSaga({ payload }: IRemoveLessonSaga) {
   try {
-    yield delay(1000);
-    // SEND DATA TO SERVER AND GET STATUS ACTION
+    const res = yield fetch(
+      `http://localhost:5000/api/admin/remove-lesson/${payload.lessonId}`,
+      {
+        method: "POST",
+        body: JSON.stringify({ key: payload.key }),
+      }
+    );
 
-    let ok = true;
-    let message = "Ошибка удаления пары";
-
-    if (ok) {
+    if (res.status === 200) {
       yield put(removeLessonSuccessAction(payload.groupId, payload.lessonId));
+    } else if (res.status === 401) {
+      const err = yield res.json();
+      checkAdminKeyFailedAction(err["err"]);
     } else {
-      yield put(removeLessonFailedAction(message));
+      const err = yield res.json();
+      yield put(removeLessonFailedAction(err["err"]));
     }
   } catch (e) {
     yield put(removeLessonFailedAction("Ошибка удаления пары"));

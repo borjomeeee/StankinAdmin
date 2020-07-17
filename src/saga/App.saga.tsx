@@ -17,7 +17,7 @@ export function* checkAdminKeySaga({ payload }: ICheckAdminKeySaga) {
       yield put(checkAdminKeySuccessAction(payload.key));
     } else {
       const err = yield res.json();
-      yield put(checkAdminKeyFailedAction(err));
+      yield put(checkAdminKeyFailedAction(err["err"]));
     }
   } catch (e) {
     yield put(checkAdminKeyFailedAction("Ошибка сервера!"));
