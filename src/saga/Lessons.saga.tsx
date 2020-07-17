@@ -22,59 +22,58 @@ import {
   changeLessonSuccessAction,
   changeLessonFailedAction,
 } from "../actions/Lessons.actions";
+import { checkAdminKeyFailedAction } from "../actions/App.actions";
 
-import { LessonType, StudentGroupType } from "../utils/enums";
+import {
+  getDatesFromString,
+  getLessonTypeFromString,
+  getStudentGroupFromString,
+} from "../utils";
 
 import Lesson, { ILesson } from "../models/Lesson.model";
 import { LessonTime } from "../models/LessonTime.model";
 
 export function* downloadLessonsSaga({ payload }: IDownloadLessonsSagaProps) {
   try {
-    yield delay(1000);
-    // DOWNLOAD LESSONS FROM SERVER
-    let ok = true;
-    let message = "Ошибка при скачивании пар";
+    const res = yield fetch(
+      `http://localhost:5000/api/admin/load-lessons/${payload.groupId}`,
+      {
+        method: "POST",
+        body: JSON.stringify({ key: payload.key }),
+      }
+    );
 
-    let lessons = [
-      new Lesson(
-        uuidv4(),
-        "Технологии программирования",
-        "Иванов Иван Иванович",
-        LessonType.LECTURE,
-        [new Date(2020, 6, 23), new Date(2020, 6, 22), new Date(2020, 6, 21)],
-        new LessonTime(1),
-        "0101",
-        StudentGroupType.NONE,
-        payload.groupId
-      ),
-      new Lesson(
-        uuidv4(),
-        "Политология",
-        "Саркисова Валерия Петровна",
-        LessonType.LAB,
-        [new Date(2020, 5, 23), new Date(2020, 5, 22), new Date(2020, 5, 21)],
-        new LessonTime(2),
-        "0101",
-        StudentGroupType.A,
-        payload.groupId
-      ),
-      new Lesson(
-        uuidv4(),
-        "Архитектура ЭВМ",
-        "Мурашкин Денис Дмитриевич",
-        LessonType.SEMINAR,
-        [new Date(2020, 6, 1), new Date(2020, 6, 2), new Date(2020, 6, 3)],
-        new LessonTime(3),
-        "0101",
-        StudentGroupType.B,
-        payload.groupId
-      ),
-    ];
+    if (res.status === 200) {
+      const lessons = yield res.json();
 
-    if (ok) {
-      yield put(downloadLessonsSuccessAction(payload.groupId, lessons));
+      const validLessons = lessons.map((lesson: any) => {
+        const lessonType = getLessonTypeFromString(lesson["type"]);
+        const lessonDates = getDatesFromString(lesson["dates"]);
+        const lessonTime = new LessonTime(lesson["num"]);
+        const lessonStudentGroup = getStudentGroupFromString(
+          lesson["user_group"]
+        );
+
+        return new Lesson(
+          lesson["_id"],
+          lesson["title"],
+          lesson["teacher"],
+          lessonType,
+          lessonDates,
+          lessonTime,
+          lesson["room"],
+          lessonStudentGroup,
+          lesson["group_id"]
+        );
+      });
+
+      yield put(downloadLessonsSuccessAction(payload.groupId, validLessons));
+    } else if (res.status === 401) {
+      const err = yield res.json();
+      checkAdminKeyFailedAction(err);
     } else {
-      yield put(downloadLessonsFailedAction(message));
+      const err = yield res.json();
+      yield put(downloadLessonsFailedAction(err));
     }
   } catch (e) {
     yield put(downloadLessonsFailedAction("Ошибка при скачивании пар"));
