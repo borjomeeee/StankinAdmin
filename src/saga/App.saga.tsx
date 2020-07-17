@@ -1,4 +1,4 @@
-import { takeLeading, delay, put } from "redux-saga/effects";
+import { takeLeading, put } from "redux-saga/effects";
 import { CHECK_ADMIN_KEY } from "../utils/constants";
 import {
   ICheckAdminKeySaga,
@@ -8,19 +8,19 @@ import {
 
 export function* checkAdminKeySaga({ payload }: ICheckAdminKeySaga) {
   try {
-    yield delay(1000);
-    // SEND KEY TO SERVER AND GET STATUS CODE
+    const res = yield fetch("http://localhost:5000//api/admin/hello_admin", {
+      method: "POST",
+      body: JSON.stringify({ key: payload.key }),
+    });
 
-    let ok = true;
-    let message = "Неверный ключ";
-
-    if (ok) {
+    if (res.status === 200) {
       yield put(checkAdminKeySuccessAction(payload.key));
     } else {
-      yield put(checkAdminKeyFailedAction(message));
+      const err = yield res.json();
+      yield put(checkAdminKeyFailedAction(err));
     }
   } catch (e) {
-    yield put(checkAdminKeyFailedAction("Неверный ключ"));
+    yield put(checkAdminKeyFailedAction("Ошибка сервера!"));
   }
 }
 
