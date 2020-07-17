@@ -1,5 +1,4 @@
-import { takeEvery, put, delay } from "redux-saga/effects";
-import { v4 as uuidv4 } from "uuid";
+import { takeEvery, put } from "redux-saga/effects";
 
 import {
   downloadGroupsSuccessAction,
@@ -108,18 +107,26 @@ export function* removeGroupSaga({ payload }: IRemoveGroupSaga) {
 
 export function* changeTitleGroupSaga({ payload }: IChangeGroupTitleSaga) {
   try {
-    yield delay(1000);
-    // SEND DATA TO SERVER AND GET STATUS ANSWER
+    const res = yield fetch(
+      `http://localhost:5000/api/admin/update-group-title/${payload.groupId}`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          key: payload.key,
+          groupName: payload.groupTitle,
+        }),
+      }
+    );
 
-    let ok = true;
-    let message = "Ошибка изменения навания группы";
-
-    if (ok) {
-      yield put(
-        changeGroupTitleSuccessAction(payload.groupId, payload.groupTitle)
-      );
+    if (res.status === 200) {
+      const group = yield res.json();
+      yield put(changeGroupTitleSuccessAction(group["_id"], group["name"]));
+    } else if (res.status === 401) {
+      const err = yield res.json();
+      checkAdminKeyFailedAction(err);
     } else {
-      yield put(changeGroupTitleFailedAction(message));
+      const err = yield res.json();
+      yield put(changeGroupTitleFailedAction(err));
     }
   } catch (e) {
     yield put(changeGroupTitleFailedAction("Ошибка изменения навания группы"));
