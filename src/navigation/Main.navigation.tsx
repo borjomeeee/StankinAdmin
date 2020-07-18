@@ -11,9 +11,9 @@ import AuthScreen from "../screens/Auth.screen";
 import CommonHeaderComponent from "../components/Header.component";
 
 import { downloadGroupsAction } from "../actions/Groups.actions";
+import { clearErrorAction } from "../actions/App.actions";
 
 import ModalTemplate from "../templates/Modal.template";
-import { clearErrorAction } from "../actions/App.actions";
 
 const MainNavigation = ({
   app,

@@ -1,15 +1,21 @@
 ## Stankin admin panel
 
-In the project directory, you can run:
+Данное приложение предназначено для просмотра и изменения данных из моей персональной бд университета со всеми группами и парами для них. 
 
-### `npm i`
+> Бд ипользуется приложением **Stankin Mobile** для удобного взаимодействия с расписанием любого студента вуза
 
-For install all dependencies
+### Команды для сборки
 
-### `npm start`
+```javascript
+// Установка всех зависимостей
+npm install
 
-For run project on local server
+// Сборка релиз версии (папка build)
+npm build
+```
 
-### `npm build`
+Для запуска приложения на локальном сервере используйте команду `npm start`
 
-For build realese version
+### Скриншоты
+
+## 
