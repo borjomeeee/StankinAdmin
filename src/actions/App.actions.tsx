@@ -3,6 +3,7 @@ import {
   IAction,
   CHECK_ADMIN_KEY_SUCCESS,
   CHECK_ADMIN_KEY_FAILED,
+  CLEAR_ERROR,
 } from "../utils/constants";
 
 export interface ICheckAdminKeySaga extends IAction {
@@ -25,4 +26,9 @@ export const checkAdminKeyFailedAction = (error: string) =>
   ({
     type: CHECK_ADMIN_KEY_FAILED,
     payload: { error },
+  } as const);
+
+export const clearErrorAction = () =>
+  ({
+    type: CLEAR_ERROR,
   } as const);

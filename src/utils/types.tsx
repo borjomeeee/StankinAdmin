@@ -36,6 +36,7 @@ import {
   checkAdminKeyAction,
   checkAdminKeySuccessAction,
   checkAdminKeyFailedAction,
+  clearErrorAction,
 } from "../actions/App.actions";
 
 export type IAppActions =
@@ -65,7 +66,8 @@ export type IAppActions =
   | ReturnType<typeof changeLessonFailedAction>
   | ReturnType<typeof checkAdminKeyAction>
   | ReturnType<typeof checkAdminKeySuccessAction>
-  | ReturnType<typeof checkAdminKeyFailedAction>;
+  | ReturnType<typeof checkAdminKeyFailedAction>
+  | ReturnType<typeof clearErrorAction>;
 
 // MainScreen
 export type IMainScreenActions = ReturnType<typeof changeSearchGroupNameAction>;

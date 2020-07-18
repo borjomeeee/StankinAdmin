@@ -18,8 +18,6 @@ export const fetchAPI = async (url: string, key: string, data: object = {}) => {
   return { status, data: resData };
 };
 
-// TODO: Испрвать все объявления res на общий data
-// TODO: Переименовать все ошибка саги на информативные
 export default function* rootSaga() {
   yield all([appSaga(), groupsSaga(), lessonsSaga()]);
 }

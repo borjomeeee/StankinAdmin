@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -30,13 +30,8 @@ const MainScreen = ({
   mainScreen,
 
   removeGroup,
-  downloadGroups,
 }: ConnectedProps<typeof connector>) => {
   const [currEditGroup, setCurrEditGroup] = useState<IGroup | null>(null);
-
-  useEffect(() => {
-    downloadGroups(app.appKey);
-  }, [downloadGroups, app.appKey]);
 
   // Handlers
   const onRemoveGroup = (groupId: string) => {

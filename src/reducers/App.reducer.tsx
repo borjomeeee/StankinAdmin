@@ -28,6 +28,7 @@ import {
   CHECK_ADMIN_KEY,
   CHECK_ADMIN_KEY_SUCCESS,
   CHECK_ADMIN_KEY_FAILED,
+  CLEAR_ERROR,
 } from "../utils/constants";
 
 import { IAppActions } from "../utils/types";
@@ -53,6 +54,9 @@ export default (
         isLoading: false,
         error: action.payload.error,
       };
+
+    case CLEAR_ERROR:
+      return { ...state, error: "" };
 
     case DOWNLOAD_GROUPS:
       return { ...state, isLoading: true };
