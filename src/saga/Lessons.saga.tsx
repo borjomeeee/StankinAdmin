@@ -34,51 +34,58 @@ import {
 
 import Lesson, { ILesson } from "../models/Lesson.model";
 import { LessonTime } from "../models/LessonTime.model";
+import { fetchAPI } from "./Root.saga";
 
 export function* downloadLessonsSaga({ payload }: IDownloadLessonsSagaProps) {
   try {
-    const res = yield fetch(
-      `http://localhost:5000/api/admin/load-lessons/${payload.groupId}`,
-      {
-        method: "POST",
-        body: JSON.stringify({ key: payload.key }),
-      }
+    const { status, data } = yield fetchAPI(
+      `/api/admin/load-lessons/${payload.groupId}`,
+      payload.key
     );
 
-    if (res.status === 200) {
-      const lessons = yield res.json();
+    if (status === 200) {
+      if (Array.isArray(data)) {
+        const validLessons = data.map((lesson: any) => {
+          const lessonType = getLessonTypeFromString(lesson["type"]);
+          const lessonDates = getDatesFromString(lesson["dates"]);
+          const lessonTime = new LessonTime(lesson["num"]);
+          const lessonStudentGroup = getStudentGroupFromString(
+            lesson["user_group"]
+          );
 
-      const validLessons = lessons.map((lesson: any) => {
-        const lessonType = getLessonTypeFromString(lesson["type"]);
-        const lessonDates = getDatesFromString(lesson["dates"]);
-        const lessonTime = new LessonTime(lesson["num"]);
-        const lessonStudentGroup = getStudentGroupFromString(
-          lesson["user_group"]
+          return new Lesson(
+            lesson["_id"],
+            lesson["title"],
+            lesson["teacher"],
+            lessonType,
+            lessonDates,
+            lessonTime,
+            lesson["room"],
+            lessonStudentGroup,
+            lesson["group_id"]
+          );
+        });
+
+        yield put(downloadLessonsSuccessAction(payload.groupId, validLessons));
+      } else {
+        yield put(
+          downloadLessonsFailedAction(
+            "[SAGA ERROR] - downloadLessonsSaga: Данные пришли не в виде массива"
+          )
         );
-
-        return new Lesson(
-          lesson["_id"],
-          lesson["title"],
-          lesson["teacher"],
-          lessonType,
-          lessonDates,
-          lessonTime,
-          lesson["room"],
-          lessonStudentGroup,
-          lesson["group_id"]
-        );
-      });
-
-      yield put(downloadLessonsSuccessAction(payload.groupId, validLessons));
-    } else if (res.status === 401) {
-      const err = yield res.json();
-      checkAdminKeyFailedAction(err["err"]);
+      }
+    } else if (status === 401) {
+      yield put(checkAdminKeyFailedAction(data["err"]));
     } else {
-      const err = yield res.json();
-      yield put(downloadLessonsFailedAction(err["err"]));
+      yield put(downloadLessonsFailedAction(data["err"]));
     }
   } catch (e) {
-    yield put(downloadLessonsFailedAction("Ошибка при скачивании пар"));
+    console.error(e);
+    yield put(
+      downloadLessonsFailedAction(
+        "[SAGA ERROR] - downloadLessonsSaga: Ошибка в саге"
+      )
+    );
   }
 }
 
@@ -95,16 +102,15 @@ export function* createLessonSaga({ payload }: ICreateLessonSaga) {
       group_id: payload.groupId,
     };
 
-    const res = yield fetch(`http://localhost:5000/api/admin/create-lesson`, {
-      method: "POST",
-      body: JSON.stringify({ key: payload.key, lesson }),
-    });
+    const { status, data } = yield fetchAPI(
+      `/api/admin/create-lesson`,
+      payload.key,
+      { lesson }
+    );
 
-    if (res.status === 200) {
-      const lessonId = yield res.json();
-
+    if (status === 200) {
       let newLesson: ILesson = new Lesson(
-        lessonId["lesson_id"],
+        data["lesson_id"],
         payload.lessonTitle,
         payload.teacher,
         payload.lessonType,
@@ -115,39 +121,38 @@ export function* createLessonSaga({ payload }: ICreateLessonSaga) {
         payload.groupId
       );
       yield put(createLessonSuccessAction(payload.groupId, newLesson));
-    } else if (res.status === 401) {
-      const err = yield res.json();
-      checkAdminKeyFailedAction(err["err"]);
+    } else if (status === 401) {
+      yield put(checkAdminKeyFailedAction(data["err"]));
     } else {
-      const err = yield res.json();
-      yield put(createLessonFailedAction(err["err"]));
+      yield put(createLessonFailedAction(data["err"]));
     }
   } catch (e) {
-    yield put(createLessonFailedAction("Ошибка создания пары"));
+    console.error(e);
+    yield put(
+      createLessonFailedAction("[SAGA ERROR] - createLessonSaga: Ошибка в саге")
+    );
   }
 }
 
 export function* removeLessonSaga({ payload }: IRemoveLessonSaga) {
   try {
-    const res = yield fetch(
-      `http://localhost:5000/api/admin/remove-lesson/${payload.lessonId}`,
-      {
-        method: "POST",
-        body: JSON.stringify({ key: payload.key }),
-      }
+    const { status, data } = yield fetchAPI(
+      `/api/admin/remove-lesson/${payload.lessonId}`,
+      payload.key
     );
 
-    if (res.status === 200) {
+    if (status === 200) {
       yield put(removeLessonSuccessAction(payload.groupId, payload.lessonId));
-    } else if (res.status === 401) {
-      const err = yield res.json();
-      checkAdminKeyFailedAction(err["err"]);
+    } else if (status === 401) {
+      yield put(checkAdminKeyFailedAction(data["err"]));
     } else {
-      const err = yield res.json();
-      yield put(removeLessonFailedAction(err["err"]));
+      yield put(removeLessonFailedAction(data["err"]));
     }
   } catch (e) {
-    yield put(removeLessonFailedAction("Ошибка удаления пары"));
+    console.error(e);
+    yield put(
+      removeLessonFailedAction("[SAGA ERROR] - removeLessonSaga: Ошибка в саге")
+    );
   }
 }
 
@@ -163,25 +168,26 @@ export function* changeLessonSaga({ payload }: IChangeLessonSaga) {
       num: payload.lesson.time.num,
     };
 
-    const res = yield fetch(
-      `http://localhost:5000/api/admin/update-lesson/${payload.lesson.id}`,
+    const { status, data } = yield fetchAPI(
+      `/api/admin/update-lesson/${payload.lesson.id}`,
+      payload.key,
       {
-        method: "POST",
-        body: JSON.stringify({ key: payload.key, lesson }),
+        lesson,
       }
     );
 
-    if (res.status === 200) {
+    if (status === 200) {
       yield put(changeLessonSuccessAction(payload.lesson));
-    } else if (res.status === 401) {
-      const err = yield res.json();
-      checkAdminKeyFailedAction(err["err"]);
+    } else if (status === 401) {
+      yield put(checkAdminKeyFailedAction(data["err"]));
     } else {
-      const err = yield res.json();
-      yield put(changeLessonFailedAction(err["err"]));
+      yield put(changeLessonFailedAction(data["err"]));
     }
   } catch (e) {
-    yield put(changeLessonFailedAction("Ошибка изменения пары"));
+    console.error(e);
+    yield put(
+      changeLessonFailedAction("[SAGA ERROR] - changeLessonSaga: Ошибка в саге")
+    );
   }
 }
 

@@ -24,112 +24,122 @@ import {
 } from "../utils/constants";
 
 import Group from "../models/Group.model";
+import { fetchAPI } from "./Root.saga";
 
 export function* downloadGroupsSaga({ payload }: IDownloadGroupsSagaProps) {
   try {
-    const res = yield fetch("http://localhost:5000/api/admin/load-schedules", {
-      method: "POST",
-      body: JSON.stringify({ key: payload.key }),
-    });
+    const { status, data } = yield fetchAPI(
+      "/api/admin/load-schedules",
+      payload.key
+    );
 
-    if (res.status === 200) {
-      const groups = yield res.json();
+    if (status === 200) {
+      if (Array.isArray(data)) {
+        const validGroups = data.map(
+          (group: any) =>
+            new Group(group["_id"], group["name"], group["last_update"])
+        );
 
-      const validGroups = groups.map(
-        (group: any) =>
-          new Group(group["_id"], group["name"], group["last_update"])
-      );
-
-      yield put(downloadGroupsSuccessAction(validGroups));
-    } else if (res.status === 401) {
-      const err = yield res.json();
-      checkAdminKeyFailedAction(err["err"]);
+        yield put(downloadGroupsSuccessAction(validGroups));
+      } else {
+        yield put(
+          downloadGroupsFailedAction(
+            "[SAGA ERROR] - downloadGroupsSaga: Данные пришли не в виде массива"
+          )
+        );
+      }
+    } else if (status === 401) {
+      yield put(checkAdminKeyFailedAction(data["err"]));
     } else {
-      const err = yield res.json();
-      yield put(downloadGroupsFailedAction(err["errr"]));
+      yield put(downloadGroupsFailedAction(data["err"]));
     }
   } catch (e) {
-    console.log(e);
-    yield put(downloadGroupsFailedAction("Ошибка скачивания раписаний"));
+    console.error(e);
+    yield put(
+      downloadGroupsFailedAction(
+        "[SAGA ERROR] - downloadGroupsSaga: Ошибка в саге"
+      )
+    );
   }
 }
 
 export function* addGroupSaga({ payload }: ICreateGroupSaga) {
   try {
-    const res = yield fetch("http://localhost:5000/api/admin/add-group", {
-      method: "POST",
-      body: JSON.stringify({ key: payload.key, groupName: payload.groupName }),
-    });
+    const { status, data } = yield fetchAPI(
+      "/api/admin/add-group",
+      payload.key,
+      {
+        groupName: payload.groupName,
+      }
+    );
 
-    if (res.status === 200) {
-      const groupData = yield res.json();
+    if (status === 200) {
       const newGroup = new Group(
-        groupData["_id"],
-        groupData["name"],
-        groupData["last_update"]
+        data["_id"],
+        data["name"],
+        data["last_update"]
       );
       yield put(createGroupSuccessAction(newGroup));
-    } else if (res.status === 401) {
-      const err = yield res.json();
-      checkAdminKeyFailedAction(err["err"]);
+    } else if (status === 401) {
+      yield put(checkAdminKeyFailedAction(data["err"]));
     } else {
-      const err = yield res.json();
-      yield put(createGroupFailedAction(err["err"]));
+      yield put(createGroupFailedAction(data["err"]));
     }
   } catch (e) {
-    yield put(createGroupFailedAction("Ошибка добавления группы"));
+    console.error(e);
+    yield put(
+      createGroupFailedAction("[SAGA ERROR] - addGroupSaga: Ошибка в саге")
+    );
   }
 }
 
 export function* removeGroupSaga({ payload }: IRemoveGroupSaga) {
   try {
-    const res = yield fetch(
-      `http://localhost:5000/api/admin/remove-group/${payload.groupId}`,
-      {
-        method: "POST",
-        body: JSON.stringify({ key: payload.key }),
-      }
+    const { status, data } = yield fetchAPI(
+      `/api/admin/remove-group/${payload.groupId}`,
+      payload.key
     );
 
-    if (res.status === 200) {
+    if (status === 200) {
       yield put(removeGroupSuccessAction(payload.groupId));
-    } else if (res.status === 401) {
-      const err = yield res.json();
-      checkAdminKeyFailedAction(err["err"]);
+    } else if (status === 401) {
+      yield put(checkAdminKeyFailedAction(data["err"]));
     } else {
-      const err = yield res.json();
-      yield put(removeGroupFailedAction(err["err"]));
+      yield put(removeGroupFailedAction(data["err"]));
     }
   } catch (e) {
-    yield put(removeGroupFailedAction("Ошибка удаления группы"));
+    console.error(e);
+    yield put(
+      removeGroupFailedAction("[SAGA ERROR] - removeGroupSaga: Ошибка в саге")
+    );
   }
 }
 
 export function* changeTitleGroupSaga({ payload }: IChangeGroupTitleSaga) {
   try {
-    const res = yield fetch(
-      `http://localhost:5000/api/admin/update-group-title/${payload.groupId}`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          key: payload.key,
-          groupName: payload.groupTitle,
-        }),
-      }
+    const {
+      status,
+      data,
+    } = yield fetchAPI(
+      `/api/admin/update-group-title/${payload.groupId}`,
+      payload.key,
+      { groupName: payload.groupTitle }
     );
 
-    if (res.status === 200) {
-      const group = yield res.json();
-      yield put(changeGroupTitleSuccessAction(group["_id"], group["name"]));
-    } else if (res.status === 401) {
-      const err = yield res.json();
-      checkAdminKeyFailedAction(err["err"]);
+    if (status === 200) {
+      yield put(changeGroupTitleSuccessAction(data["_id"], data["name"]));
+    } else if (status === 401) {
+      yield put(checkAdminKeyFailedAction(data["err"]));
     } else {
-      const err = yield res.json();
-      yield put(changeGroupTitleFailedAction(err["err"]));
+      yield put(changeGroupTitleFailedAction(data["err"]));
     }
   } catch (e) {
-    yield put(changeGroupTitleFailedAction("Ошибка изменения навания группы"));
+    console.error(e);
+    yield put(
+      changeGroupTitleFailedAction(
+        "[SAGA ERROR] - changeTitleGroupSaga: Ошибка в саге"
+      )
+    );
   }
 }
 

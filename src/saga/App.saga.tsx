@@ -6,21 +6,23 @@ import {
   checkAdminKeySuccessAction,
 } from "../actions/App.actions";
 
+import { fetchAPI } from "./Root.saga";
+
 export function* checkAdminKeySaga({ payload }: ICheckAdminKeySaga) {
   try {
-    const res = yield fetch("http://localhost:5000/api/admin/hello_admin", {
-      method: "POST",
-      body: JSON.stringify({ key: payload.key }),
-    });
+    const { status, data } = yield fetchAPI(
+      "/api/admin/hello_admin",
+      payload.key
+    );
 
-    if (res.status === 200) {
+    if (status === 200) {
       yield put(checkAdminKeySuccessAction(payload.key));
     } else {
-      const err = yield res.json();
-      yield put(checkAdminKeyFailedAction(err["err"]));
+      yield put(checkAdminKeyFailedAction(data["err"]));
     }
   } catch (e) {
-    yield put(checkAdminKeyFailedAction("Ошибка сервера!"));
+    console.error(e);
+    yield put(checkAdminKeyFailedAction("[SAGA ERROR] checkAdminKeySaga!"));
   }
 }
 
