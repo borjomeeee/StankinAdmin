@@ -1,18 +1,18 @@
 import React, { useState, useMemo } from "react";
 import { connect, ConnectedProps } from "react-redux";
 
-import { IInitialState } from "../redux/store";
+import { IInitialState } from "../../redux/store";
 
 import Search from "@material-ui/icons/Search";
 
-import IconedInputComponent from "./IconedInput";
-import LabeledInputComponent from "./LabeledInput";
-import ButtonComponent from "./Button";
+import IconedInputComponent from "../IconedInput";
+import LabeledInputComponent from "../LabeledInput";
+import ButtonComponent from "../Button";
 
-import { createGroupAction } from "../actions/Groups.actions";
-import { changeSearchGroupNameAction } from "../actions/MainScreen.actions";
+import { createGroupAction } from "../../actions/Groups.actions";
+import { changeSearchGroupNameAction } from "../../actions/MainScreen.actions";
 
-import { IGroup } from "../models/Group.model";
+import { IGroup } from "../../models/Group.model";
 
 const MainRightBarComponent = ({
   app,

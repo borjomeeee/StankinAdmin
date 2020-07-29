@@ -33,6 +33,11 @@
     "build": "react-scripts build",
     "test": "jest"
   },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./src/setupTests.ts"
+    ]
+  },
   "eslintConfig": {
     "extends": "react-app"
   },

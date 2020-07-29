@@ -9,8 +9,8 @@ import { LessonTime } from "../../models/LessonTime.model";
 import useLesson, { time } from "../../hooks/useLesson.hook";
 
 import LabeledInputComponent from "../LabeledInput";
-import FilterSelectComponent from "./FilterSelect.component";
-import IconedInputComponent from "./IconedInput.component";
+import FilterSelectComponent from "../FilterSelect";
+import IconedInputComponent from "../IconedInput";
 import DateMiniCardComponent from "../DateMiniCard";
 import ButtonComponent from "../Button";
 
@@ -23,9 +23,9 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
-import { checkLessonExist } from "../utils";
+import { checkLessonExist } from "../../utils";
 
-import { changeLessonAction } from "../actions/Lessons.actions";
+import { changeLessonAction } from "../../actions/Lessons.actions";
 
 type IEditLessonModalComponent = {
   lesson: ILesson;

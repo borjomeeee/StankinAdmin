@@ -1,27 +1,27 @@
 import React, { useState, useMemo } from "react";
 import { connect, ConnectedProps } from "react-redux";
 
-import { IInitialState } from "../redux/store";
+import { IInitialState } from "../../redux/store";
 
-import useLesson, { time } from "../hooks/useLesson.hook";
+import useLesson, { time } from "../../hooks/useLesson.hook";
 
 import Search from "@material-ui/icons/Search";
 import Room from "@material-ui/icons/Room";
 import School from "@material-ui/icons/School";
 
-import IconedInputComponent from "./IconedInput.component";
-import LabeledInputComponent from "./LabeledInput.component";
-import FilterSelectComponent from "./FilterSelect";
-import DateMiniCardComponent from "./s";
-import ButtonComponent from "./Button";
+import IconedInputComponent from "../IconedInput";
+import LabeledInputComponent from "../LabeledInput";
+import FilterSelectComponent from "../FilterSelect";
+import DateMiniCardComponent from "../DateMiniCard";
+import ButtonComponent from "../Button";
 
-import { changeSearchLessonsNameAction } from "../actions/GroupScreen.actions";
-import { createLessonAction } from "../actions/Lessons.actions";
+import { changeSearchLessonsNameAction } from "../../actions/GroupScreen.actions";
+import { createLessonAction } from "../../actions/Lessons.actions";
 
-import { IGroup } from "../models/Group.model";
-import { ILessonTime, LessonTime } from "../models/LessonTime.model";
+import { IGroup } from "../../models/Group.model";
+import { ILessonTime, LessonTime } from "../../models/LessonTime.model";
 
-import { StudentGroupType, LessonType } from "../utils/enums";
+import { StudentGroupType, LessonType } from "../../utils/enums";
 
 import {
   MuiPickersUtilsProvider,
@@ -29,9 +29,9 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
-import { checkLessonExist } from "../utils";
+import { checkLessonExist } from "../../utils";
 
-import ModalTemplate from "../templates/Modal";
+import ModalTemplate from "../../templates/Modal";
 
 type IGroupRightBar = {
   group: IGroup;

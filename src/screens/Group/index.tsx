@@ -94,7 +94,10 @@ const GroupScreen = ({
   return (
     <div className="group">
       <div className="filters">
-        <GroupFilterBarComponent label={group.title} />
+        <GroupFilterBarComponent
+          label={group.title}
+          onClick={history.goBack.bind(null)}
+        />
       </div>
       <div className="content group__content">
         <GroupLessons />

@@ -1,17 +1,20 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
 type IGroupFilterBarComponent = {
   label: string;
+  onClick: () => void;
 };
 
-const GroupFilterBarComponent = ({ label }: IGroupFilterBarComponent) => {
-  const history = useHistory();
+const GroupFilterBarComponent = ({
+  label,
+  onClick,
+}: IGroupFilterBarComponent) => {
+  // const history = useHistory();
   return (
     <div className="filter-bar">
-      <div onClick={() => history.goBack()} className="filter-bar__back">
+      <div onClick={() => onClick()} className="filter-bar__back">
         <ArrowBack style={{ fontSize: 24 }} />
       </div>
       <div className="filter-bar__title">{label}</div>
