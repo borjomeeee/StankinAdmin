@@ -1,15 +1,11 @@
 import React from "react";
 
 import "./MainGroup.component.scss";
+import { IGroup } from "../../models/Group.model";
 
-interface IMainGroupComponent {
-  props: React.ComponentProps<"div">;
-  title: string;
-}
-
-const MainGroupComponent = ({ props, title }: IMainGroupComponent) => {
+const MainGroupComponent: React.FC<IGroup> = ({ title }) => {
   return (
-    <div {...props} className="group-card">
+    <div className="group-card">
       <div className="group-card__title">{title}</div>
     </div>
   );

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { Link } from "react-router-dom";
 
 import { IInitialState } from "../../redux/store";
 
@@ -10,17 +9,15 @@ import {
 } from "../../actions/Groups.actions";
 
 import MainFilterBar from "../../components/MainFilterBar";
-import MainGroupComponent from "../../components/MainGroup";
 import EditGroupModalComponent from "../../components/EditGroupModal";
 import MainRightBarComponent from "../../components/MainRightBar";
-
-import EditRemoveHOC from "../../templates/EditRemove";
 
 import { IGroup } from "../../models/Group.model";
 
 import ModalTemplate from "../../templates/Modal";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
+import MainGroupListComponent from "../../components/MainGroupList";
 
 const MainScreen = ({
   app,
@@ -52,43 +49,24 @@ const MainScreen = ({
     );
   }
 
-  const MainGroups = () => (
-    <div className="main__groups">
-      {groups
-        .filter((group: IGroup) =>
-          group.title.startsWith(mainScreen.searchGroupText)
-        )
-        .map((group: IGroup) => (
-          <EditRemoveHOC
-            key={group.id}
-            onEdit={() => onEditGroup(group)}
-            onRemove={() => onRemoveGroup(group.id)}
-          >
-            <Link
-              to={{
-                pathname: `/group/${group.id}`,
-                state: { group },
-              }}
-            >
-              <MainGroupComponent
-                props={{
-                  onClick: () => console.log(`Touched group: ${group.id}`),
-                }}
-                title={group.title}
-              />
-            </Link>
-          </EditRemoveHOC>
-        ))}
-    </div>
+  const currGroups = groups.filter((group: IGroup) =>
+    group.title.startsWith(mainScreen.searchGroupText)
   );
+
   return (
     <div className="main">
-      <div className="filters">
+      <div className="main__filters filters">
         <MainFilterBar />
       </div>
 
       <div className="content main__content">
-        <MainGroups />
+        <div className="main__groups">
+          <MainGroupListComponent
+            groups={currGroups}
+            onEditGroup={onEditGroup}
+            onRemoveGroup={onRemoveGroup}
+          />
+        </div>
       </div>
 
       {currEditGroup && (

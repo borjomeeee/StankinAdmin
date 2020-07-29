@@ -5,7 +5,7 @@ import "./static/styles/common.scss";
 
 import { store } from "./redux/store";
 
-import MainNavigation from "./navigation/Main";
+import MainNavigation from "./navigation/Main.navigation";
 
 // TODO
 

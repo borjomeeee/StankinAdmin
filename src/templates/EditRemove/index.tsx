@@ -4,17 +4,16 @@ import Delete from "@material-ui/icons/Delete";
 import Create from "@material-ui/icons/Create";
 
 type IEditRemoveTemplate = {
-  children: React.ReactChild;
-
   onEdit: () => void;
   onRemove: () => void;
 };
 
-const EditRemoveTemplate = ({
-  children,
+const EditRemoveTemplate: React.FC<IEditRemoveTemplate> = ({
   onEdit,
   onRemove,
-}: IEditRemoveTemplate) => {
+
+  children,
+}) => {
   return (
     <div className="edit-remove__container">
       <div className="edit-remove__child">{children}</div>

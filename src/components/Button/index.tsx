@@ -5,10 +5,17 @@ type IButtonComponent = {
   onClick: () => void;
 };
 
-const ButtonComponent = ({ label, onClick }: IButtonComponent) => {
+const ButtonComponent: React.FC<IButtonComponent> = ({
+  label,
+  onClick,
+  ...props
+}) => {
+  const onTriggerClickEvent = () => onClick();
   return (
-    <div onClick={onClick} className="button">
+    <div onClick={onTriggerClickEvent} className="button">
       <div className="button__text">{label}</div>
+
+      {props.children}
     </div>
   );
 };
