@@ -1,7 +1,5 @@
 import React from "react";
 
-import "./Button.component.scss";
-
 type IButtonComponent = {
   label: string;
   onClick: () => void;

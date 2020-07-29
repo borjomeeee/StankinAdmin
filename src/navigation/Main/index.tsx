@@ -2,18 +2,18 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect, ConnectedProps } from "react-redux";
 
-import { IInitialState } from "../redux/store";
+import { IInitialState } from "../../redux/store";
 
-import MainScreen from "../screens/Main.screen";
-import GroupScreen from "../screens/Group.screen";
-import AuthScreen from "../screens/Auth.screen";
+import MainScreen from "../../screens/Main";
+import GroupScreen from "../../screens/Group";
+import AuthScreen from "../../screens/Auth";
 
-import CommonHeaderComponent from "../components/Header.component";
+import CommonHeaderComponent from "../../components/Header";
 
-import { downloadGroupsAction } from "../actions/Groups.actions";
-import { clearErrorAction } from "../actions/App.actions";
+import { downloadGroupsAction } from "../../actions/Groups.actions";
+import { clearErrorAction } from "../../actions/App.actions";
 
-import ModalTemplate from "../templates/Modal.template";
+import ModalTemplate from "../../templates/Modal";
 
 const MainNavigation = ({
   app,

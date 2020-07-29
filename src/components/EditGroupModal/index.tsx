@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 
-import "./EditGroupModal.component.scss";
+import LabeledInputComponent from "../LabeledInput";
+import ButtonComponent from "../Button";
 
-import LabeledInputComponent from "./LabeledInput.component";
-import ButtonComponent from "./Button.component";
-
-import { IGroup } from "../models/Group.model";
-import { IInitialState } from "../redux/store";
+import { IGroup } from "../../models/Group.model";
+import { IInitialState } from "../../redux/store";
 import { connect, ConnectedProps } from "react-redux";
-import { changeGroupTitleAction } from "../actions/Groups.actions";
+import { changeGroupTitleAction } from "../../actions/Groups.actions";
 
 type IEditGroupModalComponent = {
   group: IGroup;

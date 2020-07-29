@@ -1,12 +1,10 @@
 import React from "react";
 
-import "./GroupLessonCard.component.scss";
+import DateMiniCardComponent from "../DateMiniCard";
 
-import DateMiniCardComponent from "./DateMiniCard.component";
+import { StudentGroupType } from "../../utils/enums";
 
-import { StudentGroupType } from "../utils/enums";
-
-import { ILesson } from "../models/Lesson.model";
+import { ILesson } from "../../models/Lesson.model";
 
 type IGroupLessonCardComponent = {
   lesson: ILesson;

@@ -1,7 +1,5 @@
 import React from "react";
 
-import "./Modal.template.scss";
-
 import Close from "@material-ui/icons/Close";
 
 type IModalTemplate = {

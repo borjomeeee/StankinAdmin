@@ -43,7 +43,7 @@ export type ILessonsInitialState = typeof initialState.lessons;
 export type IMainScreenInitialState = typeof initialState.mainScreen;
 export type IGroupScreenInitialState = typeof initialState.groupScreen;
 
-const reducers = combineReducers({
+export const reducers = combineReducers({
   app: AppReducer,
   groups: GroupsReducer,
   lessons: LessonsReducer,
@@ -61,4 +61,4 @@ export const store = createStore(
 );
 
 // then run the saga
-sagaMiddleware.run(rootSaga);
+// sagaMiddleware.run(rootSaga);

@@ -2,25 +2,23 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { connect, ConnectedProps } from "react-redux";
 
-import "./Group.screen.scss";
+import { IInitialState } from "../../redux/store";
 
-import { IInitialState } from "../redux/store";
+import GroupFilterBarComponent from "../../components/GroupFilterBar";
+import GroupLessonCardComponent from "../../components/GroupLessonCard";
+import EditLessonModalComponent from "../../components/EditLessonModal";
+import GroupRightBarComponent from "../../components/GroupRightBar";
 
-import GroupFilterBarComponent from "../components/GroupFilterBar.component";
-import GroupLessonCardComponent from "../components/GroupLessonCard.component";
-import EditLessonModalComponent from "../components/EditLessonModal.component";
-import GroupRightBarComponent from "../components/GroupRightBar.component";
+import { ILesson } from "../../models/Lesson.model";
+import { IGroup } from "../../models/Group.model";
 
-import { ILesson } from "../models/Lesson.model";
-import { IGroup } from "../models/Group.model";
-
-import EditRemoveHOC from "../HOCs/EditRemove.HOC";
+import EditRemoveHOC from "../../templates/EditRemove";
 import {
   downloadLessonsAction,
   removeLessonAction,
-} from "../actions/Lessons.actions";
+} from "../../actions/Lessons.actions";
 
-import ModalTemplate from "../templates/Modal.template";
+import ModalTemplate from "../../templates/Modal";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 

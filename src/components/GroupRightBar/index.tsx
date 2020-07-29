@@ -11,9 +11,9 @@ import School from "@material-ui/icons/School";
 
 import IconedInputComponent from "./IconedInput.component";
 import LabeledInputComponent from "./LabeledInput.component";
-import FilterSelectComponent from "./FilterSelect.component";
-import DateMiniCardComponent from "./DateMiniCard.component";
-import ButtonComponent from "./Button.component";
+import FilterSelectComponent from "./FilterSelect";
+import DateMiniCardComponent from "./s";
+import ButtonComponent from "./Button";
 
 import { changeSearchLessonsNameAction } from "../actions/GroupScreen.actions";
 import { createLessonAction } from "../actions/Lessons.actions";
@@ -31,7 +31,7 @@ import DateFnsUtils from "@date-io/date-fns";
 
 import { checkLessonExist } from "../utils";
 
-import ModalTemplate from "../templates/Modal.template";
+import ModalTemplate from "../templates/Modal";
 
 type IGroupRightBar = {
   group: IGroup;

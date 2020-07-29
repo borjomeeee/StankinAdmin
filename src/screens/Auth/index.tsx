@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 
-import "./Auth.screen.scss";
+import { IInitialState } from "../../redux/store";
 
-import { IInitialState } from "../redux/store";
+import LabeledInputComponent from "../../components/LabeledInput";
+import ButtonComponent from "../../components/Button";
 
-import LabeledInputComponent from "../components/LabeledInput.component";
-import ButtonComponent from "../components/Button.component";
-
-import { checkAdminKeyAction } from "../actions/App.actions";
+import { checkAdminKeyAction } from "../../actions/App.actions";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 
-import FilterSelect from "./FilterSelect.component";
+import FilterSelect from "../FilterSelect";
 
-import { FilterValuesGroupType } from "../utils/enums";
-import { IInitialState } from "../redux/store";
+import { FilterValuesGroupType } from "../../utils/enums";
+import { IInitialState } from "../../redux/store";
 
 const MainFilterBar = ({ mainScreen }: ConnectedProps<typeof connector>) => {
   const [typeFilterData, setTypeFilterData] = useState({

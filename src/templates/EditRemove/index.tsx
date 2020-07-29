@@ -1,18 +1,20 @@
 import React from "react";
 
-import "./EditRemove.HOC.scss";
-
 import Delete from "@material-ui/icons/Delete";
 import Create from "@material-ui/icons/Create";
 
-type IEditRemoveHOC = {
+type IEditRemoveTemplate = {
   children: React.ReactChild;
 
   onEdit: () => void;
   onRemove: () => void;
 };
 
-const EditRemoveHOC = ({ children, onEdit, onRemove }: IEditRemoveHOC) => {
+const EditRemoveTemplate = ({
+  children,
+  onEdit,
+  onRemove,
+}: IEditRemoveTemplate) => {
   return (
     <div className="edit-remove__container">
       <div className="edit-remove__child">{children}</div>
@@ -34,4 +36,4 @@ const EditRemoveHOC = ({ children, onEdit, onRemove }: IEditRemoveHOC) => {
   );
 };
 
-export default EditRemoveHOC;
+export default EditRemoveTemplate;

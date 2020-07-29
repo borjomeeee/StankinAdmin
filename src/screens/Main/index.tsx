@@ -2,25 +2,23 @@ import React, { useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 
-import "./Main.screen.scss";
-
-import { IInitialState } from "../redux/store";
+import { IInitialState } from "../../redux/store";
 
 import {
   removeGroupAction,
   downloadGroupsAction,
-} from "../actions/Groups.actions";
+} from "../../actions/Groups.actions";
 
-import MainFilterBar from "../components/MainFilterBar.component";
-import MainGroupComponent from "../components/MainGroup.component";
-import EditGroupModalComponent from "../components/EditGroupModal.component";
-import MainRightBarComponent from "../components/MainRightBar.component";
+import MainFilterBar from "../../components/MainFilterBar";
+import MainGroupComponent from "../../components/MainGroup";
+import EditGroupModalComponent from "../../components/EditGroupModal";
+import MainRightBarComponent from "../../components/MainRightBar";
 
-import EditRemoveHOC from "../HOCs/EditRemove.HOC";
+import EditRemoveHOC from "../../templates/EditRemove";
 
-import { IGroup } from "../models/Group.model";
+import { IGroup } from "../../models/Group.model";
 
-import ModalTemplate from "../templates/Modal.template";
+import ModalTemplate from "../../templates/Modal";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 

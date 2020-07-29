@@ -5,9 +5,9 @@ import { IInitialState } from "../redux/store";
 
 import Search from "@material-ui/icons/Search";
 
-import IconedInputComponent from "./IconedInput.component";
-import LabeledInputComponent from "./LabeledInput.component";
-import ButtonComponent from "./Button.component";
+import IconedInputComponent from "./IconedInput";
+import LabeledInputComponent from "./LabeledInput";
+import ButtonComponent from "./Button";
 
 import { createGroupAction } from "../actions/Groups.actions";
 import { changeSearchGroupNameAction } from "../actions/MainScreen.actions";

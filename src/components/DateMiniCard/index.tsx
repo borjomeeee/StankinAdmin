@@ -1,7 +1,5 @@
 import React from "react";
 
-import "./DateMiniCard.component.scss";
-
 import Close from "@material-ui/icons/Close";
 
 type IDateMiniCardComponent = {
@@ -22,7 +20,7 @@ const DateMiniCardComponent = ({ date, onRemove }: IDateMiniCardComponent) => {
       </div>
       {onRemove && (
         <div className="date-card__remove" onClick={onRemove}>
-          <Close style={{ fontSize: 16 }}/>
+          <Close style={{ fontSize: 16 }} />
         </div>
       )}
     </div>

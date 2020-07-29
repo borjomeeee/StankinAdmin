@@ -1,20 +1,18 @@
 import React, { useMemo, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 
-import "./EditLessonModal.component.scss";
+import { IInitialState } from "../../redux/store";
 
-import { IInitialState } from "../redux/store";
+import { ILesson } from "../../models/Lesson.model";
+import { LessonTime } from "../../models/LessonTime.model";
 
-import { ILesson } from "../models/Lesson.model";
-import { LessonTime } from "../models/LessonTime.model";
+import useLesson, { time } from "../../hooks/useLesson.hook";
 
-import useLesson, { time } from "../hooks/useLesson.hook";
-
-import LabeledInputComponent from "./LabeledInput.component";
+import LabeledInputComponent from "../LabeledInput";
 import FilterSelectComponent from "./FilterSelect.component";
 import IconedInputComponent from "./IconedInput.component";
-import DateMiniCardComponent from "./DateMiniCard.component";
-import ButtonComponent from "./Button.component";
+import DateMiniCardComponent from "../DateMiniCard";
+import ButtonComponent from "../Button";
 
 import Room from "@material-ui/icons/Room";
 import School from "@material-ui/icons/School";
