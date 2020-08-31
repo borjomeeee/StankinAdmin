@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./style.scss";
+
 import Close from "@material-ui/icons/Close";
 
 type IDateMiniCardComponent = {

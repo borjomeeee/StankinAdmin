@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./style.scss";
+
 import DateMiniCardComponent from "../DateMiniCard";
 
 import { StudentGroupType } from "../../utils/enums";

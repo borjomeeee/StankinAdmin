@@ -45,17 +45,13 @@ const GroupScreen = ({
     }
   }, [downloadLessons, groupId, app.appKey]);
 
-  const group: IGroup | undefined = useMemo(
-    () =>
-      groupId
-        ? groups.reduce(
-            (acc: undefined | IGroup, item: IGroup) =>
-              acc || (item.id === groupId ? item : acc),
-            undefined
-          )
-        : undefined,
-    [groupId, groups]
-  );
+  const group: IGroup | undefined = groupId
+    ? groups.reduce(
+        (acc: undefined | IGroup, item: IGroup) =>
+          acc || (item.id === groupId ? item : acc),
+        undefined
+      )
+    : undefined;
 
   if (app.isLoading) {
     return (
@@ -93,13 +89,13 @@ const GroupScreen = ({
 
   return (
     <div className="group">
-      <div className="filters">
+      <div className="group__filters filters">
         <GroupFilterBarComponent
           label={group.title}
           onClick={history.goBack.bind(null)}
         />
       </div>
-      <div className="content group__content">
+      <div className="group__content content">
         <GroupLessons />
       </div>
 

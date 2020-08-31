@@ -7,6 +7,7 @@ import appSaga from "./App.saga";
 import config from "./config/config.json";
 
 export const fetchAPI = async (url: string, key: string, data: object = {}) => {
+  console.log(`${config.host}${url}`);
   const response = await fetch(`${config.host}${url}`, {
     method: "POST",
     body: JSON.stringify({ key, ...data }),

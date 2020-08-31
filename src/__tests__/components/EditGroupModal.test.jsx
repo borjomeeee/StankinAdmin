@@ -3,9 +3,6 @@ import { createStore } from "redux";
 import { mount } from "enzyme";
 import { Provider } from "react-redux";
 
-// import Enzyme from "enzyme";
-// import Adapter from "enzyme-adapter-react-16";
-
 import { initialState } from "../../redux/store";
 
 import {
@@ -13,8 +10,6 @@ import {
   EditGroupModalComponent,
   LabeledInputComponent,
 } from "../../components";
-
-// Enzyme.configure({ adapter: new Adapter() });
 
 describe("Edit group modal", () => {
   const appReducer = (
@@ -65,7 +60,6 @@ describe("Edit group modal", () => {
     expect(wrapper.find(LabeledInputComponent).length).toBe(1);
 
     wrapper.find("input").simulate("change", { target: { value: "" } });
-
     wrapper.find(ButtonComponent).simulate("click");
 
     expect(wrapper.find(LabeledInputComponent).prop("error")).toBe(

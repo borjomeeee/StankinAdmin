@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./style.scss";
+
 import { IGroup } from "../../models/Group.model";
 
 const MainGroupComponent: React.FC<IGroup> = ({ title }) => {

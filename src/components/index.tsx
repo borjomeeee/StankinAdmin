@@ -13,8 +13,6 @@ import MainFilterBarComponent from "./MainFilterBar";
 import MainGroupComponent from "./MainGroup";
 import MainRightBarComponent from "./MainRightBar";
 
-import "./style.scss";
-
 export {
   ButtonComponent,
   DateMiniCardComponent,

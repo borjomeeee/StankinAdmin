@@ -1,6 +1,8 @@
 import React, { useMemo, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 
+import "./style.scss";
+
 import { IInitialState } from "../../redux/store";
 
 import { ILesson } from "../../models/Lesson.model";

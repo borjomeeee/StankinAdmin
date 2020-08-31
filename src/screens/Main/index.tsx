@@ -19,13 +19,7 @@ import ModalTemplate from "../../templates/Modal";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MainGroupListComponent from "../../components/MainGroupList";
 
-const MainScreen = ({
-  app,
-  groups,
-  mainScreen,
-
-  removeGroup,
-}: ConnectedProps<typeof connector>) => {
+const MainScreen = ({ app, removeGroup }: ConnectedProps<typeof connector>) => {
   const [currEditGroup, setCurrEditGroup] = useState<IGroup | null>(null);
 
   // Handlers
@@ -49,10 +43,6 @@ const MainScreen = ({
     );
   }
 
-  const currGroups = groups.filter((group: IGroup) =>
-    group.title.startsWith(mainScreen.searchGroupText)
-  );
-
   return (
     <div className="main">
       <div className="main__filters filters">
@@ -62,7 +52,6 @@ const MainScreen = ({
       <div className="content main__content">
         <div className="main__groups">
           <MainGroupListComponent
-            groups={currGroups}
             onEditGroup={onEditGroup}
             onRemoveGroup={onRemoveGroup}
           />
