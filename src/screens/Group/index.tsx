@@ -2,6 +2,8 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { connect, ConnectedProps } from "react-redux";
 
+import "./style.scss";
+
 import { IInitialState } from "../../redux/store";
 
 import GroupFilterBarComponent from "../../components/GroupFilterBar";
