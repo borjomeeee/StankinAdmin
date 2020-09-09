@@ -37,9 +37,15 @@ import {
   checkAdminKeySuccessAction,
   checkAdminKeyFailedAction,
   clearErrorAction,
+  updateSchedulesAction,
+  updateSchedulesSuccessAction,
+  updateSchedulesFailedAction,
 } from "../actions/App.actions";
 
 export type IAppActions =
+  | ReturnType<typeof updateSchedulesAction>
+  | ReturnType<typeof updateSchedulesSuccessAction>
+  | ReturnType<typeof updateSchedulesFailedAction>
   | ReturnType<typeof downloadGroupsAction>
   | ReturnType<typeof downloadGroupsSuccessAction>
   | ReturnType<typeof downloadGroupsFailedAction>

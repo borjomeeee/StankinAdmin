@@ -13,6 +13,7 @@ import {
   changeGroupTitleSuccessAction,
   changeGroupTitleFailedAction,
   IDownloadGroupsSagaProps,
+  downloadGroupsAction,
 } from "../actions/Groups.actions";
 import { checkAdminKeyFailedAction } from "../actions/App.actions";
 
@@ -26,12 +27,16 @@ import {
 import Group from "../models/Group.model";
 import { fetchAPI } from "./Root.saga";
 
-export function* downloadGroupsSaga({ payload }: IDownloadGroupsSagaProps) {
+export function* downloadGroupsSaga({
+  payload,
+}: ReturnType<typeof downloadGroupsAction>) {
   try {
     const { status, data } = yield fetchAPI(
       "/api/admin/load-schedules",
       payload.key
     );
+
+    console.log(data)
 
     if (status === 200) {
       if (Array.isArray(data)) {

@@ -8,4 +8,15 @@
     column-gap: 30px;
     row-gap: 20px;
   }
+
+  &__top-bar {
+    display: flex;
+    flex-direction: row;
+
+    margin-top: 50px;
+    margin-bottom: 30px;
+
+    justify-content: space-between;
+    align-items: center;
+  }
 }

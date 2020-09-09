@@ -10,6 +10,10 @@ import {
   downloadGroupsAction,
 } from "../../actions/Groups.actions";
 
+import { updateSchedulesAction } from "../../actions/App.actions";
+
+import { ButtonComponent } from "../../components";
+
 import MainFilterBar from "../../components/MainFilterBar";
 import EditGroupModalComponent from "../../components/EditGroupModal";
 import MainRightBarComponent from "../../components/MainRightBar";
@@ -21,7 +25,11 @@ import ModalTemplate from "../../templates/Modal";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MainGroupListComponent from "../../components/MainGroupList";
 
-const MainScreen = ({ app, removeGroup }: ConnectedProps<typeof connector>) => {
+const MainScreen = ({
+  app,
+  removeGroup,
+  updateSchedulesAction,
+}: ConnectedProps<typeof connector>) => {
   const [currEditGroup, setCurrEditGroup] = useState<IGroup | null>(null);
 
   // Handlers
@@ -47,8 +55,17 @@ const MainScreen = ({ app, removeGroup }: ConnectedProps<typeof connector>) => {
 
   return (
     <div className="main">
-      <div className="main__filters filters">
-        <MainFilterBar />
+      <div className="main__top-bar">
+        <div className="main__filters filters">
+          <MainFilterBar />
+        </div>
+
+        <div className="main__download">
+          <ButtonComponent
+            label="Обновить расписания"
+            onClick={updateSchedulesAction.bind(null, app.appKey)}
+          />
+        </div>
       </div>
 
       <div className="content main__content">
@@ -86,7 +103,7 @@ const mapStateToProps = (state: IInitialState) => ({
 const mapDispatchToProps = {
   removeGroup: (key: string, groupId: string) =>
     removeGroupAction(key, groupId),
-  downloadGroups: (key: string) => downloadGroupsAction(key),
+  updateSchedulesAction,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

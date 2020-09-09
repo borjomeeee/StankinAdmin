@@ -29,6 +29,9 @@ import {
   CHECK_ADMIN_KEY_SUCCESS,
   CHECK_ADMIN_KEY_FAILED,
   CLEAR_ERROR,
+  UPDATE_SCHEDULES,
+  UPDATE_SCHEDULES_SUCCESS,
+  UPDATE_SCHEDULES_FAILED,
 } from "../utils/constants";
 
 import { IAppActions } from "../utils/types";
@@ -54,6 +57,13 @@ export default (
         isLoading: false,
         error: action.payload.error,
       };
+
+    case UPDATE_SCHEDULES:
+      return { ...state, isLoading: true };
+    case UPDATE_SCHEDULES_SUCCESS:
+      return { ...state, isLoading: false };
+    case UPDATE_SCHEDULES_FAILED:
+      return { ...state, isLoading: false, error: action.payload.error };
 
     case CLEAR_ERROR:
       return { ...state, error: "" };
