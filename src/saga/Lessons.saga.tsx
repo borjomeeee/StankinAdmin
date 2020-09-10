@@ -24,12 +24,10 @@ import {
 import { checkAdminKeyFailedAction } from "../actions/App.actions";
 
 import {
-  getDatesFromString,
   getLessonTypeFromString,
   getStudentGroupFromString,
   getStringFromLessonType,
   getStringFromStudentGroup,
-  getStringFromDates,
 } from "../utils";
 
 import Lesson, { ILesson } from "../models/Lesson.model";
@@ -45,9 +43,10 @@ export function* downloadLessonsSaga({ payload }: IDownloadLessonsSagaProps) {
 
     if (status === 200) {
       if (Array.isArray(data)) {
+        // console.log(data[0]["dates"].map((item: any) => new Date()));
         const validLessons = data.map((lesson: any) => {
           const lessonType = getLessonTypeFromString(lesson["type"]);
-          const lessonDates = getDatesFromString(lesson["dates"]);
+          const lessonDates = lesson["dates"].map((item: number) => new Date(item * 1000));
           const lessonTime = new LessonTime(lesson["num"]);
           const lessonStudentGroup = getStudentGroupFromString(
             lesson["user_group"]
@@ -97,7 +96,7 @@ export function* createLessonSaga({ payload }: ICreateLessonSaga) {
       user_group: getStringFromStudentGroup(payload.studentGroupType),
       room: payload.lessonPlace,
       teacher: payload.teacher,
-      dates: getStringFromDates(payload.lessonDates),
+      dates: payload.lessonDates.map((date: Date) => date.getTime()),
       num: payload.time.num,
       group_id: payload.groupId,
     };
@@ -164,7 +163,7 @@ export function* changeLessonSaga({ payload }: IChangeLessonSaga) {
       user_group: getStringFromStudentGroup(payload.lesson.studentGroup),
       room: payload.lesson.place,
       teacher: payload.lesson.teacher,
-      dates: getStringFromDates(payload.lesson.dates),
+      dates: payload.lesson.dates.map((date: Date) => date.getTime() / 1000),
       num: payload.lesson.time.num,
     };
 

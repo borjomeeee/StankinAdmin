@@ -36,8 +36,6 @@ export function* downloadGroupsSaga({
       payload.key
     );
 
-    console.log(data)
-
     if (status === 200) {
       if (Array.isArray(data)) {
         const validGroups = data.map(

@@ -121,7 +121,8 @@ const GroupRightBar = ({
           lessonTypeData.selected,
           new LessonTime(lessonTime),
           lessonRoom,
-          lessonTeacherName
+          lessonTeacherName,
+          lessonDates
         )
       ) {
         createLesson(

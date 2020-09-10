@@ -110,7 +110,8 @@ const EditLessonModalComponent = ({
           lessonTypeData.selected,
           new LessonTime(lessonTime),
           lessonRoom,
-          lessonTeacherName
+          lessonTeacherName,
+          lessonDates
         )
       ) {
         editLesson(app.appKey, {

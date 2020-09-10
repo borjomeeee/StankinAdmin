@@ -9,7 +9,8 @@ export const checkLessonExist = (
   lessonType: LessonType,
   lessonTime: LessonTime,
   lessonRoom: string,
-  lessonTeacher: string
+  lessonTeacher: string,
+  lessonDates: Date[]
 ): boolean => {
   const numSameLessons = lessons.filter(
     (item: ILesson) =>
@@ -18,7 +19,8 @@ export const checkLessonExist = (
       item.type === lessonType &&
       JSON.stringify(item.time) === JSON.stringify(lessonTime) &&
       item.place === lessonRoom &&
-      item.teacher === lessonTeacher
+      item.teacher === lessonTeacher &&
+      JSON.stringify(item.dates) === JSON.stringify(lessonDates)
   ).length;
 
   return numSameLessons !== 0;

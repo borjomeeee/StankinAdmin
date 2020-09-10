@@ -4,9 +4,10 @@ import groupsSaga from "./Groups.saga";
 import lessonsSaga from "./Lessons.saga";
 import appSaga from "./App.saga";
 
+
+
 export const fetchAPI = async (url: string, key: string, data: object = {}) => {
-  console.log(`${process.env.SERVER_URL}${url}`);
-  const response = await fetch(`${process.env.SERVER_URL}${url}`, {
+  const response = await fetch(`${process.env.REACT_APP_SERVER_HOST}${url}`, {
     method: "POST",
     body: JSON.stringify({ key, ...data }),
   });
@@ -14,7 +15,7 @@ export const fetchAPI = async (url: string, key: string, data: object = {}) => {
   const status = response.status;
   const resData = await response.json();
 
-  return { status, data: resData };
+  return { status, data: resData["data"], message: resData["message"] };
 };
 
 export default function* rootSaga() {
