@@ -1,38 +1,35 @@
 import React from "react";
 
-import TextField from "@material-ui/core/TextField";
+import TextField, { TextFieldProps } from "@material-ui/core/TextField";
 
-type ILabeledInputComponent = {
-  label: string;
-  value: string;
+interface ILabeledInputComponent {
+  errorMsg?: string;
+  onChangeValue: (value: string) => void;
+}
 
-  error?: string;
-  autoFocus?: boolean;
-  onChange: (value: string) => void;
-};
-
-const LabeledInputComponent = ({
+const LabeledInputComponent: React.FC<ILabeledInputComponent & TextFieldProps> = ({
   label,
   value,
 
-  error,
+  errorMsg,
   autoFocus,
-  onChange,
-}: ILabeledInputComponent) => {
+
+  onChangeValue,
+}) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value);
+    onChangeValue(event.target.value);
   };
 
   return (
     <div className="labeled-input">
       <TextField
-        error={error !== undefined && error.length > 1}
-        id={error ? "outlined-error-helper-text" : "outlined-basic"}
+        error={errorMsg !== undefined && errorMsg.length > 1}
+        id={errorMsg ? "outlined-error-helper-text" : "outlined-basic"}
         variant="outlined"
         label={label}
         value={value}
         onChange={handleChange}
-        helperText={error || ""}
+        helperText={errorMsg || ""}
         autoFocus={autoFocus}
         fullWidth
       />

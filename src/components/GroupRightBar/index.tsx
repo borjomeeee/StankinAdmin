@@ -190,8 +190,8 @@ const GroupRightBar = ({
             <LabeledInputComponent
               label="Название пары"
               value={lessonTitle}
-              onChange={handleChangeLessonTitle}
-              error={lessonTitleError}
+              onChangeValue={handleChangeLessonTitle}
+              errorMsg={lessonTitleError}
             />
 
             <FilterSelectComponent

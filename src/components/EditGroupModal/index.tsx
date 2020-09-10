@@ -61,8 +61,8 @@ const EditGroupModalComponent = ({
         <LabeledInputComponent
           label="Название группы"
           value={groupTitle}
-          onChange={onChangeEditGroupTitle}
-          error={groupTitleError}
+          onChangeValue={onChangeEditGroupTitle}
+          errorMsg={groupTitleError}
           autoFocus
         />
       </div>

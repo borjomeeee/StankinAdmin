@@ -92,8 +92,8 @@ const MainRightBarComponent = ({
           <LabeledInputComponent
             label="Название группы"
             value={addGroupInputText}
-            onChange={onChangeAddGroupInputText}
-            error={addGroupInputError}
+            onChangeValue={onChangeAddGroupInputText}
+            errorMsg={addGroupInputError}
           />
         </div>
       </div>

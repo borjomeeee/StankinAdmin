@@ -36,7 +36,7 @@ const AuthScreen = ({ app, checkKey }: ConnectedProps<typeof connector>) => {
           <LabeledInputComponent
             label="Ключ"
             value={keyInputValue}
-            onChange={setKeyInputValue}
+            onChangeValue={setKeyInputValue}
           />
         </div>
 
