@@ -7,14 +7,15 @@ interface ILabeledInputComponent {
   onChangeValue: (value: string) => void;
 }
 
-const LabeledInputComponent: React.FC<ILabeledInputComponent & TextFieldProps> = ({
-  label,
-  value,
-
+const LabeledInputComponent: React.FC<
+  ILabeledInputComponent & TextFieldProps
+> = ({
   errorMsg,
-  autoFocus,
-
   onChangeValue,
+
+  variant,
+
+  ...props
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeValue(event.target.value);
@@ -26,11 +27,9 @@ const LabeledInputComponent: React.FC<ILabeledInputComponent & TextFieldProps> =
         error={errorMsg !== undefined && errorMsg.length > 1}
         id={errorMsg ? "outlined-error-helper-text" : "outlined-basic"}
         variant="outlined"
-        label={label}
-        value={value}
         onChange={handleChange}
         helperText={errorMsg || ""}
-        autoFocus={autoFocus}
+        {...props}
         fullWidth
       />
     </div>
