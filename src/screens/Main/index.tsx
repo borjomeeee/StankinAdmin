@@ -24,17 +24,22 @@ import ModalTemplate from "../../templates/Modal";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MainGroupListComponent from "../../components/MainGroupList";
+import UpdateScheduleModalComponent from "../../components/UpdateScheduleModal";
 
 const MainScreen = ({
   app,
-  removeGroup,
+  removeGroupAction,
   updateSchedulesAction,
 }: ConnectedProps<typeof connector>) => {
+  const [visibleUpdateScheduleModal, setVisibleUpdateScheduleModal] = useState<
+    boolean
+  >(false);
+
   const [currEditGroup, setCurrEditGroup] = useState<IGroup | null>(null);
 
   // Handlers
   const onRemoveGroup = (groupId: string) => {
-    removeGroup(app.appKey, groupId);
+    removeGroupAction(app.appKey, groupId);
   };
 
   const onEditGroup = (groupId: IGroup) => {
@@ -63,7 +68,7 @@ const MainScreen = ({
         <div className="main__download">
           <ButtonComponent
             label="Обновить расписания"
-            onClick={updateSchedulesAction.bind(null, app.appKey)}
+            onClick={setVisibleUpdateScheduleModal.bind(null, true)}
           />
         </div>
       </div>
@@ -89,6 +94,17 @@ const MainScreen = ({
         </ModalTemplate>
       )}
 
+      {visibleUpdateScheduleModal && (
+        <ModalTemplate
+          title="Обновление расписаний"
+          onClose={setVisibleUpdateScheduleModal.bind(null, false)}
+        >
+          <UpdateScheduleModalComponent
+            onSubmit={updateSchedulesAction.bind(null, app.appKey)}
+          />
+        </ModalTemplate>
+      )}
+
       <MainRightBarComponent />
     </div>
   );
@@ -101,8 +117,7 @@ const mapStateToProps = (state: IInitialState) => ({
 });
 
 const mapDispatchToProps = {
-  removeGroup: (key: string, groupId: string) =>
-    removeGroupAction(key, groupId),
+  removeGroupAction,
   updateSchedulesAction,
 };
 
