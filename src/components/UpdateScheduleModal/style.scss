@@ -1,0 +1,36 @@
+.update-schedule {
+  &__sections-list {
+    margin-top: 10px;
+
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .section {
+    margin-top: 10px;
+    margin-right: 10px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 2px 4px;
+
+    border: 1px solid #000;
+
+    &__text {
+      font-size: 12px;
+    }
+
+    &__remove {
+      display: flex;
+      align-items: center;
+
+      margin-left: 3px;
+      cursor: pointer;
+    }
+  }
+
+  &__submit {
+    margin-top: 20px;
+  }
+}
