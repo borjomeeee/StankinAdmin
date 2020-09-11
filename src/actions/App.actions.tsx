@@ -31,10 +31,10 @@ export const checkAdminKeyFailedAction = (error: string) =>
     payload: { error },
   } as const);
 
-export const updateSchedulesAction = (key: string) =>
+export const updateSchedulesAction = (key: string, sections: string[]) =>
   ({
     type: UPDATE_SCHEDULES,
-    payload: { key }
+    payload: { key, sections },
   } as const);
 
 export const updateSchedulesSuccessAction = () =>

@@ -1,8 +1,5 @@
 import { takeLeading, put } from "redux-saga/effects";
-import {
-  CHECK_ADMIN_KEY,
-  UPDATE_SCHEDULES,
-} from "../utils/constants";
+import { CHECK_ADMIN_KEY, UPDATE_SCHEDULES } from "../utils/constants";
 import {
   ICheckAdminKeySaga,
   checkAdminKeyFailedAction,
@@ -39,7 +36,8 @@ export function* updateSchedulesSaga({
   try {
     const { status, data } = yield fetchAPI(
       "/api/admin/download-schedules",
-      payload.key
+      payload.key,
+      { sections: payload.sections }
     );
 
     if (status === 200) {
