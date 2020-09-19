@@ -14,7 +14,6 @@ import { downloadGroupsAction } from "../actions/Groups.actions";
 
 export function* checkAdminKeySaga({ payload }: ICheckAdminKeySaga) {
   try {
-    
     const { status, data } = yield fetchAPI(
       "/api/admin/hello_admin",
       payload.key
