@@ -7,7 +7,7 @@ import appSaga from "./App.saga";
 
 
 export const fetchAPI = async (url: string, key: string, data: object = {}) => {
-  const response = await fetch(`${process.env.REACT_APP_SERVER_HOST}${url}`, {
+  const response = await fetch(`${process.env.REACT_APP_SERVER_HOST}:${process.env.REACT_APP_SERVER_PORT}${url}`, {
     method: "POST",
     body: JSON.stringify({ key, ...data }),
   });
